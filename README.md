@@ -35,5 +35,5 @@ In this trining we in live session on Google Meet and will be recorded, and stud
 
 - Fill this [Form](https://docs.google.com/forms/d/e/1FAIpQLSfYGtPfym6Ze5JxRk57KghK3EjuI4PEzwf5wqnxqWYXIiF_Dg/viewform)
 - Join LinkedIn Group [BlueThunder](https://www.linkedin.com/groups/8150659/) so we can collaborate in the projects
-- Contact me in LinkedIn [Eslam Faisal](https://www.linkedin.com/in/eslam-faisal-b9115429b/)
+- Contact me in LinkedIn [Eslam Faisal](https://www.linkedin.com/in/eslam-faisal-b9115429b/) so you can join the worksapce with other developers
 - one or two sessions every week ( Sunday and Wednesday ) till we finish the project
