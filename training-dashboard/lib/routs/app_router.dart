@@ -18,11 +18,12 @@ class AppRouter {
     print('RoutingName: ${routingData.route}');
 
     switch (routingData.route) {
-      case RouteName.SPLASH:
+      case RouteName.HOME:
         return _getPageRoute(SplashScreen(), settings);
 
       default:
-        return _getPageRoute(const NotFoundScreen(), settings);
+        return _getPageRoute(
+            NotFoundScreen("${uriData.queryParameters}"), settings);
     }
   }
 }

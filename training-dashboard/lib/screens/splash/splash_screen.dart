@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseScreen<SplashViewModel>(
       onModelReady: (splashViewModel) {
-        splashViewModel.checkLogin();
+        // splashViewModel.checkLogin();
       },
       builder: (context, splashViewModel, child) {
         return Scaffold(

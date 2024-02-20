@@ -4,9 +4,11 @@ import 'package:training_questions_form/routs/app_router.dart';
 import 'package:training_questions_form/routs/routs_names.dart';
 import 'package:training_questions_form/services/navigation_service.dart';
 
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'locator.dart';
 
 void main() async {
+  setUrlStrategy(PathUrlStrategy());
   setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
