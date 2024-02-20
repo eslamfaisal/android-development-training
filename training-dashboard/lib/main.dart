@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:training_questions_form/routs/app_router.dart';
 import 'package:training_questions_form/routs/routs_names.dart';
 import 'package:training_questions_form/services/navigation_service.dart';
+import 'package:training_questions_form/services/shared_pref_services.dart';
 
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'locator.dart';
 
 void main() async {
@@ -20,22 +21,30 @@ void main() async {
       projectId: "android-e-commerce-training",
     ),
   );
-  runApp(MyApp());
+
+  var isLogged = await locator<SharedPrefServices>().getBoolean('isLogged');
+  runApp(MyApp(isLogged));
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  final bool isLogged;
+  const MyApp(this.isLogged, {super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Training Dashboard',
       theme: ThemeData(
-        primaryColor: const Color(0xFFFD5F00), primarySwatch: Colors.deepOrange,
+        primaryColor: const Color(0xFFFD5F00),
+        primarySwatch: Colors.deepOrange,
       ),
       initialRoute: RouteName.SPLASH,
       navigatorKey: locator<NavigationService>().navigatorKey,
-      onGenerateRoute: AppRouter.generateRoute,
+      onGenerateRoute: (settings) {
+        if (isLogged) return AppRouter.generateRoute(settings);
+        return AppRouter.getLoginRoute(settings);
+      },
     );
   }
 }

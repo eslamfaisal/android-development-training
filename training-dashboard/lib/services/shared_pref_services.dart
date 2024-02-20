@@ -1,49 +1,45 @@
 import 'package:flutter/material.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefServices {
-  SharedPreferences? _prefs = null;
+  SharedPreferences? _prefs;
 
-  SharedPrefServices() {
-    init();
+  SharedPrefServices._privateConstructor();
+
+  static final SharedPrefServices _instance = SharedPrefServices._privateConstructor();
+
+  static SharedPrefServices get instance => _instance;
+
+  static Future<void> init() async {
+    _instance._prefs = await SharedPreferences.getInstance();
   }
 
-  void init() async {
-    _prefs = await SharedPreferences.getInstance();
+  Future<void> saveString(String key, String value) async {
+    await _prefs!.setString(key, value);
   }
 
-  saveString(String key, String value) async {
-    _prefs!.setString(key, value);
+  Future<void> saveBoolean(String key, bool value) async {
+    await _prefs!.setBool(key, value);
   }
 
-  saveBoolean(String key, bool value) async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setBool(key, value);
+  Future<void> saveInLocalStorageAsInt(String key, int value) async {
+    await _prefs!.setInt(key, value);
   }
 
-  saveInLocalStorageAsInt(String key, int value) async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setInt(key, value);
+  Future<bool> getBoolean(String key) async {
+    return _prefs!.getBool(key) ?? false;
   }
 
-  Future<bool> getBoolean(String? key) async {
-    bool data = await Future.value(_prefs!.getBool(key!) ?? false);
-    return data;
+  Future<String?> getString(String key) async {
+    return _prefs!.getString(key);
   }
 
-  Future<String> getString(String? key) async {
-    String data = await Future.value(_prefs!.getString(key!));
-    return data;
+  Future<void> removeFromLocalStorage({required String key}) async {
+    await _prefs!.remove(key);
   }
 
-  removeFromLocalStorage({@required String? key}) async {
-    var data = _prefs!.remove(key!);
-    return data;
+  Future<void> clear() async {
+    await _prefs!.clear();
   }
-
-
-  clear() async {
-    _prefs!.clear();
-  }
-
 }
