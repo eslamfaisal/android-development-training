@@ -9,7 +9,7 @@ class BaseScreen<T extends BaseViewModel> extends StatefulWidget {
   final Function(T)? onModelReady;
   final Function(T)? onFinish;
 
-  BaseScreen({this.builder, this.onModelReady, this.onFinish});
+  const BaseScreen({super.key, this.builder, this.onModelReady, this.onFinish});
 
   @override
   _BaseScreenState<T> createState() => _BaseScreenState<T>();
@@ -31,8 +31,7 @@ class _BaseScreenState<T extends BaseViewModel> extends State<BaseScreen<T>> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<T>.value(
-        value: model,
-        child: Consumer<T>(builder: widget.builder!));
+        value: model, child: Consumer<T>(builder: widget.builder!));
   }
 
   @override

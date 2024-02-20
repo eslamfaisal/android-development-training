@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 class NotFoundScreen extends StatelessWidget {
-  String queryParameters;
-  NotFoundScreen(this.queryParameters, {Key? key}) : super(key: key);
+  const NotFoundScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SafeArea(
         child: Center(
-          child: Text("no_page = $queryParameters"),
+          child: Text("404\nPage Not found"),
         ),
       ),
     );

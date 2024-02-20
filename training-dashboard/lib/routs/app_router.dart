@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:training_questions_form/routs/routing_data.dart';
 import 'package:training_questions_form/routs/routs_names.dart';
 
+import '../screens/not_found_screen/empty_screen.dart';
 import '../screens/not_found_screen/not_found_screen.dart';
 import '../screens/splash/splash_screen.dart';
 
@@ -16,7 +17,7 @@ class AppRouter {
     );
 
     print('RoutingName: ${routingData.route}');
-    return _getPageRoute(NotFoundScreen("Login rout"), settings);
+    return _getPageRoute(const EmptyScreen("Login Screen"), settings);
   }
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -34,11 +35,10 @@ class AppRouter {
         return _getPageRoute(SplashScreen(), settings);
 
       case RouteName.HOME:
-        return _getPageRoute(
-            NotFoundScreen("${uriData.queryParameters}"), settings);
+        return _getPageRoute(const NotFoundScreen(), settings);
 
       default:
-        return _getPageRoute(NotFoundScreen(""), settings);
+        return _getPageRoute(const NotFoundScreen(), settings);
     }
   }
 }
