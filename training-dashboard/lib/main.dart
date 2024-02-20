@@ -1,16 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+
   await Firebase.initializeApp(
     // Replace with actual values
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyDVi_fOfrtlNvMO08H0kvowwI8pI_3Cwg8",
-      appId: "1:449149627104:web:ac6297ca9a8a7011c3be85",
-      messagingSenderId: "449149627104",
-      projectId: "android-e-commerce-training",
+    options: FirebaseOptions(
+      apiKey: dotenv.env['apiKey']!,
+      appId: dotenv.env['appId']!,
+      messagingSenderId: dotenv.env['messagingSenderId']!,
+      projectId: dotenv.env['projectId']!,
     ),
   );
   runApp(const MyApp());
@@ -78,10 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
       FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: "eslamfaisal423@gmail.com", password: "111111")
-          .then((value) => {
-            print(value.user!.email),
-            print(value.user!.uid)
-          });
+          .then((value) => {print(value.user!.email), print(value.user!.uid)});
       _counter++;
     });
   }
