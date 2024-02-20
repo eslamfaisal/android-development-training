@@ -1,6 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    // Replace with actual values
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyDVi_fOfrtlNvMO08H0kvowwI8pI_3Cwg8",
+      appId: "1:449149627104:web:ac6297ca9a8a7011c3be85",
+      messagingSenderId: "449149627104",
+      projectId: "android-e-commerce-training",
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -63,11 +75,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: "eslamfaisal423@gmail.com", password: "111111")
+          .then((value) => {
+            print(value.user!.email),
+            print(value.user!.uid)
+          });
       _counter++;
     });
   }

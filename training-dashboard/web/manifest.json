@@ -1,6 +1,6 @@
 {
-    "name": "training_questions_form",
-    "short_name": "training_questions_form",
+    "name": "Training dashboard",
+    "short_name": "training_dashboard",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
