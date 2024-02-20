@@ -41,6 +41,8 @@ dependencies:
   cloud_firestore: ^4.15.5
   firebase_core: ^2.25.4
   flutter_dotenv: ^5.1.0
+  dio: ^5.4.1
+  shared_preferences: ^2.2.2
 
 
 dev_dependencies:
