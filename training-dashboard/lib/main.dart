@@ -10,7 +10,7 @@ import 'locator.dart';
 
 void main() async {
   setUrlStrategy(PathUrlStrategy());
-  setupLocator();
+  await setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     // Replace with actual values
