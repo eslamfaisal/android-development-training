@@ -6,7 +6,7 @@ import 'services/navigation_service.dart';
 
 GetIt locator = GetIt.instance;
 
-void setupLocator() {
+Future setupLocator() async {
   locator.registerSingletonAsync<SharedPrefServices>(() async {
     await SharedPrefServices.init();
     return SharedPrefServices.instance;
