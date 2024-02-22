@@ -6,7 +6,9 @@ import 'package:training_questions_form/models/resources.dart';
 import 'package:training_questions_form/models/status.dart';
 import 'package:training_questions_form/screens/login/viewmodel/login_view_model.dart';
 import 'package:training_questions_form/screens/widgets/StyledButton.dart';
+import 'package:training_questions_form/screens/widgets/socila_button.dart';
 import 'package:training_questions_form/screens/widgets/styled_text_field.dart';
+import 'package:training_questions_form/utils/colors.dart';
 import 'package:training_questions_form/utils/common_functions.dart';
 import 'package:training_questions_form/utils/extensions.dart';
 import 'package:training_questions_form/utils/texts.dart';
@@ -70,6 +72,10 @@ class LoginScreen extends StatelessWidget {
                                     html.window.location.reload();
                                   }
                                 }),
+                          heightSpace(16),
+                          // socialButtonText('Sign in with Google', Colors.black),
+                          SocialButton('Login with Google', Colors.white,
+                              blackColor, 'google.png', primaryColor),
                           heightSpace(16),
                         ],
                       ),
