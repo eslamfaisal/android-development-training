@@ -6,15 +6,23 @@ import 'package:training_questions_form/models/resources.dart';
 import 'package:training_questions_form/models/status.dart';
 
 class FirebaseServices {
-  var db = FirebaseFirestore.instance;
-  var auth = FirebaseAuth.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  static final FirebaseServices _instance = FirebaseServices._internal();
+
+  FirebaseServices._internal();
+
+  factory FirebaseServices() {
+    return _instance;
+  }
 
   User? getCurrentUserData() {
     return auth.currentUser;
   }
 
-  void signOut() {
-    auth.signOut();
+  Future<void> signOut() async {
+    await auth.signOut();
   }
 
   Future<Resource<UserCredential>> login(String email, String password) async {

@@ -1,7 +1,6 @@
 class RouteName {
-  static const String SPLASH = '/';
+  static const String HOME = '/';
   static const String LOGIN = '/login';
-  static const String HOME = '/home';
   static const String COUNTIRES_SCREEN = '/countries';
   static const String CATEGORIES_SCREEN = '/categories';
   static const String STORES_SCREEN = '/stores';

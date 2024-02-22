@@ -14,6 +14,8 @@ import 'package:training_questions_form/utils/texts.dart';
 import '../../base_screen.dart';
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen<LoginViewModel>(
@@ -31,8 +33,8 @@ class LoginScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           SizedBox(
-                            width: 300,
-                            height: 300,
+                            width: 100,
+                            height: 100,
                             child: Image.asset('assets/images/ic_logo.png'),
                           ),
                           headerText(
