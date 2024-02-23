@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:training_questions_form/routs/routing_data.dart';
 import 'package:training_questions_form/routs/routs_names.dart';
+import 'package:training_questions_form/screens/assignments/assignments_screen.dart';
+import 'package:training_questions_form/screens/home/view/home_screen.dart';
 import 'package:training_questions_form/screens/login/view/login_screen.dart';
 
 import '../screens/not_found_screen/not_found_screen.dart';
@@ -31,10 +33,13 @@ class AppRouter {
 
     switch (routingData.route) {
       case RouteName.HOME:
-        return _getPageRoute(const NotFoundScreen(), settings);
+        return _getPageRoute(const BaseHomeScreen(AssignmentsScreen()), settings);
 
       case RouteName.LOGIN:
         return _getPageRoute(const LoginScreen(), settings);
+
+      case RouteName.ASSIGNMENTS:
+        return _getPageRoute(const BaseHomeScreen(AssignmentsScreen()), settings);
 
       default:
         return _getPageRoute(const NotFoundScreen(), settings);
