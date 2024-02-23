@@ -34,4 +34,20 @@ class FirebaseServices {
       return Resource(Status.ERROR, errorMessage: e.toString());
     }
   }
+
+  Future<Resource<UserCredential>> loginWithGoogle() async {
+    try {
+      // Create a new provider
+      GoogleAuthProvider googleProvider = GoogleAuthProvider();
+      googleProvider
+          .addScope('https://www.googleapis.com/auth/contacts.readonly');
+      googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+      // Once signed in, return the UserCredential
+      UserCredential userCredential =
+          await auth.signInWithPopup(googleProvider);
+      return Resource(Status.SUCCESS, data: userCredential);
+    } catch (e) {
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
 }

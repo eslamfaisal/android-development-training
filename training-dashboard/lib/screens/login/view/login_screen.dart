@@ -74,8 +74,24 @@ class LoginScreen extends StatelessWidget {
                                 }),
                           heightSpace(16),
                           // socialButtonText('Sign in with Google', Colors.black),
-                          SocialButton('Login with Google', Colors.white,
-                              blackColor, 'google.png', primaryColor),
+                          loginViewModel.state == ViewState.Busy
+                              ? const Center(child: CircularProgressIndicator())
+                              : SocialButton('Login with Google', Colors.white,
+                                      blackColor, 'google.png', primaryColor)
+                                  .onTap(() async {
+                                  Resource<String> response =
+                                      await loginViewModel.loginWithGoogle();
+
+                                  if (response.status == Status.ERROR) {
+                                    final snackBar = SnackBar(
+                                        content:
+                                            Text((response.errorMessage!)));
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  } else {
+                                    html.window.location.reload();
+                                  }
+                                }),
                           heightSpace(16),
                         ],
                       ),

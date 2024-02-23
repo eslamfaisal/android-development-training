@@ -11,10 +11,8 @@ import '../../../locator.dart';
 import '../../../utils/shared_preferences_constants.dart';
 
 class LoginViewModel extends BaseViewModel {
-  TextEditingController emailController =
-      TextEditingController();
-  TextEditingController passwordController =
-      TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   final _firebaseServices = locator<FirebaseServices>();
@@ -24,6 +22,26 @@ class LoginViewModel extends BaseViewModel {
       setState(ViewState.Busy);
       Resource<UserCredential>? response = await _firebaseServices.login(
           emailController.value.text.trim(), passwordController.value.text);
+      setState(ViewState.Idle);
+      if (response.status == Status.ERROR) {
+        return Resource(Status.ERROR, errorMessage: response.errorMessage);
+      } else {
+        locator<SharedPrefServices>().saveBoolean(LOGGED_IN, true);
+        locator<SharedPrefServices>()
+            .saveString(USER_ID, response.data!.user!.uid);
+        return Resource(Status.SUCCESS, data: response.data!.user!.uid);
+      }
+    } catch (e) {
+      setState(ViewState.Idle);
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<String>> loginWithGoogle() async {
+    try {
+      setState(ViewState.Busy);
+      Resource<UserCredential>? response =
+          await _firebaseServices.loginWithGoogle();
       setState(ViewState.Idle);
       if (response.status == Status.ERROR) {
         return Resource(Status.ERROR, errorMessage: response.errorMessage);
