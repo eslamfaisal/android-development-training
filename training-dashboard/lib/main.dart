@@ -20,7 +20,7 @@ void main() async {
       appId: "1:449149627104:web:ac6297ca9a8a7011c3be85",
       messagingSenderId: "449149627104",
       projectId: "android-e-commerce-training",
-      authDomain: "android-e-commerce-training.web.app",
+      authDomain: "android-e-commerce-training.firebaseapp.com",
     ),
   );
 
