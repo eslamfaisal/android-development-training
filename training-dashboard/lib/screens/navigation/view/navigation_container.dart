@@ -87,73 +87,14 @@ class _NavigationContainerState extends State<NavigationContainer>
       children: <Widget>[
         DrawerItemWidget(
           ("countries"),
-          tabController!.index == COUNTRIES_INDEX
+          tabController!.index == HOME_INDEX
               ? Colors.deepOrange[200]!
               : Colors.white,
           () {
-            locator<NavigationService>().navigateTo(RouteName.COUNTIRES_SCREEN);
+            locator<NavigationService>().navigateTo(RouteName.HOME);
           },
           Icon(
             Icons.category,
-            color: primaryColor,
-            size: 26,
-          ),
-        ),
-        DrawerItemWidget(
-          ("categories"),
-          tabController!.index == CATEGORIES_INDEX
-              ? Colors.deepOrange[200]!
-              : Colors.white,
-          () {
-            locator<NavigationService>()
-                .navigateTo(RouteName.CATEGORIES_SCREEN);
-          },
-          Icon(
-            Icons.category,
-            color: primaryColor,
-            size: 26,
-          ),
-        ),
-        DrawerItemWidget(
-          ("stores"),
-          tabController!.index == STORES_INDEX
-              ? Colors.deepOrange[200]!
-              : Colors.white,
-          () {
-            locator<NavigationService>().navigateTo(RouteName.STORES_SCREEN);
-          },
-          Icon(
-            Icons.store,
-            color: primaryColor,
-            size: 26,
-          ),
-        ),
-        DrawerItemWidget(
-          ("coupon_and_offers"),
-          tabController!.index == COUPONS_OFFERS_INDEX
-              ? Colors.deepOrange[200]!
-              : Colors.white,
-          () {
-            locator<NavigationService>()
-                .navigateTo(RouteName.COUPONS_OFFERS_SCREEN);
-          },
-          Icon(
-            Icons.store,
-            color: primaryColor,
-            size: 26,
-          ),
-        ),
-        DrawerItemWidget(
-          ("notifications"),
-          tabController!.index == NOTIFICATIONS_INDEX
-              ? Colors.deepOrange[200]!
-              : Colors.white,
-          () {
-            locator<NavigationService>()
-                .navigateTo(RouteName.NOTIFICATIONS_SCREEN);
-          },
-          Icon(
-            Icons.store,
             color: primaryColor,
             size: 26,
           ),
