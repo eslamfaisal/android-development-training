@@ -5,6 +5,7 @@ import 'package:training_questions_form/routs/app_router.dart';
 import 'package:training_questions_form/routs/routs_names.dart';
 import 'package:training_questions_form/services/navigation_service.dart';
 import 'package:training_questions_form/services/shared_pref_services.dart';
+import 'package:training_questions_form/utils/shared_preferences_constants.dart';
 
 import 'locator.dart';
 
@@ -19,10 +20,11 @@ void main() async {
       appId: "1:449149627104:web:ac6297ca9a8a7011c3be85",
       messagingSenderId: "449149627104",
       projectId: "android-e-commerce-training",
+      authDomain: "android-e-commerce-training.firebaseapp.com",
     ),
   );
 
-  var isLogged = await locator<SharedPrefServices>().getBoolean('isLogged');
+  var isLogged = await locator<SharedPrefServices>().getBoolean(LOGGED_IN);
   runApp(MyApp(isLogged));
 }
 
@@ -36,10 +38,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Training Dashboard',
       theme: ThemeData(
-        primaryColor: const Color(0xFFFD5F00),
-        primarySwatch: Colors.deepOrange,
+        primaryColor: const Color(0xFF40BFFF),
+        primarySwatch: Colors.blue,
       ),
-      initialRoute: RouteName.SPLASH,
+      initialRoute: RouteName.HOME,
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: (settings) {
         if (isLogged) return AppRouter.generateRoute(settings);

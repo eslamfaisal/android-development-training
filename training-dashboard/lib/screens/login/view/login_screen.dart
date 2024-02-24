@@ -6,7 +6,9 @@ import 'package:training_questions_form/models/resources.dart';
 import 'package:training_questions_form/models/status.dart';
 import 'package:training_questions_form/screens/login/viewmodel/login_view_model.dart';
 import 'package:training_questions_form/screens/widgets/StyledButton.dart';
+import 'package:training_questions_form/screens/widgets/socila_button.dart';
 import 'package:training_questions_form/screens/widgets/styled_text_field.dart';
+import 'package:training_questions_form/utils/colors.dart';
 import 'package:training_questions_form/utils/common_functions.dart';
 import 'package:training_questions_form/utils/extensions.dart';
 import 'package:training_questions_form/utils/texts.dart';
@@ -14,6 +16,8 @@ import 'package:training_questions_form/utils/texts.dart';
 import '../../base_screen.dart';
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen<LoginViewModel>(
@@ -31,8 +35,8 @@ class LoginScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           SizedBox(
-                            width: 300,
-                            height: 300,
+                            width: 100,
+                            height: 100,
                             child: Image.asset('assets/images/ic_logo.png'),
                           ),
                           headerText(
@@ -54,20 +58,46 @@ class LoginScreen extends StatelessWidget {
                           heightSpace(24),
                           loginViewModel.state == ViewState.Busy
                               ? const Center(child: CircularProgressIndicator())
-                              : StyledButton(("login")).onTap(() async {
-                                  Resource<String> response =
-                                      await loginViewModel.login();
+                              : Column(
+                                  children: [
+                                    StyledButton(("login")).onTap(() async {
+                                      Resource<String> response =
+                                          await loginViewModel.login();
 
-                                  if (response.status == Status.ERROR) {
-                                    final snackBar = SnackBar(
-                                        content:
-                                            Text((response.errorMessage!)));
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  } else {
-                                    html.window.location.reload();
-                                  }
-                                }),
+                                      if (response.status == Status.ERROR) {
+                                        final snackBar = SnackBar(
+                                            content:
+                                                Text((response.errorMessage!)));
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      } else {
+                                        html.window.location.reload();
+                                      }
+                                    }),
+                                    heightSpace(16),
+                                    SocialButton(
+                                            'Login with Google',
+                                            Colors.white,
+                                            blackColor,
+                                            'google.png',
+                                            primaryColor)
+                                        .onTap(() async {
+                                      Resource<String> response =
+                                          await loginViewModel
+                                              .loginWithGoogle();
+
+                                      if (response.status == Status.ERROR) {
+                                        final snackBar = SnackBar(
+                                            content:
+                                                Text((response.errorMessage!)));
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      } else {
+                                        html.window.location.reload();
+                                      }
+                                    }),
+                                  ],
+                                ),
                           heightSpace(16),
                         ],
                       ),
