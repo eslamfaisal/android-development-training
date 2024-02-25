@@ -55,17 +55,25 @@ class SessionScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 8),
                           child: SessionView(
-                            session: session,
-                            updateSession: () => _updateSession(session),
-                            deleteSession: () =>
-                                sessionsViewModel.deleteSession(session.id),
-                          ),
+                              session: session,
+                              updateSession: () => _updateSession(session),
+                              deleteSession: () => _deleteSession(context, sessionsViewModel, session.id)),
                         );
                       },
                     ),
         );
       },
     );
+  }
+
+  _deleteSession(BuildContext context, SessionsViewModel viewModel, sessionId) {
+    viewModel.deleteSession(sessionId).then((value) {
+      if (value) {
+        viewModel.getSessions();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Session Deleted')));
+      }
+    });
   }
 
   _addSession(BuildContext context, SessionsViewModel viewModel) {

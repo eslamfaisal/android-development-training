@@ -76,4 +76,15 @@ class FirebaseServices {
     }
   }
 
+
+  Future<Resource<bool>> deleteSession(String sessionId)async{
+    try{
+      await db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').doc(sessionId).delete();
+      return Resource(Status.SUCCESS, data: true);
+    }catch(e){
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+
 }

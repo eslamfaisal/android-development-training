@@ -27,7 +27,12 @@ class SessionsViewModel extends BaseViewModel {
     });
   }
 
-  deleteSession(String? id) {
-
+  Future<bool> deleteSession(String? id) async {
+    if(id !=null){
+      final result =await  _firebaseServices.deleteSession(id);
+      return result.status?.isSuccessful ==true;
+    }
+    return false;
   }
+
 }
