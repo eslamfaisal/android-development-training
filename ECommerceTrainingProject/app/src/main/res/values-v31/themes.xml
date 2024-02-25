@@ -4,7 +4,7 @@
     <style name="Theme.MainActivity" parent="Theme.SplashScreen">
 
         <item name="windowSplashScreenBackground">@color/primary_color</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/lottie2</item>
         <item name="postSplashScreenTheme">@style/Theme.ECommerce</item>
         <item name="windowSplashScreenAnimationDuration">2000</item>
 <!--        <item name="android:windowSplashScreenBrandingImage">@drawable/brand_logo</item>-->
