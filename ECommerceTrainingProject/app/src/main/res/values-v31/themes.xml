@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MainActivity" parent="Theme.SplashScreen">
+
+        <item name="windowSplashScreenBackground">@color/primary_color</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.ECommerce</item>
+        <item name="windowSplashScreenAnimationDuration">2000</item>
+<!--        <item name="android:windowSplashScreenBrandingImage">@drawable/brand_logo</item>-->
+
+    </style>
+</resources>
