@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:training_questions_form/models/resources.dart';
 import 'package:training_questions_form/models/status.dart';
 import 'package:training_questions_form/screens/sessions/model/session_model.dart';
+import 'package:training_questions_form/utils/common_functions.dart';
 
 class FirebaseServices {
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -61,4 +62,18 @@ class FirebaseServices {
       return Resource(Status.ERROR, errorMessage: e.toString());
     }
   }
+
+  Future<Resource<bool>> addSessions(
+      {required String sessionName, required String reference})async{
+    try{
+      final id =  db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').doc().id;
+      await db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').doc(id).set(
+        SessionModel(name: sessionName,reference: reference,id: id,createdAt:getCurrentDateTimeInUtc()).toJson()
+      );
+      return Resource(Status.SUCCESS, data: true);
+    }catch(e){
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
 }
