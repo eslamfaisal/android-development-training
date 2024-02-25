@@ -7,6 +7,8 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/lottie2</item>
         <item name="postSplashScreenTheme">@style/Theme.ECommerce</item>
         <item name="windowSplashScreenAnimationDuration">2000</item>
+        <item name="android:statusBarColor">@color/primary_color</item>
+        <item name="android:windowLightStatusBar">false</item> <!-- For making status bar content color dark -->
         <item name="android:windowLightNavigationBar">false</item>  <!-- For making Navigation bar content color dark -->
         <!--        <item name="android:windowSplashScreenBrandingImage">@drawable/brand_logo</item>-->
 
