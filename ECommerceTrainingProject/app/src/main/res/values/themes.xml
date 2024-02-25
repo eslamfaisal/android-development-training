@@ -1,9 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ECommerce" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.ECommerce" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+         <item name="colorPrimary">@color/primary_color</item>
+         <item name="android:colorAccent">@color/primary_color</item>
+         <item name="android:colorPrimaryDark">@color/primary_color</item>
+
+        <!-- System UI Configurations-->
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item> <!-- For making status bar content color dark -->
+        <item name="android:navigationBarColor">@android:color/darker_gray</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>  <!-- For making Navigation bar content color dark -->
+
     </style>
 
     <style name="Theme.ECommerce" parent="Base.Theme.ECommerce" />
+    <style name="Theme.MainActivity" parent="Base.Theme.ECommerce">
+        <item name="android:windowBackground">@drawable/lanch_window_background</item>
+
+        <!-- System UI Configurations-->
+        <item name="android:statusBarColor">@color/primary_color</item>
+        <item name="android:windowLightStatusBar">false</item> <!-- For making status bar content color dark -->
+        <item name="android:navigationBarColor">@color/primary_color</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>  <!-- For making Navigation bar content color dark -->
+    </style>
 </resources>
