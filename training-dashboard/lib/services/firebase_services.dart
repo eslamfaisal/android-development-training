@@ -55,7 +55,7 @@ class FirebaseServices {
   
   Future<Resource<List<SessionModel>>> getSessions()async{
     try{
-      final result = await  db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').get();
+      final result = await  db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').orderBy('created_at').get();
       final sessions = result.docs.map((e) => SessionModel.fromJson(e.data())).toList();
       return Resource(Status.SUCCESS, data: sessions);
     }catch(e){
@@ -63,7 +63,7 @@ class FirebaseServices {
     }
   }
 
-  Future<Resource<bool>> addSessions(
+  Future<Resource<bool>> addSession(
       {required String sessionName, required String reference})async{
     try{
       final id =  db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').doc().id;

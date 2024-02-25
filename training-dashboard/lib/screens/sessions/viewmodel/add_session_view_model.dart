@@ -16,7 +16,7 @@ class AddSessionViewModel extends BaseViewModel {
 
   Future<bool> addSession()async {
     setState(ViewState.Busy);
-    final result = await _firebaseServices.addSessions(
+    final result = await _firebaseServices.addSession(
        sessionName: nameController.text,
       reference: referenceController.text,
     );
