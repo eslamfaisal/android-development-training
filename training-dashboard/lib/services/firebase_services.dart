@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:training_questions_form/models/resources.dart';
 import 'package:training_questions_form/models/status.dart';
+import 'package:training_questions_form/screens/sessions/model/session_model.dart';
 
 class FirebaseServices {
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -47,6 +48,16 @@ class FirebaseServices {
           await auth.signInWithPopup(googleProvider);
       return Resource(Status.SUCCESS, data: userCredential);
     } catch (e) {
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+  
+  Future<Resource<List<SessionModel>>> getSessions()async{
+    try{
+      final result = await  db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').get();
+      final sessions = result.docs.map((e) => SessionModel.fromJson(e.data())).toList();
+      return Resource(Status.SUCCESS, data: sessions);
+    }catch(e){
       return Resource(Status.ERROR, errorMessage: e.toString());
     }
   }
