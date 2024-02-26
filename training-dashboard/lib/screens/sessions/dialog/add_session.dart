@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_questions_form/enums/screen_state.dart';
 import 'package:training_questions_form/locator.dart';
 import 'package:training_questions_form/screens/base_screen.dart';
 import 'package:training_questions_form/screens/sessions/viewmodel/add_session_view_model.dart';
@@ -47,7 +48,7 @@ class AddSession extends StatelessWidget {
                         const Divider(),
                         heightSpace(16),
                         normal18Text(
-                          ('Session Name'),
+                          ('Name'),
                         ),
                         heightSpace(8),
                         StyledTextField(
@@ -56,7 +57,7 @@ class AddSession extends StatelessWidget {
                         ),
                         heightSpace(16),
                         normal18Text(
-                          ('Session Reference'),
+                          ('Reference'),
                         ),
                         heightSpace(8),
                         StyledTextField(
@@ -64,7 +65,9 @@ class AddSession extends StatelessWidget {
                         ),
                         heightSpace(8),
                         const Divider(),
-                        StyledButton('Add').onTap(
+                        addSessionViewModel.state == ViewState.Busy
+                            ? const Center(child: CircularProgressIndicator())
+                            : StyledButton('Add').onTap(
                             () => _onClickAdd(context, addSessionViewModel))
                       ],
                     ),
