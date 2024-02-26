@@ -31,7 +31,7 @@ class SessionScreen extends StatelessWidget {
                   icon: const Icon(Icons.add),
                   label: normal16Text('Add Session', color: primaryColor),
                   style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(Size.fromHeight(40)),
+                    fixedSize: MaterialStateProperty.all(const Size.fromHeight(40)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
                       foregroundColor: MaterialStateProperty.all(primaryColor),

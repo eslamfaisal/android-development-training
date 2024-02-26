@@ -91,7 +91,7 @@ class AddSession extends StatelessWidget {
         } else {
           locator<NavigationService>().goBack();
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Session Added Fail')));
+              const SnackBar(content: Text('Session addition failed')));
         }
       });
     }

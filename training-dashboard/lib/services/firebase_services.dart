@@ -55,7 +55,7 @@ class FirebaseServices {
   
   Future<Resource<List<SessionModel>>> getSessions()async{
     try{
-      final result = await  db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').orderBy('created_at').get();
+      final result = await  _getTrainingDocument().collection('sessions').orderBy('created_at').get();
       final sessions = result.docs.map((e) => SessionModel.fromJson(e.data())).toList();
       return Resource(Status.SUCCESS, data: sessions);
     }catch(e){
@@ -66,8 +66,8 @@ class FirebaseServices {
   Future<Resource<bool>> addSession(
       {required String sessionName, required String reference})async{
     try{
-      final id =  db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').doc().id;
-      await db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').doc(id).set(
+      final id = _getTrainingDocument().collection('sessions').doc().id;
+      await _getTrainingDocument().collection('sessions').doc(id).set(
         SessionModel(name: sessionName,reference: reference,id: id,createdAt:getCurrentDateTimeInUtc()).toJson()
       );
       return Resource(Status.SUCCESS, data: true);
@@ -79,7 +79,7 @@ class FirebaseServices {
 
   Future<Resource<bool>> deleteSession(String sessionId)async{
     try{
-      await db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').doc(sessionId).delete();
+      await _getTrainingDocument().collection('sessions').doc(sessionId).delete();
       return Resource(Status.SUCCESS, data: true);
     }catch(e){
       return Resource(Status.ERROR, errorMessage: e.toString());
@@ -88,7 +88,7 @@ class FirebaseServices {
 
   Future<Resource<bool>> updateSession(SessionModel session)async{
     try{
-      await db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').doc(session.id).update(
+      await _getTrainingDocument().collection('sessions').doc(session.id).update(
         session.toJson()
       );
       return Resource(Status.SUCCESS, data: true);
@@ -98,5 +98,8 @@ class FirebaseServices {
   }
 
 
+  DocumentReference<Map<String, dynamic>> _getTrainingDocument(){
+    return db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm");
+  }
 
 }

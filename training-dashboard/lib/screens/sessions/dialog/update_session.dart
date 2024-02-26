@@ -99,7 +99,7 @@ class UpdateSession extends StatelessWidget {
         } else {
           locator<NavigationService>().goBack();
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Session Updated Fail')));
+              const SnackBar(content: Text('Session Update Fail')));
         }
       });
     }

@@ -1,10 +1,10 @@
 import 'package:training_questions_form/enums/screen_state.dart';
+import 'package:training_questions_form/locator.dart';
 import 'package:training_questions_form/models/status.dart';
 import 'package:training_questions_form/screens/base_view_model.dart';
 import 'package:training_questions_form/screens/sessions/model/session_model.dart';
 import 'package:training_questions_form/services/firebase_services.dart';
 
-import '../../../locator.dart';
 
 class SessionsViewModel extends BaseViewModel {
   final _firebaseServices = locator<FirebaseServices>();
