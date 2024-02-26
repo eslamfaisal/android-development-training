@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:training_questions_form/enums/screen_state.dart';
 import 'package:training_questions_form/screens/base_screen.dart';
 import 'package:training_questions_form/screens/sessions/dialog/add_session.dart';
+import 'package:training_questions_form/screens/sessions/dialog/update_session.dart';
 import 'package:training_questions_form/screens/sessions/model/session_model.dart';
 import 'package:training_questions_form/screens/sessions/view/session_view.dart';
 import 'package:training_questions_form/screens/sessions/viewmodel/sessions_view_model.dart';
@@ -56,7 +57,7 @@ class SessionScreen extends StatelessWidget {
                               horizontal: 16, vertical: 8),
                           child: SessionView(
                               session: session,
-                              updateSession: () => _updateSession(session),
+                              updateSession: () => _updateSession(context,session,sessionsViewModel),
                               deleteSession: () => _deleteSession(context, sessionsViewModel, session.id)),
                         );
                       },
@@ -88,5 +89,15 @@ class SessionScreen extends StatelessWidget {
     });
   }
 
-  _updateSession(SessionModel session) {}
+  _updateSession(BuildContext context,SessionModel session, SessionsViewModel viewModel) {
+    showGeneralDialog(
+        context: context,
+        pageBuilder: (context, _, p) {
+          return UpdateSession(session: session);
+        }).then((value) {
+      if (value == true) {
+        viewModel.getSessions();
+      }
+    });
+  }
 }

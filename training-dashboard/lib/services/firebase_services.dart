@@ -86,5 +86,17 @@ class FirebaseServices {
     }
   }
 
+  Future<Resource<bool>> updateSession(SessionModel session)async{
+    try{
+      await db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm").collection('sessions').doc(session.id).update(
+        session.toJson()
+      );
+      return Resource(Status.SUCCESS, data: true);
+    }catch(e){
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+
 
 }
