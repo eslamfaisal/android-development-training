@@ -25,12 +25,13 @@ class SessionScreen extends StatelessWidget {
             centerTitle: false,
             actions: [
               Padding(
-                padding: const EdgeInsets.only(right: 40),
+                padding: const EdgeInsets.only(right: 16),
                 child: OutlinedButton.icon(
                   onPressed: () => _addSession(context, sessionsViewModel),
                   icon: const Icon(Icons.add),
                   label: normal16Text('Add Session', color: primaryColor),
                   style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(Size.fromHeight(40)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
                       foregroundColor: MaterialStateProperty.all(primaryColor),
@@ -45,16 +46,16 @@ class SessionScreen extends StatelessWidget {
                   ? Center(child: stateText('There are no sessions yet'))
                   : ListView.separated(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 16),
+                          horizontal: 8, vertical: 16),
                       itemCount: sessionsViewModel.sessions.length,
                       separatorBuilder: (context, index) {
-                        return const Divider();
+                        return  Container();
                       },
                       itemBuilder: (context, index) {
                         final session = sessionsViewModel.sessions[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
+                              horizontal: 0, vertical: 8),
                           child: SessionView(
                               session: session,
                               updateSession: () => _updateSession(context,session,sessionsViewModel),
