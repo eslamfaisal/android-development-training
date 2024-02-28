@@ -11,8 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
+import com.training.ecommerce.utils.AddToCartException
+import com.training.ecommerce.utils.CrashlyticsUtils
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -20,8 +21,6 @@ class MainActivity : AppCompatActivity() {
         initSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
     }
 
     private fun initSplashScreen() {
