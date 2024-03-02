@@ -14,7 +14,6 @@
         tools:context=".ui.login.fragments.LoginFragment">
 
         <EditText
-            android:text="@{viewmodel.email}"
             android:id="@+id/edit_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -22,8 +21,7 @@
         <TextView
             android:id="@+id/text_login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{viewmodel.email}" />
+            android:layout_height="match_parent"  />
 
     </FrameLayout>
 
