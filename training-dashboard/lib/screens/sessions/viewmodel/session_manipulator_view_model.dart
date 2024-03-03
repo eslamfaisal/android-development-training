@@ -7,7 +7,7 @@ import 'package:training_questions_form/screens/base_view_model.dart';
 import 'package:training_questions_form/screens/sessions/model/session_model.dart';
 import 'package:training_questions_form/services/firebase_services.dart';
 
-class UpdateSessionViewModel extends BaseViewModel {
+class SessionManipulatorViewModel extends BaseViewModel {
   TextEditingController nameController = TextEditingController();
   TextEditingController referenceController = TextEditingController();
   late String sessionId;
@@ -17,14 +17,27 @@ class UpdateSessionViewModel extends BaseViewModel {
 
   final _firebaseServices = locator<FirebaseServices>();
 
-  Future<bool> updateSession()async {
+  Future<bool> addSession()async {
     setState(ViewState.Busy);
-    final result = await _firebaseServices.updateSession(
-      SessionModel(name: nameController.text,reference: referenceController.text,id: sessionId,createdAt: createdAt)
+    final result = await _firebaseServices.addSession(
+       sessionName: nameController.text,
+      reference: referenceController.text,
     );
     setState(ViewState.Idle);
     return result.status?.isSuccessful==true;
 
+  }
+
+  Future<bool> updateSession()async {
+    setState(ViewState.Busy);
+    final result = await _firebaseServices.updateSession(
+        SessionModel(name: nameController.text,
+            reference: referenceController.text,
+            id: sessionId,
+            createdAt: createdAt)
+    );
+    setState(ViewState.Idle);
+    return result.status?.isSuccessful == true;
   }
 
   FormFieldValidator<String>? nameValidator() {

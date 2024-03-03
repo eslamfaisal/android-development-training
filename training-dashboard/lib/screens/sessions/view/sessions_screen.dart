@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:training_questions_form/enums/screen_state.dart';
 import 'package:training_questions_form/screens/base_screen.dart';
-import 'package:training_questions_form/screens/sessions/dialog/add_session.dart';
-import 'package:training_questions_form/screens/sessions/dialog/update_session.dart';
+import 'package:training_questions_form/screens/sessions/dialog/session_manipulator_dialog.dart';
 import 'package:training_questions_form/screens/sessions/model/session_model.dart';
 import 'package:training_questions_form/screens/sessions/view/session_view.dart';
 import 'package:training_questions_form/screens/sessions/viewmodel/sessions_view_model.dart';
@@ -27,11 +26,13 @@ class SessionScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 16),
                 child: OutlinedButton.icon(
-                  onPressed: () => _addSession(context, sessionsViewModel),
+                  onPressed: () =>
+                      _showAddSessionDialog(context, sessionsViewModel),
                   icon: const Icon(Icons.add),
                   label: normal16Text('Add Session', color: primaryColor),
                   style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(const Size.fromHeight(40)),
+                      fixedSize:
+                          MaterialStateProperty.all(const Size.fromHeight(40)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
                       foregroundColor: MaterialStateProperty.all(primaryColor),
@@ -49,7 +50,7 @@ class SessionScreen extends StatelessWidget {
                           horizontal: 8, vertical: 16),
                       itemCount: sessionsViewModel.sessions.length,
                       separatorBuilder: (context, index) {
-                        return  Container();
+                        return Container();
                       },
                       itemBuilder: (context, index) {
                         final session = sessionsViewModel.sessions[index];
@@ -58,8 +59,10 @@ class SessionScreen extends StatelessWidget {
                               horizontal: 0, vertical: 8),
                           child: SessionView(
                               session: session,
-                              updateSession: () => _updateSession(context,session,sessionsViewModel),
-                              deleteSession: () => _deleteSession(context, sessionsViewModel, session.id)),
+                              updateSession: () => _showUpdateSessionDialog(
+                                  context, session, sessionsViewModel),
+                              deleteSession: () => _deleteSession(
+                                  context, sessionsViewModel, session.id)),
                         );
                       },
                     ),
@@ -78,11 +81,11 @@ class SessionScreen extends StatelessWidget {
     });
   }
 
-  _addSession(BuildContext context, SessionsViewModel viewModel) {
+  _showAddSessionDialog(BuildContext context, SessionsViewModel viewModel) {
     showGeneralDialog(
         context: context,
         pageBuilder: (context, _, p) {
-          return const AddSession();
+          return const SessionManipulatorDialog();
         }).then((value) {
       if (value == true) {
         viewModel.getSessions();
@@ -90,11 +93,12 @@ class SessionScreen extends StatelessWidget {
     });
   }
 
-  _updateSession(BuildContext context,SessionModel session, SessionsViewModel viewModel) {
+  _showUpdateSessionDialog(
+      BuildContext context, SessionModel session, SessionsViewModel viewModel) {
     showGeneralDialog(
         context: context,
         pageBuilder: (context, _, p) {
-          return UpdateSession(session: session);
+          return SessionManipulatorDialog(session: session);
         }).then((value) {
       if (value == true) {
         viewModel.getSessions();

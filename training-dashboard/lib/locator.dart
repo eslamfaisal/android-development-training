@@ -1,8 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:training_questions_form/screens/login/viewmodel/login_view_model.dart';
-import 'package:training_questions_form/screens/sessions/viewmodel/add_session_view_model.dart';
+import 'package:training_questions_form/screens/sessions/viewmodel/session_manipulator_view_model.dart';
 import 'package:training_questions_form/screens/sessions/viewmodel/sessions_view_model.dart';
-import 'package:training_questions_form/screens/sessions/viewmodel/update_session_view_model.dart';
 import 'package:training_questions_form/screens/splash/view_model/splash_view_model.dart';
 import 'package:training_questions_form/services/firebase_services.dart';
 import 'package:training_questions_form/services/shared_pref_services.dart';
@@ -21,6 +20,5 @@ Future setupLocator() async {
   locator.registerLazySingleton(() => SplashViewModel());
   locator.registerFactory(() => LoginViewModel());
   locator.registerFactory(() => SessionsViewModel());
-  locator.registerFactory(() => AddSessionViewModel());
-  locator.registerFactory(() => UpdateSessionViewModel());
+  locator.registerFactory(() => SessionManipulatorViewModel());
 }
