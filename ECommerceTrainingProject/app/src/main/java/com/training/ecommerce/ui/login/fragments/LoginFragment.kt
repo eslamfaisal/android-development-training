@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.training.ecommerce.R
 import com.training.ecommerce.data.repository.user.UserDataStoreRepositoryImpl
 import com.training.ecommerce.databinding.FragmentLoginBinding
@@ -26,7 +27,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     companion object {

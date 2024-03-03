@@ -5,6 +5,7 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
@@ -32,12 +33,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch(Main) {
             val isLoggedIn = userViewModel.isUserLoggedIn().first()
+            Log.d(TAG, "onCreate: isLoggedIn: $isLoggedIn")
             if (isLoggedIn) {
                 setContentView(R.layout.activity_main)
             } else {
+                userViewModel.setIsLoggedIn(true)
                 goToAuthActivity()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
     private fun goToAuthActivity() {
@@ -72,4 +80,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    companion object {
+        private const val TAG = "MainActivity"
+    }
 }
