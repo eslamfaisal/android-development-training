@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         initSplashScreen()
         super.onCreate(savedInstanceState)
         lifecycleScope.launch(Main) {
-            val isLoggedIn = userViewModel.isUserLoggedIn.first()
+            val isLoggedIn = userViewModel.isUserLoggedIn().first()
             if (isLoggedIn) {
                 setContentView(R.layout.activity_main)
             } else {
