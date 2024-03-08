@@ -35,10 +35,9 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch(Main) {
             val isLoggedIn = userViewModel.isUserLoggedIn().first()
             Log.d(TAG, "onCreate: isLoggedIn: $isLoggedIn")
-            if (isLoggedIn) {
+            if (!isLoggedIn) {
                 setContentView(R.layout.activity_main)
             } else {
-                userViewModel.setIsLoggedIn(true)
                 goToAuthActivity()
             }
         }
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToAuthActivity() {
         val intent = Intent(this, AuthActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val options = ActivityOptions.makeCustomAnimation(
             this, android.R.anim.fade_in, android.R.anim.fade_out
