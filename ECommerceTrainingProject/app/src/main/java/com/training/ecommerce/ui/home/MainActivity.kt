@@ -16,9 +16,9 @@ import androidx.lifecycle.lifecycleScope
 import com.training.ecommerce.R
 import com.training.ecommerce.data.datasource.datastore.UserPreferencesDataSource
 import com.training.ecommerce.data.repository.user.UserDataStoreRepositoryImpl
+import com.training.ecommerce.ui.auth.AuthActivity
 import com.training.ecommerce.ui.common.viewmodel.UserViewModel
 import com.training.ecommerce.ui.common.viewmodel.UserViewModelFactory
-import com.training.ecommerce.ui.auth.AuthActivity
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
