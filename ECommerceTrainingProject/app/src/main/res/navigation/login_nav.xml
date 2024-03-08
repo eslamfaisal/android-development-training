@@ -6,11 +6,11 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.training.ecommerce.ui.login.fragments.LoginFragment"
+        android:name="com.training.ecommerce.ui.auth.fragments.LoginFragment"
         android:label="LoginFragment" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.training.ecommerce.ui.login.fragments.RegisterFragment"
+        android:name="com.training.ecommerce.ui.auth.fragments.RegisterFragment"
         android:label="RegisterFragment" />
 
 </navigation>

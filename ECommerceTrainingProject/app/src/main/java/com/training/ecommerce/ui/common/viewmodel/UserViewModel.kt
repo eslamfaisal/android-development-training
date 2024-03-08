@@ -5,15 +5,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.training.ecommerce.data.repository.user.UserDataStoreRepositoryImpl
+import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class UserViewModel(
-    private val userPreferencesRepository: UserDataStoreRepositoryImpl
+    private val userPreferencesRepository: UserPreferenceRepository
 ) : ViewModel() {
 
-
     suspend fun isUserLoggedIn() = userPreferencesRepository.isUserLoggedIn()
+
     fun setIsLoggedIn(b: Boolean) {
         viewModelScope.launch(IO) {
             userPreferencesRepository.saveLoginState(b)

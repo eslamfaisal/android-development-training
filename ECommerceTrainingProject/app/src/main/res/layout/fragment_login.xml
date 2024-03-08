@@ -4,14 +4,14 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.training.ecommerce.ui.login.viewmodel.LoginViewModel" />
+            type="com.training.ecommerce.ui.auth.viewmodel.LoginViewModel" />
     </data>
 
     <FrameLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.login.fragments.LoginFragment">
+        tools:context=".ui.auth.fragments.LoginFragment">
 
         <EditText
             android:id="@+id/edit_email"

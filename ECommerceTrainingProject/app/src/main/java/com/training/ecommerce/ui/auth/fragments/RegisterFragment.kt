@@ -1,4 +1,4 @@
-package com.training.ecommerce.ui.login.fragments
+package com.training.ecommerce.ui.auth.fragments
 
 import androidx.fragment.app.Fragment
 
