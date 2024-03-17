@@ -20,8 +20,10 @@ import com.training.ecommerce.ui.auth.AuthActivity
 import com.training.ecommerce.ui.common.viewmodel.UserViewModel
 import com.training.ecommerce.ui.common.viewmodel.UserViewModelFactory
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,25 +34,33 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         initSplashScreen()
         super.onCreate(savedInstanceState)
+
         lifecycleScope.launch(Main) {
             val isLoggedIn = userViewModel.isUserLoggedIn().first()
             Log.d(TAG, "onCreate: isLoggedIn: $isLoggedIn")
-            if (!isLoggedIn) {
+            if (isLoggedIn) {
                 setContentView(R.layout.activity_main)
             } else {
                 goToAuthActivity()
             }
         }
+        Log.d(TAG, "onCreate: ")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: ")
     }
 
     private fun goToAuthActivity() {
         val intent = Intent(this, AuthActivity::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val options = ActivityOptions.makeCustomAnimation(
             this, android.R.anim.fade_in, android.R.anim.fade_out
         )
         startActivity(intent, options.toBundle())
+        finish()
     }
 
     private fun initSplashScreen() {
