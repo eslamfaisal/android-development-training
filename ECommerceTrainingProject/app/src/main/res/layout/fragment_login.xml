@@ -8,10 +8,11 @@
             type="com.training.ecommerce.ui.auth.viewmodel.LoginViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,8 +38,8 @@
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/MessageTextStyle"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="@string/sign_in_msg" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -128,7 +129,7 @@
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </layout>
 
