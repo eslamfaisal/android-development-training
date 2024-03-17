@@ -64,26 +64,27 @@
                 android:text="@string/sign_in" />
 
             <RelativeLayout
-                android:layout_marginBottom="24dp"
-                android:layout_marginTop="24dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp">
 
                 <View
-                    android:layout_centerInParent="true"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_centerInParent="true"
                     android:background="@color/neutral_light" />
+
                 <TextView
-                    android:background="@color/white"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:text="Or"
-                    android:textColor="@color/neutral_grey"
+                    android:layout_centerInParent="true"
+                    android:background="@color/white"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
-                    android:layout_centerInParent="true"
-                    android:textAllCaps="true"/>
+                    android:text="Or"
+                    android:textAllCaps="true"
+                    android:textColor="@color/neutral_grey" />
             </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
