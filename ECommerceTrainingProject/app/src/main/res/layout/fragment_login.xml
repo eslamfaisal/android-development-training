@@ -24,19 +24,20 @@
             <ImageView
                 android:layout_width="72dp"
                 android:layout_height="72dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="40dp"
                 android:src="@drawable/ic_primary_logo" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TitleTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/auth_welcome_msg" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/MessageTextStyle"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_in_msg" />
 
