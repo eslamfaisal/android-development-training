@@ -25,7 +25,7 @@
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_marginTop="24dp"
-                android:src="@drawable/ic_logo" />
+                android:src="@drawable/ic_primary_logo" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TitleTextStyle"
@@ -82,10 +82,50 @@
                     android:background="@color/white"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
-                    android:text="Or"
+                    android:text="@string/or"
                     android:textAllCaps="true"
                     android:textColor="@color/neutral_grey" />
             </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/google_signin_btn"
+                style="@style/SocialButtonStyle"
+                android:drawableStart="@drawable/ic_google"
+                android:text="@string/google_signin_btn_msg" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/facebook_signin_btn"
+                style="@style/SocialButtonStyle"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_facebook"
+                android:text="@string/google_signin_btn_msg" />
+
+            <TextView
+                style="@style/MediumPrimaryTextViewStyle"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/forgot_password_msg" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/MessageTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/have_a_account_msg" />
+
+                <TextView
+                    style="@style/MediumPrimaryTextViewStyle"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/register" />
+            </LinearLayout>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

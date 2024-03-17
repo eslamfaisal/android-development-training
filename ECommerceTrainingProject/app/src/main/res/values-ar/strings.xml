@@ -8,4 +8,9 @@
     <string name="email_et_hint">Your Email</string>
     <string name="password_et_hint">Password</string>
     <string name="sign_in">Sign in</string>
+    <string name="or">Or</string>
+    <string name="google_signin_btn_msg">Login with Google</string>
+    <string name="forgot_password_msg">Forgot Password?</string>
+    <string name="have_a_account_msg">Don’t have a account?</string>
+    <string name="register">Register</string>
 </resources>
