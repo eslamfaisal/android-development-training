@@ -3,4 +3,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="auth_welcome_msg">Welcome to E-Commerce</string>
     <string name="sign_in_msg">Sign in to continue</string>
+    <string name="email_et_hint">Your Email</string>
+    <string name="password_et_hint">Password</string>
+    <string name="sign_in">Sign in</string>
 </resources>

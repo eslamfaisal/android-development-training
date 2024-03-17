@@ -10,11 +10,14 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -37,6 +40,51 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sign_in_msg" />
 
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/email_et"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="36dp"
+                android:drawableStart="@drawable/ic_email"
+                android:hint="@string/email_et_hint" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/password_et"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_password"
+                android:hint="@string/password_et_hint" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/PrimaryButtonStyle"
+                android:layout_marginTop="16dp"
+                android:text="@string/sign_in" />
+
+            <RelativeLayout
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/neutral_light" />
+                <TextView
+                    android:background="@color/white"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="Or"
+                    android:textColor="@color/neutral_grey"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:textAllCaps="true"/>
+            </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

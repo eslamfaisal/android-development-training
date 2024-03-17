@@ -12,6 +12,7 @@ class LoginViewModel(
     val userPrefs: UserPreferenceRepository
 ) : ViewModel() {
 
+
     fun getFakeData() {
         viewModelScope.launch {
             delay(5000)
