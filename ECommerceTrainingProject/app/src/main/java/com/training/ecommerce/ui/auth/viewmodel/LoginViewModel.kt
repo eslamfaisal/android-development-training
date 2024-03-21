@@ -10,12 +10,12 @@ import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.utils.isValidEmail
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -23,7 +23,7 @@ class LoginViewModel(
     private val authRepository: FirebaseAuthRepository,
 ) : ViewModel() {
 
-    val loginState: MutableStateFlow<Resource<String>?> = MutableStateFlow(null)
+    val loginState = MutableSharedFlow<Resource<String>>()
 
     val email = MutableStateFlow("")
     val password = MutableStateFlow("")
@@ -40,19 +40,19 @@ class LoginViewModel(
                 authRepository.loginWithEmailAndPassword(email, password).onEach { resource ->
                     Log.d(TAG, "Emitted resource: $resource")
                     when (resource) {
-                        is Resource.Loading -> loginState.update { Resource.Loading() }
+                        is Resource.Loading -> loginState.emit(Resource.Loading())
                         is Resource.Success -> {
-                            delay(40000)
 //                            userPrefs.saveUserEmail(email)
-                            loginState.update { Resource.Success(resource.data ?: "Empty User Id") }
+                            loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
                         }
 
-                        is Resource.Error -> loginState.value =
+                        is Resource.Error -> loginState.emit(
                             Resource.Error(resource.exception ?: Exception("Unknown error"))
+                        )
                     }
                 }.launchIn(viewModelScope)
             } else {
-                loginState.update { Resource.Error(Exception("Invalid email or password")) }
+                loginState.emit(Resource.Error(Exception("Invalid email or password")))
             }
         }
     }
