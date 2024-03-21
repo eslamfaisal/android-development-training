@@ -68,6 +68,10 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
+
 
     // third party libraries
     implementation("com.github.pwittchen:reactivenetwork-rx2:3.0.8")
@@ -77,22 +81,22 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.hamcrest:hamcrest-all:1.3")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("com.google.truth:truth:1.1.3")
-    testImplementation("org.mockito:mockito-core:5.1.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+    testImplementation("org.mockito:mockito-core:5.11.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("com.google.dagger:hilt-android-testing:2.44.2")
     kaptTest("com.google.dagger:hilt-android-compiler:2.44")
 
     // Instrumented Unit Tests
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("junit:junit:4.13.2")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
     androidTestImplementation("com.google.truth:truth:1.1.3")
     androidTestImplementation("androidx.test.ext:junit-ktx:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("org.mockito:mockito-core:5.1.1")
+    androidTestImplementation("org.mockito:mockito-core:5.11.0")
     androidTestImplementation("org.mockito:mockito-android:5.11.0")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.44.2")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.44")
