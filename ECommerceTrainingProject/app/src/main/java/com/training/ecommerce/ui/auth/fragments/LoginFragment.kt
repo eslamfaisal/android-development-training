@@ -5,18 +5,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.training.ecommerce.data.datasource.datastore.UserPreferencesDataSource
+import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserDataStoreRepositoryImpl
 import com.training.ecommerce.databinding.FragmentLoginBinding
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
+import com.training.ecommerce.ui.common.views.ProgressDialog
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
+
+    private val progressDialog by lazy { ProgressDialog.createProgressDialog(requireActivity()) }
 
     private val loginViewModel: LoginViewModel by viewModels {
         LoginViewModelFactory(
@@ -24,8 +29,7 @@ class LoginFragment : Fragment() {
                 UserPreferencesDataSource(
                     requireActivity()
                 )
-            ),
-            authRepository = FirebaseAuthRepositoryImpl()
+            ), authRepository = FirebaseAuthRepositoryImpl()
         )
     }
 
@@ -51,7 +55,36 @@ class LoginFragment : Fragment() {
 
     private fun initViewModel() {
         lifecycleScope.launch {
+            loginViewModel.loginState.collect { state ->
+                Log.d(TAG, "initViewModel: $state")
+                state?.let { resource ->
+                    when (resource) {
+                        is Resource.Loading -> {
+                            progressDialog.show()
+                        }
 
+                        is Resource.Success -> {
+                            progressDialog.dismiss()
+                            Log.d(TAG, "Resource.Success: ${resource.data}")
+                            Toast.makeText(
+                                requireContext(),
+                                resource.data,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        is Resource.Error -> {
+                            progressDialog.dismiss()
+                            Log.d(TAG, "Resource.Error: ${resource.exception?.message}")
+                            Toast.makeText(
+                                requireContext(),
+                                resource.exception?.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
         }
     }
 
