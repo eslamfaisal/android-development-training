@@ -12,6 +12,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
@@ -23,7 +25,8 @@ class LoginViewModel(
     private val authRepository: FirebaseAuthRepository,
 ) : ViewModel() {
 
-    val loginState = MutableSharedFlow<Resource<String>>()
+    private val _loginState = MutableSharedFlow<Resource<String>>()
+    val loginState: SharedFlow<Resource<String>> = _loginState.asSharedFlow()
 
     val email = MutableStateFlow("")
     val password = MutableStateFlow("")
@@ -40,19 +43,19 @@ class LoginViewModel(
                 authRepository.loginWithEmailAndPassword(email, password).onEach { resource ->
                     Log.d(TAG, "Emitted resource: $resource")
                     when (resource) {
-                        is Resource.Loading -> loginState.emit(Resource.Loading())
+                        is Resource.Loading -> _loginState.emit(Resource.Loading())
                         is Resource.Success -> {
 //                            userPrefs.saveUserEmail(email)
-                            loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
+                            _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
                         }
 
-                        is Resource.Error -> loginState.emit(
+                        is Resource.Error -> _loginState.emit(
                             Resource.Error(resource.exception ?: Exception("Unknown error"))
                         )
                     }
                 }.launchIn(viewModelScope)
             } else {
-                loginState.emit(Resource.Error(Exception("Invalid email or password")))
+                _loginState.emit(Resource.Error(Exception("Invalid email or password")))
             }
         }
     }

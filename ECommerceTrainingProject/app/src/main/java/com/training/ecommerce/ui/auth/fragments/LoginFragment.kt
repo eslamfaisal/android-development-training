@@ -6,27 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.training.ecommerce.R
 import com.training.ecommerce.data.datasource.datastore.UserPreferencesDataSource
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserDataStoreRepositoryImpl
 import com.training.ecommerce.databinding.FragmentLoginBinding
-import com.training.ecommerce.ui.auth.viewmodel.AuthViewModel
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
 import com.training.ecommerce.ui.common.views.ProgressDialog
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
-
-    val authViewModel: AuthViewModel by activityViewModels()
 
     private val progressDialog by lazy { ProgressDialog.createProgressDialog(requireActivity()) }
 
@@ -74,8 +67,9 @@ class LoginFragment : Fragment() {
 
                         is Resource.Success -> {
                             progressDialog.dismiss()
-                            authViewModel.useId.value = resource.data ?: ""
-                            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+                            Toast.makeText(
+                                requireContext(), "Login successfully", Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         is Resource.Error -> {
