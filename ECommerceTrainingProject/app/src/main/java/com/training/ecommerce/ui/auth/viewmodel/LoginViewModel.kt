@@ -1,6 +1,5 @@
 package com.training.ecommerce.ui.auth.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -8,7 +7,6 @@ import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepository
 import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.utils.isValidEmail
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,28 +33,22 @@ class LoginViewModel(
         email.isValidEmail() && password.length >= 6
     }
 
-    fun login() {
-        viewModelScope.launch {
-            val email = email.value
-            val password = password.value
-            if (isLoginIsValid.first()) {
-                authRepository.loginWithEmailAndPassword(email, password).onEach { resource ->
-                    Log.d(TAG, "Emitted resource: $resource")
-                    when (resource) {
-                        is Resource.Loading -> _loginState.emit(Resource.Loading())
-                        is Resource.Success -> {
+    fun login() = viewModelScope.launch {
+        val email = email.value
+        val password = password.value
+        if (isLoginIsValid.first()) {
+            authRepository.loginWithEmailAndPassword(email, password).onEach { resource ->
+                when (resource) {
+                    is Resource.Success -> {
 //                            userPrefs.saveUserEmail(email)
-                            _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
-                        }
-
-                        is Resource.Error -> _loginState.emit(
-                            Resource.Error(resource.exception ?: Exception("Unknown error"))
-                        )
+                        _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
                     }
-                }.launchIn(viewModelScope)
-            } else {
-                _loginState.emit(Resource.Error(Exception("Invalid email or password")))
-            }
+
+                    else -> _loginState.emit(resource)
+                }
+            }.launchIn(viewModelScope)
+        } else {
+            _loginState.emit(Resource.Error(Exception("Invalid email or password")))
         }
     }
 
