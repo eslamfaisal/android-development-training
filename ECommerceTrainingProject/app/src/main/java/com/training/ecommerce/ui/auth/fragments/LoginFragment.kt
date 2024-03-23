@@ -84,9 +84,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.loginBtn.setOnClickListener {
-            loginViewModel.login()
-        }
+
     }
 
     override fun onDestroyView() {

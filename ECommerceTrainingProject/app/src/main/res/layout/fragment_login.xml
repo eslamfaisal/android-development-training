@@ -68,6 +68,7 @@
                 android:id="@+id/login_btn"
                 style="@style/PrimaryButtonStyle"
                 android:layout_marginTop="16dp"
+                android:onClickListener="@{() -> viewmodel.login()}"
                 android:text="@string/sign_in" />
 
             <RelativeLayout
