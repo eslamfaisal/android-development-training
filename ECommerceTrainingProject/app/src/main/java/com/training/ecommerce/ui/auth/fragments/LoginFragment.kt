@@ -57,28 +57,26 @@ class LoginFragment : Fragment() {
 
     private fun initViewModel() {
         lifecycleScope.launch {
-            loginViewModel.loginState.collect { state ->
-                Log.d(TAG, "initViewModel: $state")
-                state.let { resource ->
-                    when (resource) {
-                        is Resource.Loading -> {
-                            progressDialog.show()
-                        }
+            loginViewModel.loginState.collect { resource ->
+                Log.d(TAG, "initViewModel: $resource")
+                when (resource) {
+                    is Resource.Loading -> {
+                        progressDialog.show()
+                    }
 
-                        is Resource.Success -> {
-                            progressDialog.dismiss()
-                            Toast.makeText(
-                                requireContext(), "Login successfully", Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    is Resource.Success -> {
+                        progressDialog.dismiss()
+                        Toast.makeText(
+                            requireContext(), "Login successfully", Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
-                        is Resource.Error -> {
-                            progressDialog.dismiss()
-                            Log.d(TAG, "Resource.Error: ${resource.exception?.message}")
-                            Toast.makeText(
-                                requireContext(), resource.exception?.message, Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    is Resource.Error -> {
+                        progressDialog.dismiss()
+                        Log.d(TAG, "Resource.Error: ${resource.exception?.message}")
+                        Toast.makeText(
+                            requireContext(), resource.exception?.message, Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

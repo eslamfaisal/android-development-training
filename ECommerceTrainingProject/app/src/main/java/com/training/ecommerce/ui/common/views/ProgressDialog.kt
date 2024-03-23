@@ -16,7 +16,7 @@ class ProgressDialog {
                 LayoutInflater.from(context).inflate(R.layout.progress_dialog_layout, null)
             dialog.setContentView(inflate)
             dialog.setCancelable(false)
-            dialog.window!!.setBackgroundDrawable(
+            dialog.window?.setBackgroundDrawable(
                 ColorDrawable(Color.TRANSPARENT)
             )
             return dialog
