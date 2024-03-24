@@ -40,7 +40,7 @@ class LoginViewModel(
             authRepository.loginWithEmailAndPassword(email, password).onEach { resource ->
                 when (resource) {
                     is Resource.Success -> {
-//                            userPrefs.saveUserEmail(email)
+                        //TODO get user details from the user id
                         _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
                     }
 
@@ -50,6 +50,19 @@ class LoginViewModel(
         } else {
             _loginState.emit(Resource.Error(Exception("Invalid email or password")))
         }
+    }
+
+    fun loginWithGoogle(idToken: String) = viewModelScope.launch {
+        authRepository.loginWithGoogle(idToken).onEach { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    //TODO get user details from the user id
+                    _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
+                }
+
+                else -> _loginState.emit(resource)
+            }
+        }.launchIn(viewModelScope)
     }
 
     companion object {
