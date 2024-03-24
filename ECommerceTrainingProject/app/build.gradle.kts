@@ -27,6 +27,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
+        forEach {
+            it.buildConfigField(
+                "String", "clientServerId", "\"449149627104-bf8isg90ol8j2acv6cvl5q15uo2kehmf.apps.googleusercontent.com\""
+            )
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
