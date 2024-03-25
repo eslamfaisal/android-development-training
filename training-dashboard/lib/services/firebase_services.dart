@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:training_questions_form/models/resources.dart';
 import 'package:training_questions_form/models/status.dart';
+import 'package:training_questions_form/screens/sessions/model/session_model.dart';
+import 'package:training_questions_form/utils/common_functions.dart';
 
 class FirebaseServices {
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -50,4 +52,54 @@ class FirebaseServices {
       return Resource(Status.ERROR, errorMessage: e.toString());
     }
   }
+  
+  Future<Resource<List<SessionModel>>> getSessions()async{
+    try{
+      final result = await  _getTrainingDocument().collection('sessions').orderBy('created_at').get();
+      final sessions = result.docs.map((e) => SessionModel.fromJson(e.data())).toList();
+      return Resource(Status.SUCCESS, data: sessions);
+    }catch(e){
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<bool>> addSession(
+      {required String sessionName, required String reference})async{
+    try{
+      final id = _getTrainingDocument().collection('sessions').doc().id;
+      await _getTrainingDocument().collection('sessions').doc(id).set(
+        SessionModel(name: sessionName,reference: reference,id: id,createdAt:getCurrentDateTimeInUtc()).toJson()
+      );
+      return Resource(Status.SUCCESS, data: true);
+    }catch(e){
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+
+  Future<Resource<bool>> deleteSession(String sessionId)async{
+    try{
+      await _getTrainingDocument().collection('sessions').doc(sessionId).delete();
+      return Resource(Status.SUCCESS, data: true);
+    }catch(e){
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+  Future<Resource<bool>> updateSession(SessionModel session)async{
+    try{
+      await _getTrainingDocument().collection('sessions').doc(session.id).update(
+        session.toJson()
+      );
+      return Resource(Status.SUCCESS, data: true);
+    }catch(e){
+      return Resource(Status.ERROR, errorMessage: e.toString());
+    }
+  }
+
+
+  DocumentReference<Map<String, dynamic>> _getTrainingDocument(){
+    return db.collection('trainingQuestionsFormApp').doc("trainingQuestionsForm");
+  }
+
 }
