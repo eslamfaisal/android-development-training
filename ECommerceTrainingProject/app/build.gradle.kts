@@ -4,6 +4,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("kotlin-kapt")
+    id("com.google.protobuf") version "0.9.4" apply true
 }
 
 android {
@@ -29,7 +30,9 @@ android {
         }
         forEach {
             it.buildConfigField(
-                "String", "clientServerId", "\"449149627104-bf8isg90ol8j2acv6cvl5q15uo2kehmf.apps.googleusercontent.com\""
+                "String",
+                "clientServerId",
+                "\"449149627104-bf8isg90ol8j2acv6cvl5q15uo2kehmf.apps.googleusercontent.com\""
             )
         }
     }
@@ -68,7 +71,8 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.activity:activity-ktx:1.8.2")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-    
+    implementation("com.google.protobuf:protobuf-kotlin-lite:4.26.0")
+
     // firebase dependencies
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
     implementation("com.google.firebase:firebase-analytics")
@@ -107,4 +111,23 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.44")
     debugImplementation("androidx.fragment:fragment-testing:1.6.2")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
+}
+
+// Setup protobuf configuration, generating lite Java and Kotlin classes
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:4.26.0"
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                register("java") {
+                    option("lite")
+                }
+                register("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

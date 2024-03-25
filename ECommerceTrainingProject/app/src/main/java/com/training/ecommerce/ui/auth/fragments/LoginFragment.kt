@@ -1,6 +1,7 @@
 package com.training.ecommerce.ui.auth.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.Task
 import com.training.ecommerce.BuildConfig
 import com.training.ecommerce.R
 import com.training.ecommerce.data.datasource.datastore.UserPreferencesDataSource
+import com.training.ecommerce.data.datasource.datastore.userDetailsPreferencesDataStore
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserDataStoreRepositoryImpl
