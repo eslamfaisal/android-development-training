@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepository
-import com.training.ecommerce.data.repository.user.UserPreferenceRepository
+import com.training.ecommerce.data.repository.common.AppPreferenceRepository
 import com.training.ecommerce.utils.isValidEmail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val userPrefs: UserPreferenceRepository,
+    private val userPrefs: AppPreferenceRepository,
     private val authRepository: FirebaseAuthRepository,
 ) : ViewModel() {
 
@@ -72,7 +72,7 @@ class LoginViewModel(
 
 // create viewmodel factory class
 class LoginViewModelFactory(
-    private val userPrefs: UserPreferenceRepository,
+    private val userPrefs: AppPreferenceRepository,
     private val authRepository: FirebaseAuthRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

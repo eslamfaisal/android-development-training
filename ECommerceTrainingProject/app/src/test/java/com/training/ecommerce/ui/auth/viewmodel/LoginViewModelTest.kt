@@ -3,7 +3,7 @@ package com.training.ecommerce.ui.auth.viewmodel
 
 import com.google.common.truth.Truth.assertThat
 import com.training.ecommerce.MainDispatcherRule
-import com.training.ecommerce.data.repository.user.UserDataStoreRepositoryFakeImpl
+import com.training.ecommerce.data.repository.user.AppDataStoreRepositoryFakeImpl
 import com.training.ecommerce.ui.common.viewmodel.UserViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -22,7 +22,7 @@ class UserViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val userPreferencesRepository = UserDataStoreRepositoryFakeImpl()
+    private val userPreferencesRepository = AppDataStoreRepositoryFakeImpl()
 
     private lateinit var userViewModel: UserViewModel
 

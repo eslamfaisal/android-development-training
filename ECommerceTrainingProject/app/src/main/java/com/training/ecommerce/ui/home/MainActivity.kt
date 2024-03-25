@@ -14,21 +14,19 @@ import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.training.ecommerce.R
-import com.training.ecommerce.data.datasource.datastore.UserPreferencesDataSource
-import com.training.ecommerce.data.repository.user.UserDataStoreRepositoryImpl
+import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
+import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
 import com.training.ecommerce.ui.auth.AuthActivity
 import com.training.ecommerce.ui.common.viewmodel.UserViewModel
 import com.training.ecommerce.ui.common.viewmodel.UserViewModelFactory
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
     private val userViewModel: UserViewModel by viewModels {
-        UserViewModelFactory(UserDataStoreRepositoryImpl(UserPreferencesDataSource(this)))
+        UserViewModelFactory(AppDataStoreRepositoryImpl(AppPreferencesDataSource(this)))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
