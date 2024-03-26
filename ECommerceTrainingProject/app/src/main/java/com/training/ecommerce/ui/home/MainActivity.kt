@@ -1,16 +1,13 @@
 package com.training.ecommerce.ui.home
 
-import android.animation.ObjectAnimator
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.training.ecommerce.R
@@ -47,9 +44,13 @@ class MainActivity : AppCompatActivity() {
     private fun initViewModel() {
         userViewModel.listenToUserDetails()
         lifecycleScope.launch {
-            userViewModel.userPrefDetails.collect {
+            val userDetails = runBlocking { userViewModel.getUserPrefsDetails().first() }
+            Log.d(TAG, "initViewModel: user details ${userDetails.email}")
+
+            userViewModel.userPrefsState.collect {
                 Log.d(TAG, "initViewModel: user details updated ${it?.email}")
             }
+
         }
     }
 
