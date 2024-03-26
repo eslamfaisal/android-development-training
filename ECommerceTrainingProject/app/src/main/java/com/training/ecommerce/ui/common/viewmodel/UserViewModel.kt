@@ -33,7 +33,7 @@ class UserViewModel(
 
     // load user data in state flow inside view model  scope
     val userPrefsState = userPreferencesRepository.getUserDetails()
-        .stateIn(viewModelScope, started = SharingStarted.WhileSubscribed(), initialValue = null)
+        .stateIn(viewModelScope, started = SharingStarted.Eagerly, initialValue = null)
 
     init {
         listenToUserDetails()
@@ -47,25 +47,23 @@ class UserViewModel(
     private fun listenToUserDetails() = viewModelScope.launch {
         val userId = userPreferencesRepository.getUserId().first()
         if (userId.isEmpty()) return@launch
-        userFirestoreRepository.getUserDetails(userId)
-            .catch { e ->
+        userFirestoreRepository.getUserDetails(userId).catch { e ->
                 Log.e(TAG, "listenToUserDetails: ${e.message}", e)
-            }
-            .collectLatest { resource ->
-            Log.d(TAG, "listenToUserDetails: ${resource.data}")
-            when (resource) {
-                is Resource.Success -> {
+            }.collectLatest { resource ->
+                Log.d(TAG, "listenToUserDetails: ${resource.data}")
+                when (resource) {
+                    is Resource.Success -> {
 
-                    resource.data?.let {
-                        userPreferencesRepository.updateUserDetails(it.toUserDetailsPreferences())
+                        resource.data?.let {
+                            userPreferencesRepository.updateUserDetails(it.toUserDetailsPreferences())
+                        }
+                    }
+
+                    else -> {
+                        // Do nothing
                     }
                 }
-
-                else -> {
-                    // Do nothing
-                }
             }
-        }
     }
 
     suspend fun isUserLoggedIn() = appPreferencesRepository.isLoggedIn()
