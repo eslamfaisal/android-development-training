@@ -40,6 +40,17 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.textView).setOnClickListener {
             logOut()
         }
+
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        userViewModel.listenToUserDetails()
+        lifecycleScope.launch {
+            userViewModel.userPrefDetails.collect {
+                Log.d(TAG, "initViewModel: user details updated ${it?.email}")
+            }
+        }
     }
 
     private fun logOut() {

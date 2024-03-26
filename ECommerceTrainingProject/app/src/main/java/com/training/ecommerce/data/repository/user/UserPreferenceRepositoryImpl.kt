@@ -4,9 +4,10 @@ import android.content.Context
 import com.training.ecommerce.data.datasource.datastore.userDetailsDataStore
 import com.training.ecommerce.data.models.user.UserDetailsPreferences
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class UserPreferenceRepositoryImpl(private val context: Context) : UserPreferenceRepository {
-    override suspend fun getUserDetails(): Flow<UserDetailsPreferences> {
+    override fun getUserDetails(): Flow<UserDetailsPreferences> {
         return context.userDetailsDataStore.data
     }
 
@@ -14,6 +15,10 @@ class UserPreferenceRepositoryImpl(private val context: Context) : UserPreferenc
         context.userDetailsDataStore.updateData { preferences ->
             preferences.toBuilder().setId(userId).build()
         }
+    }
+
+    override fun getUSerId(): Flow<String> {
+        return context.userDetailsDataStore.data.map { it.id }
     }
 
     override suspend fun clearUserPreferences() {

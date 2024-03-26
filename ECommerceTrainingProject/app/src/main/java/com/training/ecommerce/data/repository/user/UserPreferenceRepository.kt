@@ -4,8 +4,9 @@ import com.training.ecommerce.data.models.user.UserDetailsPreferences
 import kotlinx.coroutines.flow.Flow
 
 interface UserPreferenceRepository {
-    suspend fun getUserDetails(): Flow<UserDetailsPreferences>
+    fun getUserDetails(): Flow<UserDetailsPreferences>
     suspend fun updateUserId(userId: String)
+    fun getUSerId(): Flow<String>
     suspend fun clearUserPreferences()
     suspend fun updateUserDetails(userDetailsPreferences: UserDetailsPreferences)
 }

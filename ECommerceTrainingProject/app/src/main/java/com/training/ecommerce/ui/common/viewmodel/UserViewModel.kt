@@ -8,13 +8,17 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.models.user.UserDetailsPreferences
+import com.training.ecommerce.data.models.user.toUserDetailsPreferences
 import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
 import com.training.ecommerce.data.repository.common.AppPreferenceRepository
 import com.training.ecommerce.data.repository.user.UserFirestoreRepository
 import com.training.ecommerce.data.repository.user.UserFirestoreRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class UserViewModel(
@@ -23,21 +27,19 @@ class UserViewModel(
     private val userFirestoreRepository: UserFirestoreRepository
 ) : ViewModel() {
 
-    init {
-        listenToUserDetails()
-    }
+    val userPrefDetails = userPreferencesRepository.getUserDetails()
+//        .onStart { emit(UserDetailsPreferences.newBuilder().build()) }
+        .stateIn(viewModelScope, started = SharingStarted.Eagerly, initialValue = null)
 
-    private fun listenToUserDetails() = viewModelScope.launch {
+    fun listenToUserDetails() = viewModelScope.launch {
         userFirestoreRepository.getUserDetails(
             userPreferencesRepository.getUserDetails().first().id
         ).collect { resource ->
             when (resource) {
                 is Resource.Success -> {
+
                     resource.data?.let {
-                        UserDetailsPreferences.newBuilder().setId(it.id).setEmail(it.email).build()
-                            .let { userDetails ->
-                                userPreferencesRepository.updateUserDetails(userDetails)
-                            }
+                        userPreferencesRepository.updateUserDetails(it.toUserDetailsPreferences())
                     }
                 }
 
@@ -52,6 +54,10 @@ class UserViewModel(
     suspend fun logOut() = viewModelScope.launch {
         userPreferencesRepository.clearUserPreferences()
         appPreferencesRepository.saveLoginState(false)
+    }
+
+    companion object {
+        private const val TAG = "UserViewModel"
     }
 }
 

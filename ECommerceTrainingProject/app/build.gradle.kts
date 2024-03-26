@@ -4,7 +4,9 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("com.google.protobuf") version "0.9.4" apply true
+
 }
 
 android {
