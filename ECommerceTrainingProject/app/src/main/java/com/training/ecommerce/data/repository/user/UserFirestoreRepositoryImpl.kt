@@ -18,10 +18,7 @@ class UserFirestoreRepositoryImpl(
             val documentPath = "users/$userId"
             val document = firestore.document(documentPath)
             val listener = document.addSnapshotListener { value, error ->
-                Log.d("addSnapshotListener", "Erro ")
                 if (error != null) {
-
-                    trySend(Resource.Error(Exception(error.message)))
                     close(error)
                     return@addSnapshotListener
                 }
@@ -30,7 +27,6 @@ class UserFirestoreRepositoryImpl(
                 }
             }
             awaitClose {
-                Log.d("UserFirestoreRepositoryImpl", "Closing listener")
                 listener.remove()
             }
         }

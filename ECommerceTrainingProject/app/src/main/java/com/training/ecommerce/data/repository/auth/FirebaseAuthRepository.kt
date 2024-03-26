@@ -12,4 +12,5 @@ interface FirebaseAuthRepository {
         idToken: String
     ): Flow<Resource<String>>
 
+    fun logout()
 }

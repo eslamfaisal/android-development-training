@@ -9,6 +9,8 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.models.user.toUserDetailsPreferences
+import com.training.ecommerce.data.repository.auth.FirebaseAuthRepository
+import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
 import com.training.ecommerce.data.repository.common.AppPreferenceRepository
 import com.training.ecommerce.data.repository.user.UserFirestoreRepository
@@ -16,15 +18,17 @@ import com.training.ecommerce.data.repository.user.UserFirestoreRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class UserViewModel(
     private val appPreferencesRepository: AppPreferenceRepository,
     private val userPreferencesRepository: UserPreferenceRepository,
-    private val userFirestoreRepository: UserFirestoreRepository
+    private val userFirestoreRepository: UserFirestoreRepository,
+    private val firebaseAuthRepository: FirebaseAuthRepository
 ) : ViewModel() {
 
     // load user data in state flow inside view model  scope
@@ -43,10 +47,15 @@ class UserViewModel(
     private fun listenToUserDetails() = viewModelScope.launch {
         val userId = userPreferencesRepository.getUserId().first()
         if (userId.isEmpty()) return@launch
-        userFirestoreRepository.getUserDetails(userId).onEach { resource ->
+        userFirestoreRepository.getUserDetails(userId)
+            .catch { e ->
+                Log.e(TAG, "listenToUserDetails: ${e.message}", e)
+            }
+            .collectLatest { resource ->
+            Log.d(TAG, "listenToUserDetails: ${resource.data}")
             when (resource) {
                 is Resource.Success -> {
-                    Log.d(TAG, "listenToUserDetails: ${resource.data}")
+
                     resource.data?.let {
                         userPreferencesRepository.updateUserDetails(it.toUserDetailsPreferences())
                     }
@@ -56,13 +65,12 @@ class UserViewModel(
                     // Do nothing
                 }
             }
-        }.stateIn(
-            viewModelScope, SharingStarted.Eagerly, initialValue = Resource.Loading()
-        )
+        }
     }
 
     suspend fun isUserLoggedIn() = appPreferencesRepository.isLoggedIn()
     suspend fun logOut() = viewModelScope.launch {
+        firebaseAuthRepository.logout()
         userPreferencesRepository.clearUserPreferences()
         appPreferencesRepository.saveLoginState(false)
     }
@@ -84,11 +92,15 @@ class UserViewModelFactory(
         AppDataStoreRepositoryImpl(AppPreferencesDataSource(context))
     private val userPreferencesRepository = UserPreferenceRepositoryImpl(context)
     private val userFirestoreRepository = UserFirestoreRepositoryImpl()
+    private val firebaseAuthRepository = FirebaseAuthRepositoryImpl()
 
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
         if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST") return UserViewModel(
-                appPreferencesRepository, userPreferencesRepository, userFirestoreRepository
+                appPreferencesRepository,
+                userPreferencesRepository,
+                userFirestoreRepository,
+                firebaseAuthRepository
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
