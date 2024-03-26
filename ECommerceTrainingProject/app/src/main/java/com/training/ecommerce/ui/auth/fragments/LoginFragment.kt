@@ -18,11 +18,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.training.ecommerce.BuildConfig
 import com.training.ecommerce.R
-import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.training.ecommerce.data.models.Resource
-import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
-import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
-import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
 import com.training.ecommerce.databinding.FragmentLoginBinding
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
@@ -38,15 +34,7 @@ class LoginFragment : Fragment() {
     private val progressDialog by lazy { ProgressDialog.createProgressDialog(requireActivity()) }
 
     private val loginViewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(
-            appPreferenceRepository = AppDataStoreRepositoryImpl(
-                AppPreferencesDataSource(
-                    requireActivity()
-                )
-            ), userPreferenceRepository = UserPreferenceRepositoryImpl(
-                requireActivity()
-            ), authRepository = FirebaseAuthRepositoryImpl()
-        )
+        LoginViewModelFactory(contextValue = requireContext())
     }
 
     private var _binding: FragmentLoginBinding? = null
