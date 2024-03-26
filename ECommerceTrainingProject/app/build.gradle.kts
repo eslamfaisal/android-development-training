@@ -107,4 +107,7 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.44")
     debugImplementation("androidx.fragment:fragment-testing:1.6.2")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
+
+    // facebook login
+    implementation("com.facebook.android:facebook-android-sdk:latest.release")
 }

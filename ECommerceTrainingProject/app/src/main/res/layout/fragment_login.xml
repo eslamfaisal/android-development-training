@@ -102,11 +102,11 @@
                 android:text="@string/google_signin_btn_msg" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/facebook_signin_btn"
+                android:id="@+id/facebook_login_btn"
                 style="@style/SocialButtonStyle"
                 android:layout_marginTop="8dp"
                 android:drawableStart="@drawable/ic_facebook"
-                android:text="@string/google_signin_btn_msg" />
+                android:text="@string/facebook_login_btn" />
 
             <TextView
                 style="@style/MediumPrimaryTextViewStyle"

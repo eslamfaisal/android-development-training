@@ -52,6 +52,19 @@ class LoginViewModel(
         }
     }
 
+    fun handleFacebookAccessToken(token: String) = viewModelScope.launch {
+        authRepository.loginWithFacebook(token).onEach { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    //TODO get user details from the user id
+                    _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
+                }
+
+                else -> _loginState.emit(resource)
+            }
+        }.launchIn(viewModelScope)
+    }
+
     fun loginWithGoogle(idToken: String) = viewModelScope.launch {
         authRepository.loginWithGoogle(idToken).onEach { resource ->
             when (resource) {

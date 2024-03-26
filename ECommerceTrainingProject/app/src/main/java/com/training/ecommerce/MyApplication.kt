@@ -3,6 +3,8 @@ package com.training.ecommerce
 import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.schedulers.Schedulers
@@ -14,7 +16,8 @@ class MyApplication : Application() {
         super.onCreate()
         // Initialize Firebase
         listenToNetworkConnectivity()
-
+        FacebookSdk.sdkInitialize(this)
+        AppEventsLogger.activateApp(this)
     }
 
     @SuppressLint("CheckResult")

@@ -1,14 +1,24 @@
 package com.training.ecommerce.ui.auth.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -34,6 +44,8 @@ class LoginFragment : Fragment() {
 
     private val progressDialog by lazy { ProgressDialog.createProgressDialog(requireActivity()) }
 
+    private lateinit var callbackManager: CallbackManager
+
     private val loginViewModel: LoginViewModel by viewModels {
         LoginViewModelFactory(
             userPrefs = UserDataStoreRepositoryImpl(
@@ -57,13 +69,18 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initListeners()
         initViewModel()
+        initFacebook()
     }
-
     private fun initViewModel() {
         lifecycleScope.launch {
             loginViewModel.loginState.collect { resource ->
@@ -94,6 +111,52 @@ class LoginFragment : Fragment() {
         binding.googleSigninBtn.setOnClickListener {
             loginWithGoogleRequest()
         }
+        binding.facebookLoginBtn.setOnClickListener {
+            loginWithFacebookRequest()
+        }
+    }
+
+    private fun initFacebook() {
+        callbackManager = CallbackManager.Factory.create()
+        val accessToken = AccessToken.getCurrentAccessToken()
+        if (accessToken != null && !accessToken.isExpired) {
+            Toast.makeText(
+                requireContext(),
+                "Token:Go to Home screen successfully",
+                Toast.LENGTH_SHORT
+            ).show()
+            // go to some screen to just test it is successful
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        } else {
+            LoginManager.getInstance().registerCallback(callbackManager,
+                object : FacebookCallback<LoginResult> {
+                    override fun onCancel() {
+                        Log.d(TAG, "onCancel")
+                    }
+
+                    override fun onError(error: FacebookException) {
+                        Log.d(TAG, "onError: ${error.message}")
+                    }
+
+                    override fun onSuccess(result: LoginResult) {
+                        // go to some screen to just test it is successful
+                        findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+                        firebaseAuthWithFacebook(result.accessToken.token)
+                        Log.d(TAG, "onSuccess: ${result.accessToken.token}")
+                    }
+                })
+        }
+    }
+
+    private fun loginWithFacebookRequest() {
+        binding.facebookLoginBtn.setOnClickListener {
+            LoginManager.getInstance()
+                .logInWithReadPermissions(this, listOf("public_profile", "email"))
+        }
+    }
+
+    private fun firebaseAuthWithFacebook(token: String) {
+        loginViewModel.handleFacebookAccessToken(token)
     }
 
     // ActivityResultLauncher for the sign-in intent
