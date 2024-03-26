@@ -17,6 +17,9 @@ import com.training.ecommerce.data.repository.user.UserFirestoreRepository
 import com.training.ecommerce.data.repository.user.UserFirestoreRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
+import com.training.ecommerce.utils.CrashlyticsUtils
+import com.training.ecommerce.utils.CrashlyticsUtils.LISTEN_TO_USER_DETAILS
+import com.training.ecommerce.utils.UserDetailsException
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
@@ -48,22 +51,26 @@ class UserViewModel(
         val userId = userPreferencesRepository.getUserId().first()
         if (userId.isEmpty()) return@launch
         userFirestoreRepository.getUserDetails(userId).catch { e ->
-                Log.e(TAG, "listenToUserDetails: ${e.message}", e)
-            }.collectLatest { resource ->
-                Log.d(TAG, "listenToUserDetails: ${resource.data}")
-                when (resource) {
-                    is Resource.Success -> {
+            val msg = e.message ?: "Error listening to user details"
+            CrashlyticsUtils.sendCustomLogToCrashlytics<UserDetailsException>(
+                msg, LISTEN_TO_USER_DETAILS to msg
+            )
+        }.collectLatest { resource ->
+            Log.d(TAG, "listenToUserDetails: ${resource.data}")
+            when (resource) {
+                is Resource.Success -> {
 
-                        resource.data?.let {
-                            userPreferencesRepository.updateUserDetails(it.toUserDetailsPreferences())
-                        }
-                    }
-
-                    else -> {
-                        // Do nothing
+                    resource.data?.let {
+                        userPreferencesRepository.updateUserDetails(it.toUserDetailsPreferences())
                     }
                 }
+
+                else -> {
+                    // Do nothing
+                    Log.d(TAG, "Error listen to user details: ${resource.exception?.message}")
+                }
             }
+        }
     }
 
     suspend fun isUserLoggedIn() = appPreferencesRepository.isLoggedIn()

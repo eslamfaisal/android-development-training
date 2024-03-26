@@ -16,6 +16,7 @@ object CrashlyticsUtils {
     const val ADD_TOCART_KEY = "ADD_TOCART_KEY"
     const val LOGIN_KEY = "LOGIN_KEY"
     const val LOGIN_PROVIDER = "LOGIN_PROVIDER"
+    const val LISTEN_TO_USER_DETAILS = "LISTEN_TO_USER_DETAILS"
 
 
     fun sendLogToCrashlytics(msg: String, vararg keys: String) {
@@ -49,3 +50,4 @@ object CrashlyticsUtils {
 class CustomCrashlyticsLogException(message: String) : Exception(message)
 class AddToCartException(message: String) : Exception(message)
 class LoginException(message: String) : Exception(message)
+class UserDetailsException(message: String) : Exception(message)
