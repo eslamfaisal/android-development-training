@@ -21,4 +21,8 @@ class UserPreferenceRepositoryImpl(private val context: Context) : UserPreferenc
             preferences.toBuilder().clear().build()
         }
     }
+
+    override suspend fun updateUserDetails(userDetailsPreferences: UserDetailsPreferences) {
+        context.userDetailsDataStore.updateData { userDetailsPreferences }
+    }
 }
