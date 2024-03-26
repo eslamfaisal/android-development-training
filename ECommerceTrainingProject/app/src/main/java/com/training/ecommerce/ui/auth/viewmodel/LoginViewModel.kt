@@ -91,12 +91,11 @@ class LoginViewModelFactory(
     private val contextValue: Context
 ) : ViewModelProvider.Factory {
 
-    private val appPreferenceRepository: AppPreferenceRepository =
+    private val appPreferenceRepository =
         AppDataStoreRepositoryImpl(AppPreferencesDataSource(contextValue))
-    private val userPreferenceRepository: UserPreferenceRepository =
-        UserPreferenceRepositoryImpl(contextValue)
-    private val authRepository: FirebaseAuthRepository = FirebaseAuthRepositoryImpl()
-    private val userFirestoreRepository: UserFirestoreRepository = UserFirestoreRepositoryImpl()
+    private val userPreferenceRepository = UserPreferenceRepositoryImpl(contextValue)
+    private val authRepository = FirebaseAuthRepositoryImpl()
+    private val userFirestoreRepository = UserFirestoreRepositoryImpl()
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {

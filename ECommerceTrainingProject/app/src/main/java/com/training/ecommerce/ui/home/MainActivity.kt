@@ -28,13 +28,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private val userViewModel: UserViewModel by viewModels {
-        UserViewModelFactory(
-            AppDataStoreRepositoryImpl(
-                AppPreferencesDataSource(this)
-            ),
-            UserPreferenceRepositoryImpl(this),
-            UserFirestoreRepositoryImpl()
-        )
+        UserViewModelFactory(context = this,)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
