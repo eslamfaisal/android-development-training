@@ -17,7 +17,7 @@ class UserPreferenceRepositoryImpl(private val context: Context) : UserPreferenc
         }
     }
 
-    override fun getUserId(): Flow<String> {
+    override suspend fun getUserId(): Flow<String> {
         return context.userDetailsDataStore.data.map { it.id }
     }
 

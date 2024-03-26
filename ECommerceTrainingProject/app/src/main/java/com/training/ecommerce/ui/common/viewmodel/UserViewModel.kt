@@ -36,7 +36,7 @@ class UserViewModel(
 
     fun listenToUserDetails() = viewModelScope.launch {
         userFirestoreRepository.getUserDetails(
-            userPreferencesRepository.getUserDetails().first().id
+            userPreferencesRepository.getUserId().first()
         ).collect { resource ->
             when (resource) {
                 is Resource.Success -> {
