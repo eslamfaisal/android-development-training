@@ -1,6 +1,7 @@
 package com.training.ecommerce.ui.common.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -16,6 +17,7 @@ import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -27,8 +29,7 @@ class UserViewModel(
 
     // load user data in state flow inside view model  scope
     val userPrefsState = userPreferencesRepository.getUserDetails()
-        .stateIn(viewModelScope, started = SharingStarted.Eagerly, initialValue = null)
-
+        .stateIn(viewModelScope, started = SharingStarted.WhileSubscribed(), initialValue = null)
 
     init {
         listenToUserDetails()
@@ -39,13 +40,13 @@ class UserViewModel(
     // note that this flow block the main thread while you get the data every time you call it
     fun getUserPrefsDetails() = userPreferencesRepository.getUserDetails()
 
-    fun listenToUserDetails() = viewModelScope.launch {
+    private fun listenToUserDetails() = viewModelScope.launch {
         val userId = userPreferencesRepository.getUserId().first()
         if (userId.isEmpty()) return@launch
-        userFirestoreRepository.getUserDetails(userId).collect { resource ->
+        userFirestoreRepository.getUserDetails(userId).onEach { resource ->
             when (resource) {
                 is Resource.Success -> {
-
+                    Log.d(TAG, "listenToUserDetails: ${resource.data}")
                     resource.data?.let {
                         userPreferencesRepository.updateUserDetails(it.toUserDetailsPreferences())
                     }
@@ -55,7 +56,9 @@ class UserViewModel(
                     // Do nothing
                 }
             }
-        }
+        }.stateIn(
+            viewModelScope, SharingStarted.Eagerly, initialValue = Resource.Loading()
+        )
     }
 
     suspend fun isUserLoggedIn() = appPreferencesRepository.isLoggedIn()
@@ -66,6 +69,11 @@ class UserViewModel(
 
     companion object {
         private const val TAG = "UserViewModel"
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d(TAG, "onCleared: UserViewModel cleared")
     }
 }
 

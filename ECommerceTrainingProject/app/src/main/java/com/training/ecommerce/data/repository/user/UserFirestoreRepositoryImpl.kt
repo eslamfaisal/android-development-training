@@ -1,5 +1,6 @@
 package com.training.ecommerce.data.repository.user
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.models.user.UserDetailsModel
@@ -17,7 +18,9 @@ class UserFirestoreRepositoryImpl(
             val documentPath = "users/$userId"
             val document = firestore.document(documentPath)
             val listener = document.addSnapshotListener { value, error ->
+                Log.d("addSnapshotListener", "Erro ")
                 if (error != null) {
+
                     trySend(Resource.Error(Exception(error.message)))
                     close(error)
                     return@addSnapshotListener
@@ -26,7 +29,9 @@ class UserFirestoreRepositoryImpl(
                     trySend(Resource.Success(it))
                 }
             }
-            awaitClose { listener.remove() }
+            awaitClose {
+                Log.d("UserFirestoreRepositoryImpl", "Closing listener")
+                listener.remove()
+            }
         }
-
 }
