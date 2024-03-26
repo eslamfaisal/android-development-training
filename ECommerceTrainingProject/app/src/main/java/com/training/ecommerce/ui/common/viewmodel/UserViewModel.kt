@@ -12,7 +12,6 @@ import com.training.ecommerce.data.repository.user.UserFirestoreRepository
 import com.training.ecommerce.data.repository.user.UserFirestoreRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class UserViewModel(
@@ -22,11 +21,9 @@ class UserViewModel(
 ) : ViewModel() {
 
     suspend fun isUserLoggedIn() = appPreferencesRepository.isLoggedIn()
-
-    fun setIsLoggedIn(b: Boolean) {
-        viewModelScope.launch(IO) {
-            appPreferencesRepository.saveLoginState(b)
-        }
+    suspend fun logOut() = viewModelScope.launch {
+        userPreferencesRepository.clearUserPreferences()
+        appPreferencesRepository.saveLoginState(false)
     }
 }
 

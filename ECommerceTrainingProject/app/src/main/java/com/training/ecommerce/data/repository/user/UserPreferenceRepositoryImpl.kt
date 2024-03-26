@@ -15,4 +15,10 @@ class UserPreferenceRepositoryImpl(private val context: Context) : UserPreferenc
             preferences.toBuilder().setId(userId).build()
         }
     }
+
+    override suspend fun clearUserPreferences() {
+        context.userDetailsDataStore.updateData { preferences ->
+            preferences.toBuilder().clear().build()
+        }
+    }
 }

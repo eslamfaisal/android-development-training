@@ -14,37 +14,42 @@ import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.training.ecommerce.R
-import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
-import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
-import com.training.ecommerce.data.repository.user.UserFirestoreRepositoryImpl
-import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
 import com.training.ecommerce.ui.auth.AuthActivity
 import com.training.ecommerce.ui.common.viewmodel.UserViewModel
 import com.training.ecommerce.ui.common.viewmodel.UserViewModelFactory
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
     private val userViewModel: UserViewModel by viewModels {
-        UserViewModelFactory(context = this,)
+        UserViewModelFactory(context = this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initSplashScreen()
         super.onCreate(savedInstanceState)
 
-        lifecycleScope.launch(Main) {
-            val isLoggedIn = userViewModel.isUserLoggedIn().first()
-            Log.d(TAG, "onCreate: isLoggedIn: $isLoggedIn")
-            if (isLoggedIn) {
-                setContentView(R.layout.activity_main)
-            } else {
-                goToAuthActivity()
-            }
+        val isLoggedIn = runBlocking { userViewModel.isUserLoggedIn().first() }
+
+        if (isLoggedIn) {
+            setContentView(R.layout.activity_main)
+        } else {
+            goToAuthActivity()
+            return
         }
-        Log.d(TAG, "onCreate: ")
+
+        findViewById<View>(R.id.textView).setOnClickListener {
+            logOut()
+        }
+    }
+
+    private fun logOut() {
+        lifecycleScope.launch {
+            userViewModel.logOut()
+            goToAuthActivity()
+        }
     }
 
     override fun onResume() {

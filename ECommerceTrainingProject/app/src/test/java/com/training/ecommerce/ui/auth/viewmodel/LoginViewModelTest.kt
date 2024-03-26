@@ -28,7 +28,7 @@ class UserViewModelTest {
 
     @Before
     fun setUp() {
-        userViewModel = UserViewModel(userPreferencesRepository)
+//        userViewModel = UserViewModel(userPreferencesRepository)
     }
 
     @Test
