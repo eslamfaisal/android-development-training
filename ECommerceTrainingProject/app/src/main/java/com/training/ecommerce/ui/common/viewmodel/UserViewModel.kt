@@ -5,27 +5,36 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.training.ecommerce.data.repository.common.AppPreferenceRepository
+import com.training.ecommerce.data.repository.user.UserFirestoreRepository
+import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class UserViewModel(
-    private val userPreferencesRepository: AppPreferenceRepository
+    private val appPreferencesRepository: AppPreferenceRepository,
+    private val userPreferencesRepository: UserPreferenceRepository,
+    private val userFirestoreRepository: UserFirestoreRepository
 ) : ViewModel() {
 
-    suspend fun isUserLoggedIn() = userPreferencesRepository.isLoggedIn()
+    suspend fun isUserLoggedIn() = appPreferencesRepository.isLoggedIn()
 
     fun setIsLoggedIn(b: Boolean) {
         viewModelScope.launch(IO) {
-            userPreferencesRepository.saveLoginState(b)
+            appPreferencesRepository.saveLoginState(b)
         }
     }
 }
 
-class UserViewModelFactory(private val userPreferencesRepository: AppPreferenceRepository) :
-    ViewModelProvider.Factory {
+class UserViewModelFactory(
+    private val appPreferencesRepository: AppPreferenceRepository,
+    private val userPreferencesRepository: UserPreferenceRepository,
+    private val userFirestoreRepository: UserFirestoreRepository,
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
         if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST") return UserViewModel(userPreferencesRepository) as T
+            @Suppress("UNCHECKED_CAST") return UserViewModel(
+                appPreferencesRepository, userPreferencesRepository, userFirestoreRepository
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -1,5 +1,6 @@
 package com.training.ecommerce.ui.auth.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,10 +22,12 @@ import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
+import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
 import com.training.ecommerce.databinding.FragmentLoginBinding
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
 import com.training.ecommerce.ui.common.views.ProgressDialog
+import com.training.ecommerce.ui.home.MainActivity
 import com.training.ecommerce.ui.showSnakeBarError
 import com.training.ecommerce.utils.CrashlyticsUtils
 import com.training.ecommerce.utils.LoginException
@@ -36,10 +39,12 @@ class LoginFragment : Fragment() {
 
     private val loginViewModel: LoginViewModel by viewModels {
         LoginViewModelFactory(
-            userPrefs = AppDataStoreRepositoryImpl(
+            appPreferenceRepository = AppDataStoreRepositoryImpl(
                 AppPreferencesDataSource(
                     requireActivity()
                 )
+            ), userPreferenceRepository = UserPreferenceRepositoryImpl(
+                requireActivity()
             ), authRepository = FirebaseAuthRepositoryImpl()
         )
     }
@@ -74,7 +79,7 @@ class LoginFragment : Fragment() {
 
                     is Resource.Success -> {
                         progressDialog.dismiss()
-
+                        goToHome()
                     }
 
                     is Resource.Error -> {
@@ -88,6 +93,13 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun goToHome() {
+        requireActivity().startActivity(Intent(activity, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
+        requireActivity().finish()
     }
 
     private fun initListeners() {

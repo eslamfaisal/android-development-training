@@ -7,5 +7,6 @@ message UserDetailsPreferences {
   string id = 1;
   string email = 2;
   string name = 3;
-  repeated string reviews = 4;
+  int32 createdAt = 4;
+  repeated string reviews = 5;
 }

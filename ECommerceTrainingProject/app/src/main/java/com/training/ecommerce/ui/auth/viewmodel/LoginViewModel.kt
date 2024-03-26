@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepository
 import com.training.ecommerce.data.repository.common.AppPreferenceRepository
+import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.utils.isValidEmail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +20,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val userPrefs: AppPreferenceRepository,
+    private val appPreferenceRepository: AppPreferenceRepository,
+    private val userPreferenceRepository: UserPreferenceRepository,
     private val authRepository: FirebaseAuthRepository,
 ) : ViewModel() {
 
@@ -40,8 +42,8 @@ class LoginViewModel(
             authRepository.loginWithEmailAndPassword(email, password).onEach { resource ->
                 when (resource) {
                     is Resource.Success -> {
-                        //TODO get user details from the user id
-                        _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
+                        savePreferenceData(resource.data!!)
+                        _loginState.emit(Resource.Success(resource.data))
                     }
 
                     else -> _loginState.emit(resource)
@@ -52,18 +54,24 @@ class LoginViewModel(
         }
     }
 
+    private suspend fun savePreferenceData(userID: String) {
+        appPreferenceRepository.saveLoginState(true)
+        userPreferenceRepository.updateUserId(userID)
+    }
+
     fun loginWithGoogle(idToken: String) = viewModelScope.launch {
         authRepository.loginWithGoogle(idToken).onEach { resource ->
             when (resource) {
                 is Resource.Success -> {
-                    //TODO get user details from the user id
-                    _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
+                    savePreferenceData(resource.data!!)
+                    _loginState.emit(Resource.Success(resource.data))
                 }
 
                 else -> _loginState.emit(resource)
             }
         }.launchIn(viewModelScope)
     }
+
 
     companion object {
         private const val TAG = "LoginViewModel"
@@ -72,12 +80,15 @@ class LoginViewModel(
 
 // create viewmodel factory class
 class LoginViewModelFactory(
-    private val userPrefs: AppPreferenceRepository,
+    private val appPreferenceRepository: AppPreferenceRepository,
+    private val userPreferenceRepository: UserPreferenceRepository,
     private val authRepository: FirebaseAuthRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST") return LoginViewModel(userPrefs, authRepository) as T
+            @Suppress("UNCHECKED_CAST") return LoginViewModel(
+                appPreferenceRepository, userPreferenceRepository, authRepository
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

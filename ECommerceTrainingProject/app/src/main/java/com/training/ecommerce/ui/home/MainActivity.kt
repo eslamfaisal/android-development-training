@@ -16,6 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import com.training.ecommerce.R
 import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
+import com.training.ecommerce.data.repository.user.UserFirestoreRepositoryImpl
+import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
 import com.training.ecommerce.ui.auth.AuthActivity
 import com.training.ecommerce.ui.common.viewmodel.UserViewModel
 import com.training.ecommerce.ui.common.viewmodel.UserViewModelFactory
@@ -26,7 +28,13 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private val userViewModel: UserViewModel by viewModels {
-        UserViewModelFactory(AppDataStoreRepositoryImpl(AppPreferencesDataSource(this)))
+        UserViewModelFactory(
+            AppDataStoreRepositoryImpl(
+                AppPreferencesDataSource(this)
+            ),
+            UserPreferenceRepositoryImpl(this),
+            UserFirestoreRepositoryImpl()
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
