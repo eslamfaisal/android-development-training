@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        userViewModel.listenToUserDetails()
         lifecycleScope.launch {
             val userDetails = runBlocking { userViewModel.getUserPrefsDetails().first() }
             Log.d(TAG, "initViewModel: user details ${userDetails.email}")

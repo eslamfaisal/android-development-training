@@ -29,15 +29,20 @@ class UserViewModel(
     val userPrefsState = userPreferencesRepository.getUserDetails()
         .stateIn(viewModelScope, started = SharingStarted.Eagerly, initialValue = null)
 
+
+    init {
+        listenToUserDetails()
+    }
+
     // load user data flow
     // we can use this to get user data in the view in main thread so we do not want to wait the data from state
     // note that this flow block the main thread while you get the data every time you call it
     fun getUserPrefsDetails() = userPreferencesRepository.getUserDetails()
 
     fun listenToUserDetails() = viewModelScope.launch {
-        userFirestoreRepository.getUserDetails(
-            userPreferencesRepository.getUserId().first()
-        ).collect { resource ->
+        val userId = userPreferencesRepository.getUserId().first()
+        if (userId.isEmpty()) return@launch
+        userFirestoreRepository.getUserDetails(userId).collect { resource ->
             when (resource) {
                 is Resource.Success -> {
 
