@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         lifecycleScope.launch {
-            val userDetails = runBlocking { userViewModel.getUserPrefsDetails().first() }
+            val userDetails = runBlocking { userViewModel.getUserDetails().first() }
             Log.d(TAG, "initViewModel: user details ${userDetails.email}")
 
             userViewModel.userDetailsState.collect {

@@ -38,7 +38,7 @@ class UserViewModel(
 ) : ViewModel() {
 
     // load user data in state flow inside view model  scope
-    val userDetailsState = getUserPrefsDetails().stateIn(
+    val userDetailsState = getUserDetails().stateIn(
         viewModelScope, started = SharingStarted.Eagerly, initialValue = null
     )
 
@@ -50,7 +50,7 @@ class UserViewModel(
     // we can use this to get user data in the view in main thread so we do not want to wait the data from state
     // note that this flow block the main thread while you get the data every time you call it
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getUserPrefsDetails() =
+    fun getUserDetails() =
         userPreferencesRepository.getUserDetails().mapLatest { it.toUserDetailsModel() }
 
     private fun listenToUserDetails() = viewModelScope.launch {
