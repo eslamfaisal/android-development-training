@@ -1,11 +1,19 @@
 package com.training.ecommerce.ui.auth.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepository
+import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
+import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
+import com.training.ecommerce.data.repository.common.AppPreferenceRepository
+import com.training.ecommerce.data.repository.user.UserFirestoreRepository
+import com.training.ecommerce.data.repository.user.UserFirestoreRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserPreferenceRepository
+import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
 import com.training.ecommerce.utils.isValidEmail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,8 +27,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val userPrefs: UserPreferenceRepository,
+    private val appPreferenceRepository: AppPreferenceRepository,
+    private val userPreferenceRepository: UserPreferenceRepository,
     private val authRepository: FirebaseAuthRepository,
+    private val userFirestoreRepository: UserFirestoreRepository
 ) : ViewModel() {
 
     private val _loginState = MutableSharedFlow<Resource<String>>()
@@ -40,8 +50,8 @@ class LoginViewModel(
             authRepository.loginWithEmailAndPassword(email, password).onEach { resource ->
                 when (resource) {
                     is Resource.Success -> {
-                        //TODO get user details from the user id
-                        _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
+                        savePreferenceData(resource.data!!)
+                        _loginState.emit(Resource.Success(resource.data))
                     }
 
                     else -> _loginState.emit(resource)
@@ -52,12 +62,17 @@ class LoginViewModel(
         }
     }
 
+    private suspend fun savePreferenceData(userID: String) {
+        appPreferenceRepository.saveLoginState(true)
+        userPreferenceRepository.updateUserId(userID)
+    }
+
     fun loginWithGoogle(idToken: String) = viewModelScope.launch {
         authRepository.loginWithGoogle(idToken).onEach { resource ->
             when (resource) {
                 is Resource.Success -> {
-                    //TODO get user details from the user id
-                    _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
+                    savePreferenceData(resource.data!!)
+                    _loginState.emit(Resource.Success(resource.data))
                 }
 
                 else -> _loginState.emit(resource)
@@ -85,12 +100,23 @@ class LoginViewModel(
 
 // create viewmodel factory class
 class LoginViewModelFactory(
-    private val userPrefs: UserPreferenceRepository,
-    private val authRepository: FirebaseAuthRepository
+    private val contextValue: Context
 ) : ViewModelProvider.Factory {
+
+    private val appPreferenceRepository =
+        AppDataStoreRepositoryImpl(AppPreferencesDataSource(contextValue))
+    private val userPreferenceRepository = UserPreferenceRepositoryImpl(contextValue)
+    private val authRepository = FirebaseAuthRepositoryImpl()
+    private val userFirestoreRepository = UserFirestoreRepositoryImpl()
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST") return LoginViewModel(userPrefs, authRepository) as T
+            @Suppress("UNCHECKED_CAST") return LoginViewModel(
+                appPreferenceRepository,
+                userPreferenceRepository,
+                authRepository,
+                userFirestoreRepository
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

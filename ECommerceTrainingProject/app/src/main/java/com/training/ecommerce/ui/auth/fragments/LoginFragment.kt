@@ -25,14 +25,12 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.training.ecommerce.BuildConfig
 import com.training.ecommerce.R
-import com.training.ecommerce.data.datasource.datastore.UserPreferencesDataSource
 import com.training.ecommerce.data.models.Resource
-import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
-import com.training.ecommerce.data.repository.user.UserDataStoreRepositoryImpl
 import com.training.ecommerce.databinding.FragmentLoginBinding
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
 import com.training.ecommerce.ui.common.views.ProgressDialog
+import com.training.ecommerce.ui.home.MainActivity
 import com.training.ecommerce.ui.showSnakeBarError
 import com.training.ecommerce.utils.CrashlyticsUtils
 import com.training.ecommerce.utils.LoginException
@@ -45,13 +43,7 @@ class LoginFragment : Fragment() {
     private val progressDialog by lazy { ProgressDialog.createProgressDialog(requireActivity()) }
 
     private val loginViewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(
-            userPrefs = UserDataStoreRepositoryImpl(
-                UserPreferencesDataSource(
-                    requireActivity()
-                )
-            ), authRepository = FirebaseAuthRepositoryImpl()
-        )
+        LoginViewModelFactory(contextValue = requireContext())
     }
 
     private var _binding: FragmentLoginBinding? = null
@@ -86,7 +78,7 @@ class LoginFragment : Fragment() {
 
                     is Resource.Success -> {
                         progressDialog.dismiss()
-
+                        goToHome()
                     }
 
                     is Resource.Error -> {
@@ -99,6 +91,13 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun goToHome() {
+        requireActivity().startActivity(Intent(activity, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
+        requireActivity().finish()
     }
 
     private fun initListeners() {

@@ -57,6 +57,11 @@ class FirebaseAuthRepositoryImpl(private val auth: FirebaseAuth = FirebaseAuth.g
         }
     }
 
+    override fun logout() {
+        auth.signOut()
+    }
+
+
     companion object {
         private const val TAG = "FirebaseAuthRepositoryI"
     }
