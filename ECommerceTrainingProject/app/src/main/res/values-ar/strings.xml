@@ -19,7 +19,5 @@
     <string name="retry">Retry</string>
     <string name="google_sign_in_field_msg">Google sign in failed, please retry again later.</string>
     <string name="generic_err_msg">Error please try again later.</string>
-    <string name="facebook_app_id">1516811638876850</string>
-    <string name="fb_login_protocol_scheme">fb1516811638876850</string>
-    <string name="facebook_client_token">b43ee3fcdfdbbfb46a95ecf64021584a</string>
+
 </resources>
