@@ -37,8 +37,8 @@ import com.training.ecommerce.utils.LoginException
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
-    private lateinit var callbackManager: CallbackManager
-    private lateinit var loginManager: LoginManager
+    private val callbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
+    private val loginManager: LoginManager by lazy { LoginManager.getInstance() }
 
     private val progressDialog by lazy { ProgressDialog.createProgressDialog(requireActivity()) }
 
@@ -61,8 +61,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        callbackManager = CallbackManager.Factory.create()
-        loginManager = LoginManager.getInstance()
 
         initListeners()
         initViewModel()
@@ -190,8 +188,7 @@ class LoginFragment : Fragment() {
         })
 
         loginManager.logInWithReadPermissions(
-            this,
-            listOf("email", "public_profile")
+            this, callbackManager, listOf("email", "public_profile")
         )
     }
 

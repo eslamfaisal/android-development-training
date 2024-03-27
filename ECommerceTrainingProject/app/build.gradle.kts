@@ -36,6 +36,21 @@ android {
                 "clientServerId",
                 "\"449149627104-bf8isg90ol8j2acv6cvl5q15uo2kehmf.apps.googleusercontent.com\""
             )
+            it.resValue(
+                "string",
+                "facebook_app_id",
+                "\"1085123185933390\""
+            )
+            it.resValue(
+                "string",
+                "fb_login_protocol_scheme",
+                "\"fb1085123185933390\""
+            )
+            it.resValue(
+                "string",
+                "facebook_client_token",
+                "\"f4be6c4f39a66cd30192d2595eb6b9d6\""
+            )
         }
     }
     compileOptions {
