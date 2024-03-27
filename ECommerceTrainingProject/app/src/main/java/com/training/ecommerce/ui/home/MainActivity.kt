@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             val userDetails = runBlocking { userViewModel.getUserPrefsDetails().first() }
             Log.d(TAG, "initViewModel: user details ${userDetails.email}")
 
-            userViewModel.userPrefsState.collect {
+            userViewModel.userDetailsState.collect {
                 Log.d(TAG, "initViewModel: user details updated ${it?.email}")
             }
 

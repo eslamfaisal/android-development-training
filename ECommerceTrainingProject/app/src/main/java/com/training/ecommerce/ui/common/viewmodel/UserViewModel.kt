@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.training.ecommerce.data.models.Resource
+import com.training.ecommerce.data.models.user.toUserDetailsModel
 import com.training.ecommerce.data.models.user.toUserDetailsPreferences
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepository
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
@@ -20,10 +21,12 @@ import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
 import com.training.ecommerce.utils.CrashlyticsUtils
 import com.training.ecommerce.utils.CrashlyticsUtils.LISTEN_TO_USER_DETAILS
 import com.training.ecommerce.utils.UserDetailsException
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -35,8 +38,9 @@ class UserViewModel(
 ) : ViewModel() {
 
     // load user data in state flow inside view model  scope
-    val userPrefsState = userPreferencesRepository.getUserDetails()
-        .stateIn(viewModelScope, started = SharingStarted.Eagerly, initialValue = null)
+    val userDetailsState = getUserPrefsDetails().stateIn(
+        viewModelScope, started = SharingStarted.Eagerly, initialValue = null
+    )
 
     init {
         listenToUserDetails()
@@ -45,7 +49,9 @@ class UserViewModel(
     // load user data flow
     // we can use this to get user data in the view in main thread so we do not want to wait the data from state
     // note that this flow block the main thread while you get the data every time you call it
-    fun getUserPrefsDetails() = userPreferencesRepository.getUserDetails()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun getUserPrefsDetails() =
+        userPreferencesRepository.getUserDetails().mapLatest { it.toUserDetailsModel() }
 
     private fun listenToUserDetails() = viewModelScope.launch {
         val userId = userPreferencesRepository.getUserId().first()
