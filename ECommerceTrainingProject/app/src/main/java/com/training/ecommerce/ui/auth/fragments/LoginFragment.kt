@@ -1,6 +1,8 @@
 package com.training.ecommerce.ui.auth.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -31,6 +39,8 @@ import com.training.ecommerce.utils.LoginException
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
+    private lateinit var callbackManager: CallbackManager
+    private lateinit var loginManager: LoginManager
 
     private val progressDialog by lazy { ProgressDialog.createProgressDialog(requireActivity()) }
 
@@ -59,6 +69,8 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        callbackManager = CallbackManager.Factory.create()
+        loginManager = LoginManager.getInstance()
 
         initListeners()
         initViewModel()
@@ -80,9 +92,8 @@ class LoginFragment : Fragment() {
                     is Resource.Error -> {
                         progressDialog.dismiss()
                         val msg = resource.exception?.message ?: getString(R.string.generic_err_msg)
-                        view?.showSnakeBarError(
-                            resource.exception?.message ?: getString(R.string.generic_err_msg)
-                        )
+                        Log.d(TAG, "initViewModelError: $msg")
+                        view?.showSnakeBarError(msg)
                         logAuthIssueToCrashlytics(msg, "Login Error")
                     }
                 }
@@ -93,6 +104,13 @@ class LoginFragment : Fragment() {
     private fun initListeners() {
         binding.googleSigninBtn.setOnClickListener {
             loginWithGoogleRequest()
+        }
+        binding.facebookSigninBtn.setOnClickListener {
+            if (isLoggedIn()) {
+                signOut()
+            } else {
+                loginWithFacebook()
+            }
         }
     }
 
@@ -139,6 +157,52 @@ class LoginFragment : Fragment() {
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         loginViewModel.loginWithGoogle(idToken)
+    }
+
+    private fun signOut() {
+        loginManager.logOut()
+        Log.d(TAG, "signOut: ")
+    }
+
+    private fun isLoggedIn(): Boolean {
+        val accessToken = AccessToken.getCurrentAccessToken()
+        return accessToken != null && !accessToken.isExpired
+    }
+
+    private fun loginWithFacebook() {
+        loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult) {
+                val token = result.accessToken.token
+                Log.d(TAG, "onSuccess: $token")
+                firebaseAuthWithFacebook(token)
+            }
+
+            override fun onCancel() {
+                // Handle login cancel
+            }
+
+            override fun onError(error: FacebookException) {
+                // Handle login error
+                val msg = error.message ?: getString(R.string.generic_err_msg)
+                Log.d(TAG, "onError: $msg")
+                view?.showSnakeBarError(msg)
+                logAuthIssueToCrashlytics(msg, "Facebook")
+            }
+        })
+
+        loginManager.logInWithReadPermissions(
+            this,
+            listOf("email", "public_profile")
+        )
+    }
+
+    private fun firebaseAuthWithFacebook(token: String) {
+        loginViewModel.loginWithFacebook(token)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroyView() {
