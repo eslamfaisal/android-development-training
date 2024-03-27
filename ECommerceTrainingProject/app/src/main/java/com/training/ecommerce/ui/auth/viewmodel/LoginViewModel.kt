@@ -80,6 +80,18 @@ class LoginViewModel(
         }.launchIn(viewModelScope)
     }
 
+    fun loginWithFacebook(token: String) = viewModelScope.launch {
+        authRepository.loginWithFacebook(token).onEach { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    _loginState.emit(Resource.Success(resource.data ?: "Empty User Id"))
+                }
+
+                else -> _loginState.emit(resource)
+            }
+        }.launchIn(viewModelScope)
+    }
+
 
     companion object {
         private const val TAG = "LoginViewModel"

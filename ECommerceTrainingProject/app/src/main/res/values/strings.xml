@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">E-Commerce</string>
+
+    <string name="facebook_app_id" translatable="false">1085123185933390</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1085123185933390</string>
+    <string name="facebook_client_token" translatable="false">f4be6c4f39a66cd30192d2595eb6b9d6</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="auth_welcome_msg">Welcome to E-Commerce</string>
     <string name="sign_in_msg">Sign in to continue</string>
@@ -8,6 +13,7 @@
     <string name="sign_in">Sign in</string>
     <string name="or">Or</string>
     <string name="google_signin_btn_msg">Login with Google</string>
+    <string name="facebook_signin_btn_msg">Login with Facebook</string>
     <string name="forgot_password_msg">Forgot Password?</string>
     <string name="have_a_account_msg">Don’t have a account?</string>
     <string name="register">Register</string>
