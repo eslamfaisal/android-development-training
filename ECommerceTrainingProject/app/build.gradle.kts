@@ -91,7 +91,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-kotlin-lite:4.26.0")
 
     // firebase dependencies
-    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-firestore-ktx")
