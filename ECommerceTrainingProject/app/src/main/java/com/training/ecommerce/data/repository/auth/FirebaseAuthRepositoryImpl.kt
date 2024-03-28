@@ -35,7 +35,7 @@ class FirebaseAuthRepositoryImpl(
         auth.signInWithCredential(credential).await()
     }
 
-    private fun login(
+    private suspend fun login(
         provider: AuthProvider,
         signInRequest: suspend () -> AuthResult,
     ): Flow<Resource<UserDetailsModel>> = flow {
