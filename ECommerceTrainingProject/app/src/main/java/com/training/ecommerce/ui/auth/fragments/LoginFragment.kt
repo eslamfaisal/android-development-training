@@ -102,11 +102,7 @@ class LoginFragment : Fragment() {
             loginWithGoogleRequest()
         }
         binding.facebookSigninBtn.setOnClickListener {
-            if (isLoggedIn()) {
-                signOut()
-            } else {
-                loginWithFacebook()
-            }
+            loginWithFacebook()
         }
     }
 
@@ -166,6 +162,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginWithFacebook() {
+        if (isLoggedIn()) signOut()
         loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
                 val token = result.accessToken.token
@@ -195,10 +192,10 @@ class LoginFragment : Fragment() {
         loginViewModel.loginWithFacebook(token)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        callbackManager.onActivityResult(requestCode, resultCode, data)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
