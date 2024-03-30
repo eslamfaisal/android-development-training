@@ -23,10 +23,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 
 class LoginViewModel(
     private val appPreferenceRepository: AppPreferenceRepository,
@@ -64,7 +61,7 @@ class LoginViewModel(
 
     private fun handleLoginFlow(loginFlow: suspend () -> Flow<Resource<UserDetailsModel>>) =
         viewModelScope.launch(IO) {
-            loginFlow().onEach { resource ->
+            loginFlow().collect { resource ->
                 when (resource) {
                     is Resource.Success -> {
                         savePreferenceData(resource.data!!)
@@ -73,9 +70,8 @@ class LoginViewModel(
 
                     else -> _loginState.emit(resource)
                 }
-            }.launchIn(viewModelScope.plus(IO))
+            }
         }
-
 
     private suspend fun savePreferenceData(userDetailsModel: UserDetailsModel) {
         appPreferenceRepository.saveLoginState(true)
