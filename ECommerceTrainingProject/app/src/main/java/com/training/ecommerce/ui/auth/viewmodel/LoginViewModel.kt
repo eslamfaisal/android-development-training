@@ -15,6 +15,7 @@ import com.training.ecommerce.data.repository.common.AppPreferenceRepository
 import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
 import com.training.ecommerce.utils.isValidEmail
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +26,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 
 class LoginViewModel(
     private val appPreferenceRepository: AppPreferenceRepository,
@@ -42,7 +44,7 @@ class LoginViewModel(
         email.isValidEmail() && password.length >= 6
     }
 
-    fun login() = viewModelScope.launch {
+    fun login() = viewModelScope.launch(IO) {
         val email = email.value
         val password = password.value
         if (isLoginIsValid.first()) {
@@ -61,7 +63,7 @@ class LoginViewModel(
     }
 
     private fun handleLoginFlow(loginFlow: suspend () -> Flow<Resource<UserDetailsModel>>) =
-        viewModelScope.launch {
+        viewModelScope.launch(IO) {
             loginFlow().onEach { resource ->
                 when (resource) {
                     is Resource.Success -> {
@@ -71,7 +73,7 @@ class LoginViewModel(
 
                     else -> _loginState.emit(resource)
                 }
-            }.launchIn(viewModelScope)
+            }.launchIn(viewModelScope.plus(IO))
         }
 
 
