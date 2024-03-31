@@ -133,7 +133,7 @@ dependencies {
 // Setup protobuf configuration, generating lite Java and Kotlin classes
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.26.0"
+        artifact = "com.google.protobuf:protoc:4.26.1"
     }
     generateProtoTasks {
         all().forEach { task ->

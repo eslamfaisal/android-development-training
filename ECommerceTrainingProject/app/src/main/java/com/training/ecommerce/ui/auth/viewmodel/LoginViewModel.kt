@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.models.user.UserDetailsModel
-import com.training.ecommerce.data.models.user.toUserDetailsPreferences
+import com.training.ecommerce.domain.models.toUserDetailsPreferences
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepository
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
