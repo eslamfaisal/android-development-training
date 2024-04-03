@@ -37,3 +37,9 @@ In this trining we in live session on Google Meet and will be recorded, and stud
 - Join LinkedIn Group [BlueThunder](https://www.linkedin.com/groups/8150659/) so we can collaborate in the projects
 - Contact me in LinkedIn [Eslam Faisal](https://www.linkedin.com/in/eslam-faisal-b9115429b/) so you can join the worksapce with other developers
 - one or two sessions every week ( Sunday and Wednesday ) till we finish the project
+
+**Training Sessions** 
+
+[Youtube](https://www.youtube.com/watch?v=3xe6NTtepQE&list=PLlwTHaBkFK0juUHhqtNd7fJ7PkMV67WIF&ab_channel=BlueThunder%3B)
+[Drive](https://drive.google.com/drive/folders/1PIzVvcm9fKbHHWvDBF__UYHtTbEkMZ_S?usp=drive_link)
+ 
