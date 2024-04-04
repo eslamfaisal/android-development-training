@@ -1,6 +1,5 @@
 package com.training.ecommerce.data.repository.user
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.models.user.UserDetailsModel
@@ -24,6 +23,8 @@ class UserFirestoreRepositoryImpl(
                 }
                 value?.toObject(UserDetailsModel::class.java)?.let {
                     trySend(Resource.Success(it))
+                } ?: run {
+                    close(UserNotFoundException("User not found"))
                 }
             }
             awaitClose {
@@ -31,3 +32,5 @@ class UserFirestoreRepositoryImpl(
             }
         }
 }
+
+class UserNotFoundException(message: String) : Exception(message)

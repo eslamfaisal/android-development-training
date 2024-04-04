@@ -8,8 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
 import com.training.ecommerce.data.models.Resource
-import com.training.ecommerce.domain.models.toUserDetailsModel
-import com.training.ecommerce.domain.models.toUserDetailsPreferences
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepository
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
 import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
@@ -18,10 +16,13 @@ import com.training.ecommerce.data.repository.user.UserFirestoreRepository
 import com.training.ecommerce.data.repository.user.UserFirestoreRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.data.repository.user.UserPreferenceRepositoryImpl
+import com.training.ecommerce.domain.models.toUserDetailsModel
+import com.training.ecommerce.domain.models.toUserDetailsPreferences
 import com.training.ecommerce.utils.CrashlyticsUtils
 import com.training.ecommerce.utils.CrashlyticsUtils.LISTEN_TO_USER_DETAILS
 import com.training.ecommerce.utils.UserDetailsException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
@@ -36,6 +37,8 @@ class UserViewModel(
     private val userFirestoreRepository: UserFirestoreRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository
 ) : ViewModel() {
+
+    private val logoutState = MutableSharedFlow<Resource<Unit>>()
 
     // load user data in state flow inside view model  scope
     val userDetailsState = getUserDetails().stateIn(
@@ -61,6 +64,7 @@ class UserViewModel(
             CrashlyticsUtils.sendCustomLogToCrashlytics<UserDetailsException>(
                 msg, LISTEN_TO_USER_DETAILS to msg
             )
+            if (e is UserDetailsException) logOut()
         }.collectLatest { resource ->
             Log.d(TAG, "listenToUserDetails: ${resource.data}")
             when (resource) {
@@ -81,9 +85,11 @@ class UserViewModel(
 
     suspend fun isUserLoggedIn() = appPreferencesRepository.isLoggedIn()
     suspend fun logOut() = viewModelScope.launch {
+        logoutState.emit(Resource.Loading())
         firebaseAuthRepository.logout()
         userPreferencesRepository.clearUserPreferences()
         appPreferencesRepository.saveLoginState(false)
+        logoutState.emit(Resource.Success(Unit))
     }
 
     companion object {
