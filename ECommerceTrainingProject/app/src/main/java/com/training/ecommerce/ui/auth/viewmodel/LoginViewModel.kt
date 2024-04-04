@@ -41,7 +41,7 @@ class LoginViewModel(
         email.isValidEmail() && password.length >= 6
     }
 
-    fun login() = viewModelScope.launch(IO) {
+    fun loginWithEmailAndPassword() = viewModelScope.launch(IO) {
         val email = email.value
         val password = password.value
         if (isLoginIsValid.first()) {
