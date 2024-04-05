@@ -1,9 +1,12 @@
 package com.training.ecommerce.data.repository.auth
 
+import android.util.Log
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.models.user.AuthProvider
@@ -77,6 +80,64 @@ class FirebaseAuthRepositoryImpl(
             emit(Resource.Error(e)) // Emit error
         }
     }
+
+    override suspend fun registerWithEmailAndPassword(
+        email: String,
+        password: String,
+        fullName: String
+    ): Flow<Resource<String>> = flow {
+        emit(Resource.Loading())
+        try {
+            // Check if the email is already in use
+            val emailExists =
+                auth.fetchSignInMethodsForEmail(email).await().signInMethods?.isNotEmpty()
+                    ?: false
+            if (emailExists) {
+                emit(Resource.Error(Exception("The email address is already in use by another account.")))
+                return@flow
+            }
+
+            // If email is not in use, proceed with user registration
+            val result = auth.createUserWithEmailAndPassword(email, password).await()
+            if (result.user == null) {
+                emit(Resource.Error(Exception("User not created")))
+                return@flow
+            }
+            result.user?.let { user ->
+//                    val userDetails = UserDetailsModel(
+//                        createdAt = System.currentTimeMillis(),
+//                        id = user.uid,
+//                        email = email,
+//                        name = fullName,
+//                        disabled = false
+//                    )
+
+                // Create user details map for Firestore
+                val userDetails = hashMapOf(
+                    "id" to user.uid,
+                    "created_at" to System.currentTimeMillis(),
+                    "email" to email,
+                    "name" to fullName,
+                )
+                // Add user details to Firestore
+                val usersCollection = firestore.collection("users")
+                try {
+                    usersCollection
+                        .document(user.uid)
+                        .set(userDetails)
+                        .await()
+                    emit(Resource.Success(user.uid))
+                } catch (e: Exception) {
+                    emit(Resource.Error(e))
+                }
+            }
+        } catch (e: FirebaseAuthUserCollisionException) {
+            emit(Resource.Error(e))
+        } catch (e: Exception) {
+            emit(Resource.Error(e))
+        }
+    }
+
 
     private fun logAuthIssueToCrashlytics(msg: String, provider: String) {
         CrashlyticsUtils.sendCustomLogToCrashlytics<LoginException>(

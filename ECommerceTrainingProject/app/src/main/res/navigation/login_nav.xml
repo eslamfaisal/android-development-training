@@ -15,6 +15,10 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.training.ecommerce.ui.auth.fragments.RegisterFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
 </navigation>

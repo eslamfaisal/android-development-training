@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.training.ecommerce.ui.auth.viewmodel.RegisterViewModel" />
+
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:context=".ui.auth.fragments.RegisterFragment">
+
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="64dp"
+                android:src="@drawable/ic_primary_logo" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/let_s_get_started_msg" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/MessageTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/create_an_new_account_msg" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_full_name"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="36dp"
+                android:drawableStart="@drawable/ic_user"
+                android:hint="@string/full_name"
+                android:inputType="textPersonName"
+                android:text="@={viewModel.fullName}" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_email"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_email"
+                android:hint="@string/email_et_hint"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.email}" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_password"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_password"
+                android:hint="@string/password_et_hint"
+                android:inputType="textPassword"
+                android:text="@={viewModel.password}" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_password_again"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_password"
+                android:hint="@string/password_again_et_hint"
+                android:inputType="textPassword"
+                android:text="@={viewModel.confirmPassword}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btn_sign_up"
+                style="@style/PrimaryButtonStyle"
+                android:layout_marginTop="16dp"
+                android:onClickListener="@{() -> viewModel.register()}"
+
+                android:text="@string/sign_up" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/MessageTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/have_a_account_msg" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btn_sign_in"
+                    style="@style/MediumPrimaryTextViewStyle"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/sign_in" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</layout>
