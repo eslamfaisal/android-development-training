@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(
@@ -44,7 +43,7 @@ class RegisterViewModel(
             if (password == confirmPassword.value) {
                 _registerState.emit(Resource.Loading())
                 auth.registerWithEmailAndPassword(email, password, fullName)
-                    .onEach { resource ->
+                    .collect { resource ->
                         when (resource) {
                             is Resource.Success -> {
                                 _registerState.emit(Resource.Success(resource.data!!))

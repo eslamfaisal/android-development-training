@@ -1,15 +1,14 @@
 package com.training.ecommerce.ui.auth.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.training.ecommerce.R
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepositoryImpl
@@ -63,14 +62,14 @@ class RegisterFragment : Fragment() {
                 when (resource) {
                     is Resource.Success -> {
                         progressDialog.dismiss()
+                        Toast.makeText(requireContext(), "${resource.data}", Toast.LENGTH_SHORT)
+                            .show()
                         goToLogin()
-                        Log.d(TAG, "initViewModel: Success ${resource.data}")
                     }
 
                     is Resource.Error -> {
                         progressDialog.dismiss()
                         val msg = resource.exception?.message ?: getString(R.string.generic_err_msg)
-                        Log.d(TAG, "initViewModel: Error $msg")
                         view?.showSnakeBarError(msg)
                     }
 

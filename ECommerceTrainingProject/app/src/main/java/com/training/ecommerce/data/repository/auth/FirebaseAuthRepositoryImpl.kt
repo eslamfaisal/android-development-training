@@ -4,7 +4,6 @@ import android.util.Log
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
@@ -13,8 +12,11 @@ import com.training.ecommerce.data.models.user.AuthProvider
 import com.training.ecommerce.data.models.user.UserDetailsModel
 import com.training.ecommerce.utils.CrashlyticsUtils
 import com.training.ecommerce.utils.LoginException
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class FirebaseAuthRepositoryImpl(
@@ -88,22 +90,55 @@ class FirebaseAuthRepositoryImpl(
     ): Flow<Resource<String>> = flow {
         emit(Resource.Loading())
         try {
-            // Check if the email is already in use
-            val emailExists =
-                auth.fetchSignInMethodsForEmail(email).await().signInMethods?.isNotEmpty()
-                    ?: false
-            if (emailExists) {
-                emit(Resource.Error(Exception("The email address is already in use by another account.")))
-                return@flow
-            }
-
-            // If email is not in use, proceed with user registration
             val result = auth.createUserWithEmailAndPassword(email, password).await()
-            if (result.user == null) {
+            val user = result.user
+            if (user == null) {
                 emit(Resource.Error(Exception("User not created")))
                 return@flow
             }
-            result.user?.let { user ->
+            user.sendEmailVerification().await()
+            user.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(fullName).build())
+                .await()
+            emit(Resource.Success("Verification email sent"))
+            observeEmailVerification(user.uid)
+        } catch (e: Exception) {
+            emit(Resource.Error(e))
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun observeEmailVerification(userId: String) {
+        val listener = FirebaseAuth.IdTokenListener { auth ->
+            auth.currentUser?.reload()?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    if (user != null && user.isEmailVerified) {
+                        GlobalScope.launch {
+                            updateUserDetails(
+                                userId,
+                                user.email.toString(),
+                                user.displayName.toString()
+                            )
+                        }
+                    } else {
+                        Log.e(TAG, "Email verification failed")
+                    }
+                } else {
+                    Log.e(TAG, "Email verification failed")
+                }
+            }
+        }
+        auth.addIdTokenListener(listener)
+    }
+
+    private suspend fun updateUserDetails(userId: String, email: String, fullName: String) {
+        val userDetails = mapOf(
+            "id" to userId,
+            "created_at" to System.currentTimeMillis(),
+            "email" to email,
+            "name" to fullName,
+            "disabled" to false
+        )
 //                    val userDetails = UserDetailsModel(
 //                        createdAt = System.currentTimeMillis(),
 //                        id = user.uid,
@@ -112,29 +147,11 @@ class FirebaseAuthRepositoryImpl(
 //                        disabled = false
 //                    )
 
-                // Create user details map for Firestore
-                val userDetails = hashMapOf(
-                    "id" to user.uid,
-                    "created_at" to System.currentTimeMillis(),
-                    "email" to email,
-                    "name" to fullName,
-                )
-                // Add user details to Firestore
-                val usersCollection = firestore.collection("users")
-                try {
-                    usersCollection
-                        .document(user.uid)
-                        .set(userDetails)
-                        .await()
-                    emit(Resource.Success(user.uid))
-                } catch (e: Exception) {
-                    emit(Resource.Error(e))
-                }
-            }
-        } catch (e: FirebaseAuthUserCollisionException) {
-            emit(Resource.Error(e))
+        val usersCollection = firestore.collection("users")
+        try {
+            usersCollection.document(userId).set(userDetails).await()
         } catch (e: Exception) {
-            emit(Resource.Error(e))
+            Log.e(TAG, "Error updating user details", e)
         }
     }
 
