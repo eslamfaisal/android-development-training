@@ -22,6 +22,10 @@ class UserFirestoreRepositoryImpl(
                     return@addSnapshotListener
                 }
                 value?.toObject(UserDetailsModel::class.java)?.let {
+                    if(it.disabled == true) {
+                        close(AccountDisabledexception("Account Disabled"))
+                        return@addSnapshotListener
+                    }
                     trySend(Resource.Success(it))
                 } ?: run {
                     close(UserNotFoundException("User not found"))
@@ -34,3 +38,4 @@ class UserFirestoreRepositoryImpl(
 }
 
 class UserNotFoundException(message: String) : Exception(message)
+class AccountDisabledexception(message: String) : Exception(message)
