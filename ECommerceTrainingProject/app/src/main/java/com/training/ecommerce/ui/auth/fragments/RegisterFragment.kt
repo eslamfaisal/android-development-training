@@ -6,13 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.training.ecommerce.R
+import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.databinding.FragmentRegisterBinding
 import com.training.ecommerce.ui.auth.viewmodel.RegisterViewModel
 import com.training.ecommerce.ui.auth.viewmodel.RegisterViewModelFactory
+import com.training.ecommerce.ui.common.views.ProgressDialog
+import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
+
+    private val progressDialog by lazy { ProgressDialog.createProgressDialog(requireActivity()) }
 
     private val registerViewModel: RegisterViewModel by viewModels {
         RegisterViewModelFactory(contextValue = requireContext())
@@ -34,7 +39,28 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initViewModel()
         initListeners()
+    }
+
+    private fun initViewModel() {
+        lifecycleScope.launch {
+            registerViewModel.registerState.collect { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        progressDialog.show()
+                    }
+
+                    is Resource.Success -> {
+                        progressDialog.dismiss()
+                    }
+
+                    is Resource.Error -> {
+                        progressDialog.dismiss()
+                    }
+                }
+            }
+        }
     }
 
     private fun initListeners() {
