@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.databinding.FragmentRegisterBinding
 import com.training.ecommerce.ui.auth.viewmodel.RegisterViewModel
@@ -53,6 +54,8 @@ class RegisterFragment : Fragment() {
 
                     is Resource.Success -> {
                         progressDialog.dismiss()
+
+                        showLoginSuccessDialog()
                     }
 
                     is Resource.Error -> {
@@ -67,6 +70,19 @@ class RegisterFragment : Fragment() {
         binding.signInTv.setOnClickListener {
             findNavController().popBackStack()
         }
+    }
+
+
+    // create successful login dialog function
+    private fun showLoginSuccessDialog() {
+        MaterialAlertDialogBuilder(requireActivity()).setTitle("Login Success")
+            .setMessage("We have sent you an email verification link. Please verify your email to login.")
+            .setPositiveButton(
+                "OK"
+            ) { dialog, which ->
+                dialog?.dismiss()
+                findNavController().popBackStack()
+            }.create().show()
     }
 
 }

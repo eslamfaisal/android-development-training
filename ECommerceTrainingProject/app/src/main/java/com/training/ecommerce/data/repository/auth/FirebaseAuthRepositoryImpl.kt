@@ -55,13 +55,11 @@ class FirebaseAuthRepositoryImpl(
 
                 // create user details object
                 val userDetails = UserDetailsModel(
-                    id = userId,
-                    name = name,
-                    email = email,
-                    createdAt = System.currentTimeMillis()
+                    id = userId, name = name, email = email, createdAt = System.currentTimeMillis()
                 )
                 // save user details to firestore
                 firestore.collection("users").document(userId).set(userDetails).await()
+                authResult?.user?.sendEmailVerification()?.await()
                 emit(Resource.Success(userDetails))
             } catch (e: Exception) {
                 logAuthIssueToCrashlytics(
@@ -85,6 +83,13 @@ class FirebaseAuthRepositoryImpl(
 
             if (userId == null) {
                 val msg = "Sign in UserID not found"
+                logAuthIssueToCrashlytics(msg, provider.name)
+                emit(Resource.Error(Exception(msg)))
+                return@flow
+            }
+
+            if (authResult.user?.isEmailVerified == false) {
+                val msg = "Email not verified"
                 logAuthIssueToCrashlytics(msg, provider.name)
                 emit(Resource.Error(Exception(msg)))
                 return@flow
