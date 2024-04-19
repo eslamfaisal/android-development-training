@@ -1,10 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:training_questions_form/routs/routs_names.dart';
 import 'package:training_questions_form/screens/navigation/widgets/drawer_item_widget.dart';
-import 'package:training_questions_form/screens/navigation/widgets/pop_up_item.dart';
 import 'package:training_questions_form/services/navigation_service.dart';
-import 'package:training_questions_form/services/shared_pref_services.dart';
-import 'package:training_questions_form/utils/colors.dart'; 
-import 'package:flutter/material.dart';
+import 'package:training_questions_form/utils/colors.dart';
+import 'package:training_questions_form/utils/common_functions.dart';
 
 import '../../../locator.dart';
 import '../navigation_index.dart';
@@ -13,7 +12,7 @@ class NavigationContainer extends StatefulWidget {
   final Widget child;
   final int initialIndex;
 
-  NavigationContainer(this.child, this.initialIndex);
+  const NavigationContainer(this.child, this.initialIndex, {super.key});
 
   @override
   _NavigationContainerState createState() => _NavigationContainerState();
@@ -38,7 +37,24 @@ class _NavigationContainerState extends State<NavigationContainer>
         // iconTheme: IconThemeData(color: Colors.green),
         automaticallyImplyLeading:
             MediaQuery.of(context).size.width < 1300 ? true : false,
-        title: Image.asset('assets/images/ic_logo.png'),
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/ic_logo.png',
+              width: 40,
+              height: 40,
+            ),
+            widthSpace(16),
+            Text(
+              "Dashboard",
+              style: TextStyle(
+                color: primaryColor,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: true,
         // automaticallyImplyLeading: false,
       ),
       body: Row(
@@ -86,77 +102,11 @@ class _NavigationContainerState extends State<NavigationContainer>
       physics: const BouncingScrollPhysics(), // shrinkWrap: true,
       children: <Widget>[
         DrawerItemWidget(
-          ("countries"),
-          tabController!.index == COUNTRIES_INDEX
-              ? Colors.deepOrange[200]!
-              : Colors.white,
+          ("Sessions"),
+          tabController!.index == HOME_INDEX,
           () {
-            locator<NavigationService>().navigateTo(RouteName.COUNTIRES_SCREEN);
+            locator<NavigationService>().navigateTo(RouteName.HOME);
           },
-          Icon(
-            Icons.category,
-            color: primaryColor,
-            size: 26,
-          ),
-        ),
-        DrawerItemWidget(
-          ("categories"),
-          tabController!.index == CATEGORIES_INDEX
-              ? Colors.deepOrange[200]!
-              : Colors.white,
-          () {
-            locator<NavigationService>()
-                .navigateTo(RouteName.CATEGORIES_SCREEN);
-          },
-          Icon(
-            Icons.category,
-            color: primaryColor,
-            size: 26,
-          ),
-        ),
-        DrawerItemWidget(
-          ("stores"),
-          tabController!.index == STORES_INDEX
-              ? Colors.deepOrange[200]!
-              : Colors.white,
-          () {
-            locator<NavigationService>().navigateTo(RouteName.STORES_SCREEN);
-          },
-          Icon(
-            Icons.store,
-            color: primaryColor,
-            size: 26,
-          ),
-        ),
-        DrawerItemWidget(
-          ("coupon_and_offers"),
-          tabController!.index == COUPONS_OFFERS_INDEX
-              ? Colors.deepOrange[200]!
-              : Colors.white,
-          () {
-            locator<NavigationService>()
-                .navigateTo(RouteName.COUPONS_OFFERS_SCREEN);
-          },
-          Icon(
-            Icons.store,
-            color: primaryColor,
-            size: 26,
-          ),
-        ),
-        DrawerItemWidget(
-          ("notifications"),
-          tabController!.index == NOTIFICATIONS_INDEX
-              ? Colors.deepOrange[200]!
-              : Colors.white,
-          () {
-            locator<NavigationService>()
-                .navigateTo(RouteName.NOTIFICATIONS_SCREEN);
-          },
-          Icon(
-            Icons.store,
-            color: primaryColor,
-            size: 26,
-          ),
         ),
       ],
     );

@@ -1,36 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:training_questions_form/utils/common_functions.dart';
+import 'package:training_questions_form/utils/colors.dart';
 import 'package:training_questions_form/utils/extensions.dart';
 
 class DrawerItemWidget extends StatelessWidget {
   final String title;
-  final Color color;
+  final bool selectedItem;
   final VoidCallback function;
-  final Icon icon;
 
   DrawerItemWidget(
     this.title,
-    this.color,
+    this.selectedItem,
     this.function,
-    this.icon,
   );
-
 
   @override
   Widget build(BuildContext context) {
     return Container(
-            color: color,
-            padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
-            child: Row(
-              children: [
-                icon,
-                widthSpace(8),
-                Text(
-                  title,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ],
+      color: selectedItem ? primaryColor : Colors.white,
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: selectedItem ? Colors.white : Colors.black,
             ),
-          ).onTap(function);
+          ),
+        ],
+      ),
+    ).onTap(function);
   }
 }
