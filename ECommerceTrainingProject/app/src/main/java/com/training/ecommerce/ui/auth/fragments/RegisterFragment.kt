@@ -92,6 +92,9 @@ class RegisterFragment : Fragment() {
 
                     is Resource.Error -> {
                         progressDialog.dismiss()
+                        val msg = resource.exception?.message ?: getString(R.string.generic_err_msg)
+                        Log.d(TAG, "initViewModelError: $msg")
+                        view?.showSnakeBarError(msg)
                     }
                 }
             }
