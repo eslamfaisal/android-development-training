@@ -1,5 +1,6 @@
 package com.training.ecommerce.ui.auth.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ import com.training.ecommerce.BuildConfig
 import com.training.ecommerce.R
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.databinding.FragmentRegisterBinding
+import com.training.ecommerce.ui.auth.getGoogleRequestIntent
 import com.training.ecommerce.ui.auth.viewmodel.RegisterViewModel
 import com.training.ecommerce.ui.auth.viewmodel.RegisterViewModelFactory
 import com.training.ecommerce.ui.common.views.ProgressDialog
@@ -154,15 +156,10 @@ class RegisterFragment : Fragment() {
     }
     
     private fun registerWithGoogleRequest() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(BuildConfig.clientServerId).requestEmail().requestProfile()
-            .requestServerAuthCode(BuildConfig.clientServerId).build()
-
-        val googleSignInClient: GoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        googleSignInClient.signOut()
-        val signInIntent = googleSignInClient.signInIntent
+        val signInIntent = getGoogleRequestIntent(requireActivity())
         launcher.launch(signInIntent)
     }
+
 
     private fun handleSignUpResult(completedTask: Task<GoogleSignInAccount>) {
         try {
