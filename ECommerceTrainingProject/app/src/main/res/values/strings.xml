@@ -11,7 +11,7 @@
     <string name="google_signin_btn_msg">Login with Google</string>
     <string name="facebook_signin_btn_msg">Login with Facebook</string>
     <string name="forgot_password_msg">Forgot Password?</string>
-    <string name="dont_have_an_account_msg">Don’t have an account?</string>
+    <string name="dont_have_a_account_msg">Don’t have an account?</string>
     <string name="register">Register</string>
     <string name="loading">Loading</string>
     <string name="ok">OK</string>
@@ -26,4 +26,6 @@
     <string name="have_an_account_msg">have an account?</string>
     <string name="google_signup_btn_msg">Sign up with Google</string>
     <string name="facebook_signup_btn_msg">Sign up with facebook</string>
+    <string name="forget_password_msg">Enter your email, to send an email to update your password.</string>
+    <string name="send">Send</string>
 </resources>

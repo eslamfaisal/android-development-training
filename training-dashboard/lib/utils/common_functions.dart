@@ -25,3 +25,8 @@ bool isNumeric(String s) {
 String notNullString(any) {
   return any == null ? '' : any.toString();
 }
+
+
+int getCurrentDateTimeInUtc(){
+  return DateTime.now().toUtc().millisecondsSinceEpoch;
+}

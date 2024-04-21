@@ -118,13 +118,13 @@
             </RelativeLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/google_signin_btn"
+                android:id="@+id/google_signup_btn"
                 style="@style/SocialButtonStyle"
                 android:drawableStart="@drawable/ic_google"
                 android:text="@string/google_signup_btn_msg" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/facebook_signin_btn"
+                android:id="@+id/facebook_signup_btn"
                 style="@style/SocialButtonStyle"
                 android:layout_marginTop="8dp"
                 android:drawableStart="@drawable/ic_facebook"

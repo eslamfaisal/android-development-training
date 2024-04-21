@@ -159,3 +159,15 @@ Widget bold10Text(String header, {Color? color, TextAlign? align}) {
         fontWeight: FontWeight.bold),
   );
 }
+
+Widget linkText(String header,){
+  return Text(
+    header,
+    maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
+        color: blueColor,
+        decoration: TextDecoration.underline
+    ),
+  );
+}

@@ -109,6 +109,7 @@
                 android:text="@string/facebook_signin_btn_msg" />
 
             <TextView
+                android:id="@+id/forgot_password_tv"
                 style="@style/MediumPrimaryTextViewStyle"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
