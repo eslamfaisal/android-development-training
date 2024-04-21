@@ -1,31 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <variable
             name="viewmodel"
-            type="com.training.ecommerce.ui.login.viewmodel.LoginViewModel" />
+            type="com.training.ecommerce.ui.auth.viewmodel.LoginViewModel" />
     </data>
 
-    <FrameLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.login.fragments.LoginFragment">
+        android:background="@color/white"
+        android:scrollbars="none">
 
-        <EditText
-            android:text="@{viewmodel.email}"
-            android:id="@+id/edit_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:id="@+id/text_login"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@{viewmodel.email}" />
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-    </FrameLayout>
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/ic_primary_logo" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/auth_welcome_msg" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/MessageTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/sign_in_msg" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/email_et"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="36dp"
+                android:drawableStart="@drawable/ic_email"
+                android:hint="@string/email_et_hint"
+                android:inputType="textEmailAddress"
+                android:text="@={viewmodel.email}" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/password_et"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_password"
+                android:hint="@string/password_et_hint"
+                android:inputType="textPassword"
+                android:text="@={viewmodel.password}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/login_btn"
+                style="@style/PrimaryButtonStyle"
+                android:layout_marginTop="16dp"
+                android:onClickListener="@{() -> viewmodel.loginWithEmailAndPassword()}"
+                android:text="@string/sign_in" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true"
+                    android:background="@color/neutral_light" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@color/white"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="center"
+                    android:text="@string/or"
+                    android:textAllCaps="true"
+                    android:textColor="@color/neutral_grey" />
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/google_signin_btn"
+                style="@style/SocialButtonStyle"
+                android:drawableStart="@drawable/ic_google"
+                android:text="@string/google_signin_btn_msg" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/facebook_signin_btn"
+                style="@style/SocialButtonStyle"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_facebook"
+                android:text="@string/facebook_signin_btn_msg" />
+
+            <TextView
+                android:id="@+id/forgot_password_tv"
+                style="@style/MediumPrimaryTextViewStyle"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/forgot_password_msg" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/MessageTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dont_have_a_account_msg" />
+
+                <TextView
+                    android:id="@+id/register_tv"
+                    style="@style/MediumPrimaryTextViewStyle"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/register" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </layout>
 

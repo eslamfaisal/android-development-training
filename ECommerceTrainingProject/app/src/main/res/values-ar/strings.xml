@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">E-Commerce</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="auth_welcome_msg">Welcome to E-Commerce</string>
+    <string name="sign_in_msg">Sign in to continue</string>
+    <string name="email_et_hint">Your Email</string>
+    <string name="password_et_hint">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="or">Or</string>
+    <string name="google_signin_btn_msg">Login with Google</string>
+    <string name="facebook_signin_btn_msg">Login with Facebook</string>
+    <string name="forgot_password_msg">Forgot Password?</string>
+    <string name="dont_have_a_account_msg">Don’t have a account?</string>
+    <string name="register">Register</string>
+    <string name="loading">Loading</string>
+    <string name="ok">OK</string>
+    <string name="retry">Retry</string>
+    <string name="google_sign_in_field_msg">Google sign in failed, please retry again later.</string>
+    <string name="generic_err_msg">Error please try again later.</string>
+    <string name="register_welcome_msg">Let’s Get Started</string>
+    <string name="sign_up_msg">Create a new account</string>
+    <string name="name_et_hint">Full Name</string>
+    <string name="password_again_et_hint">Password Again</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="have_an_account_msg">have a account?</string>
+    <string name="google_signup_btn_msg">Sign up with Google</string>
+    <string name="facebook_signup_btn_msg">Sign up with facebook</string>
+    <string name="forget_password_msg">Enter your email, to send an email to update your password.</string>
+    <string name="send">Send</string>
+
+</resources>

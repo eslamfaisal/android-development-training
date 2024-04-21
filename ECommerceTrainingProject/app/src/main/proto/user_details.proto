@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "com.training.ecommerce.data.models.user";
+option java_multiple_files = true;
+
+message UserDetailsPreferences {
+  string id = 1;
+  string email = 2;
+  string name = 3;
+  int32 createdAt = 4;
+  repeated string reviews = 5;
+}
