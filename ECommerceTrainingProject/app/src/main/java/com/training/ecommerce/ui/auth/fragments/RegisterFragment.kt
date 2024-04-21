@@ -1,6 +1,5 @@
 package com.training.ecommerce.ui.auth.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,12 +19,9 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.training.ecommerce.BuildConfig
 import com.training.ecommerce.R
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.databinding.FragmentRegisterBinding
@@ -114,11 +110,11 @@ class RegisterFragment : Fragment() {
         }
 
     }
-    
+
     private fun signOut() {
         loginManager.logOut()
     }
-    
+
     private fun isLoggedIn(): Boolean {
         val accessToken = AccessToken.getCurrentAccessToken()
         return accessToken != null && !accessToken.isExpired
@@ -154,7 +150,7 @@ class RegisterFragment : Fragment() {
     private fun firebaseAuthWithFacebook(token: String) {
         registerViewModel.registerWithFacebook(token)
     }
-    
+
     private fun registerWithGoogleRequest() {
         val signInIntent = getGoogleRequestIntent(requireActivity())
         launcher.launch(signInIntent)
@@ -196,6 +192,11 @@ class RegisterFragment : Fragment() {
                 dialog?.dismiss()
                 findNavController().popBackStack()
             }.create().show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

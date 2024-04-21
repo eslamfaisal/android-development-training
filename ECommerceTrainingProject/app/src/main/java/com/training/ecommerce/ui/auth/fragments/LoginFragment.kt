@@ -20,11 +20,8 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.training.ecommerce.BuildConfig
 import com.training.ecommerce.R
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.databinding.FragmentLoginBinding
@@ -39,6 +36,7 @@ import com.training.ecommerce.utils.LoginException
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
+
     private val callbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
     private val loginManager: LoginManager by lazy { LoginManager.getInstance() }
 
@@ -108,6 +106,10 @@ class LoginFragment : Fragment() {
         }
         binding.registerTv.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+        binding.forgotPasswordTv.setOnClickListener {
+            val forgetPasswordFragment = ForgetPasswordFragment()
+            forgetPasswordFragment.show(parentFragmentManager, "forget-password")
         }
     }
 

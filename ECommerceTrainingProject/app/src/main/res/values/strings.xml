@@ -26,4 +26,6 @@
     <string name="have_an_account_msg">have an account?</string>
     <string name="google_signup_btn_msg">Sign up with Google</string>
     <string name="facebook_signup_btn_msg">Sign up with facebook</string>
+    <string name="forget_password_msg">Enter your email, to send an email to update your password.</string>
+    <string name="send">Send</string>
 </resources>
