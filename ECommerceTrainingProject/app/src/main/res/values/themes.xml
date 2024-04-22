@@ -19,7 +19,7 @@
     <style name="Theme.ECommerce" parent="Base.Theme.ECommerce" />
 
     <style name="Theme.MainActivity" parent="Base.Theme.ECommerce">
-        <item name="android:windowBackground">@drawable/lanch_window_background</item>
+        <item name="android:windowBackground">@drawable/launch_window_background</item>
 
         <!-- System UI Configurations-->
         <item name="android:statusBarColor">@color/primary_color</item>
