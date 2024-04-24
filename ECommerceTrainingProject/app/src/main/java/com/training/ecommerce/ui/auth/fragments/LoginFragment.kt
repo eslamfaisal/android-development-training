@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -28,19 +27,17 @@ import com.training.ecommerce.databinding.FragmentLoginBinding
 import com.training.ecommerce.ui.auth.getGoogleRequestIntent
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModel
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
-import com.training.ecommerce.ui.common.views.ProgressDialog
+import com.training.ecommerce.ui.common.fragments.BaseFragment
 import com.training.ecommerce.ui.home.MainActivity
 import com.training.ecommerce.ui.showSnakeBarError
 import com.training.ecommerce.utils.CrashlyticsUtils
 import com.training.ecommerce.utils.LoginException
 import kotlinx.coroutines.launch
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
 
     private val callbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
     private val loginManager: LoginManager by lazy { LoginManager.getInstance() }
-
-    private val progressDialog by lazy { ProgressDialog.createProgressDialog(requireActivity()) }
 
     private val loginViewModel: LoginViewModel by viewModels {
         LoginViewModelFactory(contextValue = requireContext())
