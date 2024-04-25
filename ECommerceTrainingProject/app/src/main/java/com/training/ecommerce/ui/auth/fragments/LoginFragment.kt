@@ -1,9 +1,7 @@
 package com.training.ecommerce.ui.auth.fragments
 
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -43,15 +41,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
     override fun getLayoutResId(): Int = R.layout.fragment_login
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun init() {
         initListeners()
         initViewModel()
     }
-
-    override fun init() {
-     }
 
     private fun initViewModel() {
         lifecycleScope.launch {
@@ -178,16 +171,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
     private fun firebaseAuthWithFacebook(token: String) {
         viewModel.loginWithFacebook(token)
-    }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        callbackManager.onActivityResult(requestCode, resultCode, data)
-//    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {
