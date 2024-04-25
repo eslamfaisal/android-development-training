@@ -86,18 +86,19 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
-    implementation("androidx.activity:activity-ktx:1.8.2")
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
     implementation("com.google.protobuf:protobuf-kotlin-lite:4.26.0")
 
     // firebase dependencies
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-functions-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:21.0.0")
-    implementation ("com.facebook.android:facebook-login:16.0.0")
+    implementation("com.google.android.gms:play-services-auth:21.1.0")
+    implementation ("com.facebook.android:facebook-login:17.0.0")
 
     // third party libraries
     implementation("com.github.pwittchen:reactivenetwork-rx2:3.0.8")
