@@ -36,6 +36,7 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : ViewModel> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         doDataBinding()
+        init()
     }
 
     /**
@@ -44,14 +45,13 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : ViewModel> : Fragment() {
     abstract fun init()
 
     private fun doDataBinding() {
-        binding.lifecycleOwner =
-            viewLifecycleOwner // it is extra if you want to set life cycle owner in binding
+        // it is extra if you want to set life cycle owner in binding
+        binding.lifecycleOwner = viewLifecycleOwner
         // Here your viewModel and binding variable imlementation
         binding.setVariable(
             BR.viewmodel, viewModel
         )  // In all layout the variable name should be "viewModel"
         binding.executePendingBindings()
-        init()
     }
 
     override fun onDestroyView() {
