@@ -3,9 +3,7 @@ package com.training.ecommerce.ui.auth.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -34,27 +32,16 @@ import com.training.ecommerce.utils.CrashlyticsUtils
 import com.training.ecommerce.utils.LoginException
 import kotlinx.coroutines.launch
 
-class LoginFragment : BaseFragment() {
+class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
     private val callbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
     private val loginManager: LoginManager by lazy { LoginManager.getInstance() }
 
-    private val loginViewModel: LoginViewModel by viewModels {
+    override val viewModel: LoginViewModel by viewModels {
         LoginViewModelFactory(contextValue = requireContext())
     }
 
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewmodel = loginViewModel
-        // Inflate the layout for this fragment
-        return binding.root
-    }
+    override fun getLayoutResId(): Int = R.layout.fragment_login
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,9 +50,12 @@ class LoginFragment : BaseFragment() {
         initViewModel()
     }
 
+    override fun init() {
+     }
+
     private fun initViewModel() {
         lifecycleScope.launch {
-            loginViewModel.loginState.collect { resource ->
+            viewModel.loginState.collect { resource ->
                 when (resource) {
                     is Resource.Loading -> {
                         progressDialog.show()
@@ -146,7 +136,7 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
-        loginViewModel.loginWithGoogle(idToken)
+        viewModel.loginWithGoogle(idToken)
     }
 
     private fun signOut() {
@@ -187,7 +177,7 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun firebaseAuthWithFacebook(token: String) {
-        loginViewModel.loginWithFacebook(token)
+        viewModel.loginWithFacebook(token)
     }
 
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
