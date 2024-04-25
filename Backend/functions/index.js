@@ -3,7 +3,8 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.hellowWorld = onRequest((req, res) => {
-    res.status(200).send("Hello world" );
+    console.debug("hello world test log")
+    res.status(200).send("Hello world from android development" );
 });
 
 exports.registerUser = onRequest(async (req, res) => {
