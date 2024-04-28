@@ -1,13 +1,16 @@
 package com.training.ecommerce.ui.home
 
+import android.animation.ObjectAnimator
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.training.ecommerce.R
@@ -79,7 +82,24 @@ class MainActivity : AppCompatActivity() {
     private fun initSplashScreen() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             installSplashScreen()
-        } else {
+            splashScreen.setOnExitAnimationListener { splashScreenView ->
+                // Create your custom animation.
+                val slideUp = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.TRANSLATION_X,
+                    -50f,
+                    +splashScreenView.width.toFloat()
+                )
+                slideUp.interpolator = AnticipateInterpolator()
+                slideUp.duration = 1000L
+
+                slideUp.doOnEnd { splashScreenView.remove() }
+
+                slideUp.start()
+
+            }
+        }
+        else {
             setTheme(R.style.Theme_ECommerce)
         }
     }
