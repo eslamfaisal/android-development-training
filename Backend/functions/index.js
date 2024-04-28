@@ -29,8 +29,8 @@ exports.registerUser = onRequest(async (req, res) => {
             displayName: fullName,
             disabled: false,
             emailVerified: true,
-            photoURL: "http://www.example.com/12345678/photo.png",
         });
+
 
         // Optionally, store additional user details in Firestore
         const userData = {
