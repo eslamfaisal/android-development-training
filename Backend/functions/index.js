@@ -3,8 +3,8 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.hellowWorld = onRequest((req, res) => {
-    console.debug("hello world test log")
-    res.status(200).send("Hello world from android development" );
+    console.info("hello world test log")
+    res.status(401).send("Un Authorized");
 });
 
 exports.registerUser = onRequest(async (req, res) => {
@@ -16,8 +16,8 @@ exports.registerUser = onRequest(async (req, res) => {
 
     // Extract user details from request body
     const {email, password, fullName} = req.body;
-    if (!email || !password) {
-        res.status(400).send('Missing email or password');
+    if (!email || !password || !fullName) {
+        res.status(400).send('Missing data');
         return;
     }
 
@@ -29,10 +29,12 @@ exports.registerUser = onRequest(async (req, res) => {
 
         // Optionally, store additional user details in Firestore
         const userData = {
-            email: email, fullName: fullName || '', createdAt: admin.firestore.FieldValue.serverTimestamp(),
+            email: email, fullName: fullName, created_at: admin.firestore.FieldValue.serverTimestamp(),
         };
 
         await admin.firestore().collection('users').doc(userRecord.uid).set(userData);
+
+        // send email verification tasskkkkkk
 
         // Send the UID and email of the newly created user back to the client
         res.status(201).send({
