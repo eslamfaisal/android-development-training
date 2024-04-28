@@ -1,5 +1,6 @@
 package com.training.ecommerce.data.repository.auth
 
+import android.util.Log
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -52,13 +53,16 @@ class FirebaseAuthRepositoryImpl(
                 return@flow
             }
 
-            if (authResult.user?.isEmailVerified == false) {
-                authResult.user?.sendEmailVerification()?.await()
-                val msg = "Email not verified, verification email sent to user"
-                logAuthIssueToCrashlytics(msg, provider.name)
-                emit(Resource.Error(Exception(msg)))
-                return@flow
-            }
+            val idTokenRequest = authResult.user?.getIdToken(true)?.await()
+            Log.d(TAG, "login: idTokenRequest = ${idTokenRequest?.token}")
+
+//            if (authResult.user?.isEmailVerified == false) {
+//                authResult.user?.sendEmailVerification()?.await()
+//                val msg = "Email not verified, verification email sent to user"
+//                logAuthIssueToCrashlytics(msg, provider.name)
+//                emit(Resource.Error(Exception(msg)))
+//                return@flow
+//            }
 
             // get user details from firestore
             val userDoc = firestore.collection("users").document(userId).get().await()

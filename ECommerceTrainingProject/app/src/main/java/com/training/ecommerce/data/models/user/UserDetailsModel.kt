@@ -16,4 +16,5 @@ data class UserDetailsModel(
     var name: String? = null,
     var disabled: Boolean? = null,
     var reviews: List<String>? = null,
+    var idToken: String? = null
 ) : Parcelable

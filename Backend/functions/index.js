@@ -24,8 +24,15 @@ exports.registerUser = onRequest(async (req, res) => {
     try {
         // Register the user with Firebase Authentication
         const userRecord = await admin.auth().createUser({
-            email: email, password: password
+            email: email,
+            password: "123456",
+            displayName: fullName,
+            disabled: false,
+            emailVerified: true,
+            photoURL: "http://www.example.com/12345678/photo.png",
         });
+
+        await admin.auth
 
         // Optionally, store additional user details in Firestore
         const userData = {
