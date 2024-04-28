@@ -34,7 +34,7 @@ exports.registerUser = onRequest(async (req, res) => {
 
         // Optionally, store additional user details in Firestore
         const userData = {
-            email: email, fullName: fullName, created_at: admin.firestore.FieldValue.serverTimestamp(),
+            email: email, name: fullName, created_at: admin.firestore.FieldValue.serverTimestamp(),
         };
 
         await admin.firestore().collection('users').doc(userRecord.uid).set(userData);
