@@ -1,7 +1,6 @@
 package com.training.ecommerce.di
 
 import android.app.Application
-import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.training.ecommerce.data.datasource.datastore.AppPreferencesDataSource
@@ -9,7 +8,6 @@ import com.training.ecommerce.data.models.user.UserDetailsModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
