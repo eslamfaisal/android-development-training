@@ -37,9 +37,11 @@ exports.registerUser = onRequest(async (req, res) => {
             id: userRecord.uid, email: email, name: fullName, created_at: admin.firestore.FieldValue.serverTimestamp(),
         };
 
+
         await admin.firestore().collection('users').doc(userRecord.uid).set(userData);
 
-        // send email verification tasskkkkkk
+        // TODO send email verification to the user
+        // const emailVerificationLink = await admin.auth().generateEmailVerificationLink(email);
 
         // Send the UID and email of the newly created user back to the client
         res.status(201).send({
