@@ -6,7 +6,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("com.google.protobuf") version "0.9.4" apply true
-
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -86,21 +86,27 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
-    implementation("androidx.activity:activity-ktx:1.8.2")
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
     implementation("com.google.protobuf:protobuf-kotlin-lite:4.26.0")
 
     // firebase dependencies
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-functions-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:21.0.0")
-    implementation ("com.facebook.android:facebook-login:16.0.0")
+    implementation("com.google.android.gms:play-services-auth:21.1.0")
+    implementation ("com.facebook.android:facebook-login:17.0.0")
 
     // third party libraries
     implementation("com.github.pwittchen:reactivenetwork-rx2:3.0.8")
+
+    implementation("com.google.dagger:hilt-android:2.47")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
 
     // Local Unit Tests
     implementation("androidx.test:core-ktx:1.5.0")
@@ -112,7 +118,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.11.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("com.google.dagger:hilt-android-testing:2.44.2")
-    kaptTest("com.google.dagger:hilt-android-compiler:2.44")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.47")
 
     // Instrumented Unit Tests
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -125,8 +131,8 @@ dependencies {
     androidTestImplementation("org.mockito:mockito-core:5.11.0")
     androidTestImplementation("org.mockito:mockito-android:5.11.0")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.44.2")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.44")
-    debugImplementation("androidx.fragment:fragment-testing:1.6.2")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.47")
+    debugImplementation("androidx.fragment:fragment-testing:1.7.0")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
 }
 
