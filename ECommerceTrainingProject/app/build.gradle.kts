@@ -6,7 +6,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("com.google.protobuf") version "0.9.4" apply true
-
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -103,6 +103,11 @@ dependencies {
     // third party libraries
     implementation("com.github.pwittchen:reactivenetwork-rx2:3.0.8")
 
+    implementation("com.google.dagger:hilt-android:2.47")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
+
     // Local Unit Tests
     implementation("androidx.test:core-ktx:1.5.0")
     testImplementation("junit:junit:4.13.2")
@@ -113,7 +118,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.11.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("com.google.dagger:hilt-android-testing:2.44.2")
-    kaptTest("com.google.dagger:hilt-android-compiler:2.44")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.47")
 
     // Instrumented Unit Tests
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -126,8 +131,8 @@ dependencies {
     androidTestImplementation("org.mockito:mockito-core:5.11.0")
     androidTestImplementation("org.mockito:mockito-android:5.11.0")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.44.2")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.44")
-    debugImplementation("androidx.fragment:fragment-testing:1.6.2")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.47")
+    debugImplementation("androidx.fragment:fragment-testing:1.7.0")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
 }
 
