@@ -26,12 +26,16 @@ interface CloudFunctionAPI {
         private const val BASE_URL = "https://us-central1-android-e-commerce-training.cloudfunctions.net/"
         private const val TIME_OUT = 60L
         fun create(): CloudFunctionAPI {
-            val okHttpClient = OkHttpClient.Builder().readTimeout(TIME_OUT, TimeUnit.SECONDS)
-                .connectTimeout(TIME_OUT, TimeUnit.SECONDS).addInterceptor {
-                    HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    }.intercept(it)
-                }.build()
+            val okHttpClient =
+                OkHttpClient
+                    .Builder()
+                    .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                    .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+                    .addInterceptor { HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY }.intercept(it)
+                    }
+                    .addInterceptor { ErrorLoggingInterceptor().intercept(it) }
+                    .build()
 
             val retrofit: CloudFunctionAPI by lazy {
                 Retrofit.Builder().addConverterFactory(
