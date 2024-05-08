@@ -97,6 +97,10 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun registerWithGoogleWithAPI(idToken: String): Flow<Resource<RegisterResponseModel>> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun registerEmailAndPasswordWithAPI(registerRequestModel: RegisterRequestModel): Flow<Resource<RegisterResponseModel>> {
         return flow {
             try {
@@ -239,10 +243,6 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
                 emit(Resource.Error(e)) // Emit error
             }
         }
-    }
-
-    override suspend fun registerWithGoogleWithAPI(idToken: String): Flow<Resource<RegisterResponseModel>> {
-        TODO("Not yet implemented")
     }
 
     private fun logAuthIssueToCrashlytics(msg: String, provider: String) {
