@@ -3,6 +3,8 @@ package com.training.ecommerce.ui.auth.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.ecommerce.data.models.Resource
+import com.training.ecommerce.data.models.auth.RegisterRequestModel
+import com.training.ecommerce.data.models.auth.RegisterResponseModel
 import com.training.ecommerce.data.models.user.UserDetailsModel
 import com.training.ecommerce.data.repository.auth.FirebaseAuthRepository
 import com.training.ecommerce.utils.isValidEmail
@@ -22,8 +24,8 @@ class RegisterViewModel @Inject constructor(
     private val authRepository: FirebaseAuthRepository
 ) : ViewModel() {
 
-    private val _registerState = MutableSharedFlow<Resource<UserDetailsModel>>()
-    val registerState: SharedFlow<Resource<UserDetailsModel>> = _registerState.asSharedFlow()
+    private val _registerState = MutableSharedFlow<Resource<RegisterResponseModel>>()
+    val registerState: SharedFlow<Resource<RegisterResponseModel>> = _registerState.asSharedFlow()
 
     val name = MutableStateFlow("")
     val email = MutableStateFlow("")
@@ -42,7 +44,12 @@ class RegisterViewModel @Inject constructor(
         val password = password.value
         if (isRegisterIsValid.first()) {
             // handle register flow
-            authRepository.registerWithEmailAndPassword(name, email, password).collect {
+            val registerResponseModel = RegisterRequestModel(
+                fullName = name,
+                email = email,
+                password = password
+            )
+            authRepository.registerEmailAndPasswordWithAPI(registerResponseModel).collect {
                 _registerState.emit(it)
             }
         } else {
@@ -51,14 +58,14 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun signUpWithGoogle(idToken: String) = viewModelScope.launch {
-        authRepository.registerWithGoogle(idToken).collect {
-            _registerState.emit(it)
-        }
+//        authRepository.registerWithGoogle(idToken).collect {
+//            _registerState.emit(it)
+//        }
     }
 
     fun registerWithFacebook(token: String) = viewModelScope.launch {
-        authRepository.registerWithFacebook(token).collect {
-            _registerState.emit(it)
-        }
+//        authRepository.registerWithFacebook(token).collect {
+//            _registerState.emit(it)
+//        }
     }
 }

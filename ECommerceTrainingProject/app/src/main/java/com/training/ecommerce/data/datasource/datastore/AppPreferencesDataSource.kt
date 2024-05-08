@@ -1,13 +1,12 @@
 package com.training.ecommerce.data.datasource.datastore
 
-import android.app.Application
+import android.content.Context
 import androidx.datastore.preferences.core.edit
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class AppPreferencesDataSource @Inject constructor(val context: Application) {
+class AppPreferencesDataSource @Inject constructor(val context: Context) {
 
     suspend fun saveLoginState(isLoggedIn: Boolean) {
         context.appDataStore.edit { preferences ->
