@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.training.ecommerce.R
 import com.training.ecommerce.ui.auth.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
 
     val authViewModel: AuthViewModel by viewModels()

@@ -7,6 +7,8 @@ exports.hellowWorld = onRequest((req, res) => {
     res.status(401).send("Un Authorized");
 });
 
+const GenericResponse = require('./generic-response');
+
 exports.registerUser = onRequest(async (req, res) => {
     // Check for POST request
     if (req.method !== 'POST') {
@@ -21,6 +23,7 @@ exports.registerUser = onRequest(async (req, res) => {
         return;
     }
 
+    let response = new GenericResponse();
     try {
         // Register the user with Firebase Authentication
         const userRecord = await admin.auth().createUser({
@@ -37,18 +40,25 @@ exports.registerUser = onRequest(async (req, res) => {
             id: userRecord.uid, email: email, name: fullName, created_at: admin.firestore.FieldValue.serverTimestamp(),
         };
 
-
         await admin.firestore().collection('users').doc(userRecord.uid).set(userData);
 
         // TODO send email verification to the user
         // const emailVerificationLink = await admin.auth().generateEmailVerificationLink(email);
 
-        // Send the UID and email of the newly created user back to the client
-        res.status(201).send({
+        response.message = "User Registered successfully."
+        response.code = 200;
+        response.data = {
             uid: userRecord.uid, email: userRecord.email
-        });
+        }; // Example data
+
+        // Send the UID and email of the newly created user back to the client
+        res.status(201).send(response);
     } catch (error) {
         console.error("Error creating new user:", error);
-        res.status(500).send("Error creating new user: " + error.message);
+        response.message = "Error creating new user: " + error.message
+        response.code = 400;
+        res.status(400).send(response);
     }
 });
+
+// TODO create register social media user

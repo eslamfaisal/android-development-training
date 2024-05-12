@@ -22,23 +22,21 @@ import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.databinding.FragmentLoginBinding
 import com.training.ecommerce.ui.auth.getGoogleRequestIntent
 import com.training.ecommerce.ui.auth.viewmodel.LoginViewModel
-import com.training.ecommerce.ui.auth.viewmodel.LoginViewModelFactory
 import com.training.ecommerce.ui.common.fragments.BaseFragment
 import com.training.ecommerce.ui.home.MainActivity
 import com.training.ecommerce.ui.showSnakeBarError
 import com.training.ecommerce.utils.CrashlyticsUtils
 import com.training.ecommerce.utils.LoginException
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
     private val callbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
     private val loginManager: LoginManager by lazy { LoginManager.getInstance() }
 
-    override val viewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(contextValue = requireContext())
-    }
-
+    override val viewModel: LoginViewModel by viewModels()
     override fun getLayoutResId(): Int = R.layout.fragment_login
 
     override fun init() {

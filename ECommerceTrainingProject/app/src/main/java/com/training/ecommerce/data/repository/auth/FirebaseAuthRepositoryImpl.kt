@@ -1,11 +1,16 @@
 package com.training.ecommerce.data.repository.auth
 
+import android.util.Log
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.training.ecommerce.data.datasource.networking.CloudFunctionAPI
+import com.training.ecommerce.data.datasource.networking.handleErrorResponse
 import com.training.ecommerce.data.models.Resource
+import com.training.ecommerce.data.models.auth.RegisterRequestModel
+import com.training.ecommerce.data.models.auth.RegisterResponseModel
 import com.training.ecommerce.data.models.user.AuthProvider
 import com.training.ecommerce.data.models.user.UserDetailsModel
 import com.training.ecommerce.utils.CrashlyticsUtils
@@ -13,10 +18,12 @@ import com.training.ecommerce.utils.LoginException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class FirebaseAuthRepositoryImpl(
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+class FirebaseAuthRepositoryImpl @Inject constructor(
+    private val auth: FirebaseAuth,
+    private val firestore: FirebaseFirestore,
+    private val cloudFunctionAPI: CloudFunctionAPI
 ) : FirebaseAuthRepository {
 
     // Example usage for email and password login
@@ -85,6 +92,40 @@ class FirebaseAuthRepositoryImpl(
             emit(Resource.Error(e)) // Emit error
         }
     }
+
+    override suspend fun registerWithFacebookWithAPI(token: String): Flow<Resource<RegisterResponseModel>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun registerWithGoogleWithAPI(idToken: String): Flow<Resource<RegisterResponseModel>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun registerEmailAndPasswordWithAPI(registerRequestModel: RegisterRequestModel): Flow<Resource<RegisterResponseModel>> {
+        return flow {
+            try {
+                emit(Resource.Loading())
+                val response = cloudFunctionAPI.registerUser(registerRequestModel)
+                if (response.isSuccessful) {
+                    val registerResponse = response.body()
+                    registerResponse?.data?.let {
+                        emit(Resource.Success(it))
+                    } ?: run {
+                        emit(Resource.Error(Exception(registerResponse?.message)))
+                    }
+                } else {
+                    Log.d(
+                        TAG,
+                        "registerEmailAndPasswordWithAPI: Error registering user = ${response.errorBody()}"
+                    )
+                    emit(Resource.Error(Exception(handleErrorResponse(response.errorBody()!!.charStream()))))
+                }
+            } catch (e: Exception) {
+                emit(Resource.Error(e))
+            }
+        }
+    }
+
 
     override suspend fun registerWithGoogle(idToken: String): Flow<Resource<UserDetailsModel>> {
         return flow {
