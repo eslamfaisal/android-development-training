@@ -22,21 +22,20 @@ import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.databinding.FragmentRegisterBinding
 import com.training.ecommerce.ui.auth.getGoogleRequestIntent
 import com.training.ecommerce.ui.auth.viewmodel.RegisterViewModel
-import com.training.ecommerce.ui.auth.viewmodel.RegisterViewModelFactory
 import com.training.ecommerce.ui.common.fragments.BaseFragment
 import com.training.ecommerce.ui.showSnakeBarError
 import com.training.ecommerce.utils.CrashlyticsUtils
 import com.training.ecommerce.utils.RegisterException
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding, RegisterViewModel>() {
 
     private val callbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
     private val loginManager: LoginManager by lazy { LoginManager.getInstance() }
 
-    override val viewModel: RegisterViewModel by viewModels {
-        RegisterViewModelFactory(contextValue = requireContext())
-    }
+    override val viewModel: RegisterViewModel by viewModels()
 
 
     // ActivityResultLauncher for the sign-in intent

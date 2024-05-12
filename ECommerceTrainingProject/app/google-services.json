@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "449149627104-7ekni5ku73kdf6b0cku6himjombtuth5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.training.ecommerce",
+            "certificate_hash": "a1e93fff8adf179a962dbdaaabdfdb513e5705d8"
+          }
+        },
+        {
           "client_id": "449149627104-ri54pflcio3781bhrs26v2pgtlvuvad8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

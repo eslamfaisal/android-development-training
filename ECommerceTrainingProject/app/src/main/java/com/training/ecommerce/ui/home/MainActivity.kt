@@ -13,17 +13,15 @@ import androidx.lifecycle.lifecycleScope
 import com.training.ecommerce.R
 import com.training.ecommerce.ui.auth.AuthActivity
 import com.training.ecommerce.ui.common.viewmodel.UserViewModel
-import com.training.ecommerce.ui.common.viewmodel.UserViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val userViewModel: UserViewModel by viewModels {
-        UserViewModelFactory(context = this)
-    }
-
+    private val userViewModel: UserViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         initSplashScreen()
         super.onCreate(savedInstanceState)
