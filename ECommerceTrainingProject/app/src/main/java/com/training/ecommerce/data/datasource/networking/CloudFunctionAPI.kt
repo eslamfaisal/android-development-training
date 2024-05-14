@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.training.ecommerce.data.models.GenericResponse
 import com.training.ecommerce.data.models.auth.RegisterRequestModel
 import com.training.ecommerce.data.models.auth.RegisterResponseModel
+import com.training.ecommerce.data.models.user.AuthProvider
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -20,6 +21,13 @@ interface CloudFunctionAPI {
     @POST("registerUser")
     suspend fun registerUser(
         @Body registerRequest: RegisterRequestModel
+    ): Response<GenericResponse<RegisterResponseModel>>
+
+    // i cant add it to cloud function :)
+    @POST("registerWithSocialMedia")
+    suspend fun registerWithSocialMedia(
+          idToken :String,
+          provider:String
     ): Response<GenericResponse<RegisterResponseModel>>
 
     companion object {
