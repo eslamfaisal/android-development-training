@@ -28,4 +28,9 @@
     <string name="facebook_signup_btn_msg">Sign up with facebook</string>
     <string name="forget_password_msg">Enter your email, to send an email to update your password.</string>
     <string name="send">Send</string>
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="cart">Cart</string>
+    <string name="offer">Offer</string>
+    <string name="account">Account</string>
 </resources>

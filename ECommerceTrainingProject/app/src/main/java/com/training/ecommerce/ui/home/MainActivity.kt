@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.training.ecommerce.R
+import com.training.ecommerce.databinding.ActivityMainBinding
 import com.training.ecommerce.ui.auth.AuthActivity
 import com.training.ecommerce.ui.common.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +23,9 @@ import kotlinx.coroutines.runBlocking
 class MainActivity : AppCompatActivity() {
 
     private val userViewModel: UserViewModel by viewModels()
+
+    private var _bindig: ActivityMainBinding? = null
+    private val binding get() = _bindig!!
     override fun onCreate(savedInstanceState: Bundle?) {
         initSplashScreen()
         super.onCreate(savedInstanceState)
@@ -30,11 +34,9 @@ class MainActivity : AppCompatActivity() {
             goToAuthActivity()
             return
         }
+        _bindig = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(R.layout.activity_main)
-        findViewById<View>(R.id.textView).setOnClickListener {
-            logOut()
-        }
 
         initViewModel()
     }
@@ -48,13 +50,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "initViewModel: user details updated ${it?.email}")
             }
 
-        }
-    }
-
-    private fun logOut() {
-        lifecycleScope.launch {
-            userViewModel.logOut()
-            goToAuthActivity()
         }
     }
 
@@ -80,6 +75,11 @@ class MainActivity : AppCompatActivity() {
         } else {
             setTheme(R.style.Theme_ECommerce)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _bindig = null
     }
 
     companion object {
