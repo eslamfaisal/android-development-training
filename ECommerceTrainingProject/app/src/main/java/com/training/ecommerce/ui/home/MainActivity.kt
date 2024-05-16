@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             AccountFragment()
         )
 
-//        binding.homeViewPager.offscreenPageLimit = fragments.size
+        binding.homeViewPager.offscreenPageLimit = fragments.size
         binding.homeViewPager.adapter = HomeViewPagerAdapter(this, fragments)
         binding.homeViewPager.registerOnPageChangeCallback(
             object : androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
