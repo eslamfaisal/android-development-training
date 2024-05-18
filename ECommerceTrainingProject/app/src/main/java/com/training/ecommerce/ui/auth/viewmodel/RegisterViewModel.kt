@@ -58,14 +58,10 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun signUpWithGoogle(idToken: String) = viewModelScope.launch {
-//        authRepository.registerWithGoogle(idToken).collect {
-//            _registerState.emit(it)
-//        }
+        authRepository.registerWithGoogleWithAPI(idToken)
     }
 
     fun registerWithFacebook(token: String) = viewModelScope.launch {
-//        authRepository.registerWithFacebook(token).collect {
-//            _registerState.emit(it)
-//        }
+        authRepository.registerWithFacebookWithAPI(token)
     }
 }

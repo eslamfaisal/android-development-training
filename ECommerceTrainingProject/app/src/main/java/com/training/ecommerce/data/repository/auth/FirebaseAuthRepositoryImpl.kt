@@ -94,11 +94,45 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun registerWithFacebookWithAPI(token: String): Flow<Resource<RegisterResponseModel>> {
-        TODO("Not yet implemented")
+        return flow {
+            try {
+                emit(Resource.Loading())
+                val response = cloudFunctionAPI.registerWithSocialMedia(token,"facebook")
+                if(response.isSuccessful){
+                    val registerResponse = response.body()
+                    registerResponse?.data?.let {
+                        emit(Resource.Success(it))
+                    }?:run {
+                        emit(Resource.Error(Exception(registerResponse?.message)))
+                    }
+                }else {
+                    emit(Resource.Error(Exception(handleErrorResponse(response.errorBody()!!.charStream()))))
+                }
+            }catch (e:Exception){
+                emit(Resource.Error(e))
+            }
+        }
     }
 
     override suspend fun registerWithGoogleWithAPI(idToken: String): Flow<Resource<RegisterResponseModel>> {
-        TODO("Not yet implemented")
+        return flow {
+            try {
+                emit(Resource.Loading())
+                val response = cloudFunctionAPI.registerWithSocialMedia(idToken,"google")
+                if(response.isSuccessful){
+                    val registerResponse = response.body()
+                    registerResponse?.data?.let {
+                        emit(Resource.Success(it))
+                    }?:run {
+                        emit(Resource.Error(Exception(registerResponse?.message)))
+                    }
+                }else {
+                    emit(Resource.Error(Exception(handleErrorResponse(response.errorBody()!!.charStream()))))
+                }
+            }catch (e:Exception){
+                emit(Resource.Error(e))
+            }
+        }
     }
 
     override suspend fun registerEmailAndPasswordWithAPI(registerRequestModel: RegisterRequestModel): Flow<Resource<RegisterResponseModel>> {
