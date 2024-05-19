@@ -34,5 +34,6 @@
     <string name="cart">Cart</string>
     <string name="offer">Offer</string>
     <string name="account">Account</string>
+    <string name="search_products">Search Products</string>
 
 </resources>
