@@ -35,8 +35,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:gravity="center_vertical"
                         android:layout_marginBottom="8dp"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingTop="8dp">
 
@@ -86,16 +86,18 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/neutral_light" />
-                <View
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/sale_ads_view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="1500dp"
-                    android:background="@color/white" />
+                    android:layout_height="240dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             </LinearLayout>
 
