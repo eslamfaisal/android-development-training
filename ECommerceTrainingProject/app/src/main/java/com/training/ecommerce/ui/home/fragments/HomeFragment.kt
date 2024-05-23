@@ -103,11 +103,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         for (i in 0 until count) {
             val circleView = CircleView(requireContext())
             val params = LinearLayout.LayoutParams(
-                16, 16
+                20, 20
             )
             params.setMargins(8, 0, 8, 0) // Margin between circles
             circleView.setLayoutParams(params)
-            circleView.setRadius(8f) // Set radius
+            circleView.setRadius(10f) // Set radius
             circleView.setColor(
                 if (i == 0) requireContext().getColor(R.color.primary_color) else requireContext().getColor(
                     R.color.neutral_grey
