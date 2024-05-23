@@ -90,10 +90,11 @@
         <item name="backgroundTint">@color/white</item>
         <item name="itemActiveIndicatorStyle">@null</item>
         <item name="itemTextAppearanceActive">@style/SelectedBottomNavigationViewTextStyle</item>
+        <item name="itemTextAppearanceInactive">@style/SelectedBottomNavigationViewTextStyle</item>
     </style>
 
     <style name="SelectedBottomNavigationViewTextStyle" parent="@style/TextAppearance.AppCompat.Caption">
-        <item name="android:textColor">@color/primary_color</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="SaleTimerItemTextStyle">

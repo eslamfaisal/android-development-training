@@ -26,11 +26,12 @@
         android:id="@+id/bottom_navigation_view"
         style="@style/Widget.App.BottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="58dp"
         android:background="?android:attr/windowBackground"
         app:itemIconTint="@drawable/home_nav_items_color"
         app:itemPaddingBottom="10dp"
         app:itemPaddingTop="10dp"
+        app:itemIconSize="20dp"
         app:itemTextColor="@drawable/home_nav_items_color"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/home_nav_menu" />
