@@ -99,14 +99,14 @@
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/sale_ads_view_pager"
                         android:layout_width="match_parent"
-                        android:layout_height="240dp"
+                        android:layout_height="220dp"
                         android:nestedScrollingEnabled="false"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
                 </com.training.ecommerce.utils.NestedScrollableHost>
 
                 <LinearLayout
-                    android:id="@+id/indicator"
+                    android:id="@+id/indicator_view"
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
                     android:layout_gravity="center"

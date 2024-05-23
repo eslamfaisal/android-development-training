@@ -32,7 +32,6 @@ class HomeFragment : Fragment() {
 
         Log.d(TAG, "onViewCreated: HomeFragment")
 
-
         val salesAds = listOf(
             SalesAdUIModel(
                 title = "Super Flash Sale",
@@ -44,6 +43,7 @@ class HomeFragment : Fragment() {
                 endAt = System.currentTimeMillis() + 7200000 // 2 hours from now
             )
         )
+
         initializeIndicators(salesAds.size)
         val adapter = SalesAdAdapter(salesAds)
         binding.saleAdsViewPager.adapter = adapter
@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
                 )
             ) // First indicator is red
             indicators.add(circleView)
-            binding.indicator.addView(circleView)
+            binding.indicatorView.addView(circleView)
         }
     }
 
