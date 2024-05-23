@@ -5,6 +5,7 @@ import androidx.annotation.Keep
 import com.google.firebase.firestore.PropertyName
 import com.google.firebase.firestore.ServerTimestamp
 import kotlinx.parcelize.Parcelize
+import java.util.Date
 
 @Keep
 @Parcelize
@@ -32,5 +33,18 @@ data class SalesAdModel(
     @ServerTimestamp
     @get:PropertyName("end_at")
     @set:PropertyName("end_at")
-    var endAt: Long? = null
-): Parcelable
+    var endAt: Date? = null
+): Parcelable {
+    fun toUIModel(): SalesAdModel {
+        return SalesAdModel(
+            title = this.title,
+            description = this.description,
+            imageUrl = this.imageUrl,
+            type = this.type,
+            productId = this.productId,
+            categoryId = this.categoryId,
+            externalLink = this.externalLink,
+            endAt = this.endAt
+        )
+    }
+}
