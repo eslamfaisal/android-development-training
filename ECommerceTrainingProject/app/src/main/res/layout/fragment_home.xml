@@ -92,18 +92,28 @@
                     android:layout_marginTop="8dp"
                     android:background="@color/neutral_light" />
 
-                <com.training.ecommerce.utils.NestedScrollableHost
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/sale_ads_view_pager"
+                    <com.training.ecommerce.utils.NestedScrollableHost
                         android:layout_width="match_parent"
-                        android:layout_height="220dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                        android:layout_height="wrap_content">
 
-                </com.training.ecommerce.utils.NestedScrollableHost>
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/sale_ads_view_pager"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                    </com.training.ecommerce.utils.NestedScrollableHost>
+
+                    <include
+                        android:id="@+id/sale_ads_shimmer_view"
+                        layout="@layout/sale_ad_shimmer_view" />
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/indicator_view"

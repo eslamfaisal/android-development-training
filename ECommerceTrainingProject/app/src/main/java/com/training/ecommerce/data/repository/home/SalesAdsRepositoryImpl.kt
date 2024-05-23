@@ -15,6 +15,7 @@ class SalesAdsRepositoryImpl @Inject constructor(
         try {
             Log.d(TAG, "getSalesAds: ")
             emit(Resource.Loading())
+            kotlinx.coroutines.delay(5000)
             val salesAds =
                 firestore.collection("sales_ads")
                     .get().await().toObjects(SalesAdModel::class.java)

@@ -1,13 +1,13 @@
 package com.training.ecommerce.ui.home.fragments
 
 import android.util.Log
+import android.view.View
 import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.training.ecommerce.R
 import com.training.ecommerce.data.models.Resource
-import com.training.ecommerce.data.models.sale_ads.SalesAdModel
 import com.training.ecommerce.databinding.FragmentHomeBinding
 import com.training.ecommerce.ui.common.fragments.BaseFragment
 import com.training.ecommerce.ui.common.views.CircleView
@@ -37,14 +37,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     private fun iniViewModel() {
         lifecycleScope.launch {
-            viewModel.salesAdsStateTemp.collect {resources->
-                when(resources){
+            viewModel.salesAdsStateTemp.collect { resources ->
+                when (resources) {
                     is Resource.Loading -> {
                         Log.d(TAG, "iniViewModel: Loading")
                     }
+
                     is Resource.Success -> {
+                        binding.saleAdsShimmerView.root.stopShimmer()
+                        binding.saleAdsShimmerView.root.visibility = View.GONE
                         initSalesAdsView(resources.data)
                     }
+
                     is Resource.Error -> {
                         Log.d(TAG, "iniViewModel: Error")
                     }

@@ -1,39 +1,35 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="salesAd"
-            type="com.training.ecommerce.ui.home.model.SalesAdUIModel" />
-    </data>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:layout_centerInParent="true"
+    app:shimmer_auto_start="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/sale_ad_item_background"
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:background="@color/neutral_grey"
             android:layout_width="match_parent"
+            android:alpha="0.4"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/promo_image"
-            app:imageUrl="@{salesAd.imageUrl}" />
+            android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
+            android:background="@color/neutral_light"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_margin="24dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="@{salesAd.title}"
+            android:lines="1"
             android:textColor="@android:color/white"
             android:textSize="32sp"
             android:textStyle="bold" />
@@ -47,11 +43,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/hoursTextView"
+                android:background="@color/neutral_light"
                 style="@style/SaleTimerItemTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="08" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,12 +59,11 @@
                 tools:text=":" />
 
             <TextView
-                android:id="@+id/minutesTextView"
+                android:background="@color/neutral_light"
                 style="@style/SaleTimerItemTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="34" />
-
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,11 +73,13 @@
                 tools:text=":" />
 
             <TextView
-                android:id="@+id/secondsTextView"
+                android:background="@color/neutral_light"
                 style="@style/SaleTimerItemTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="52" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                />
+
         </LinearLayout>
     </RelativeLayout>
-</layout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>
