@@ -7,6 +7,10 @@
         <variable
             name="salesAd"
             type="com.training.ecommerce.ui.home.model.SalesAdUIModel" />
+
+        <variable
+            name="lifecycleScope"
+            type="androidx.lifecycle.LifecycleCoroutineScope" />
     </data>
 
     <RelativeLayout
@@ -49,6 +53,8 @@
             <TextView
                 android:id="@+id/hoursTextView"
                 style="@style/SaleTimerItemTextStyle"
+                app:countdownTimer="@{salesAd.hours}"
+                app:lifecycleScope="@{lifecycleScope}"
                 tools:text="08" />
 
             <TextView
@@ -64,6 +70,8 @@
             <TextView
                 android:id="@+id/minutesTextView"
                 style="@style/SaleTimerItemTextStyle"
+                app:countdownTimer="@{salesAd.minutes}"
+                app:lifecycleScope="@{lifecycleScope}"
                 tools:text="34" />
 
             <TextView
@@ -79,6 +87,8 @@
             <TextView
                 android:id="@+id/secondsTextView"
                 style="@style/SaleTimerItemTextStyle"
+                app:countdownTimer="@{salesAd.seconds}"
+                app:lifecycleScope="@{lifecycleScope}"
                 tools:text="52" />
         </LinearLayout>
     </RelativeLayout>

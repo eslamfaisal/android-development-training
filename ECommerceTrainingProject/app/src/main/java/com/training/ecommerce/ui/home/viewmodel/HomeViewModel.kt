@@ -22,8 +22,11 @@ class HomeViewModel @Inject constructor(
         viewModelScope + IO, started = SharingStarted.Eagerly, initialValue = Resource.Loading()
     )
 
-    init {
+    fun stopTimer() {
+        salesAdsStateTemp.value.data?.forEach { it.stopCountdown() }
     }
 
-
+    fun startTimer() {
+        salesAdsStateTemp.value.data?.forEach { it.startCountdown() }
+    }
 }
