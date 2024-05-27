@@ -31,11 +31,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_margin="24dp"
+            android:layout_margin="18dp"
             android:fontFamily="@font/poppins_bold"
             android:text="@{salesAd.title}"
             android:textColor="@android:color/white"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -43,14 +43,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="24dp"
+            android:layout_margin="18dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/hoursTextView"
                 style="@style/SaleTimerItemTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 tools:text="08" />
 
             <TextView
@@ -58,30 +56,29 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
                 android:padding="8dp"
+                android:text=":"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
-                tools:text=":" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/minutesTextView"
                 style="@style/SaleTimerItemTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 tools:text="34" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
                 android:padding="8dp"
+                android:text=":"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
-                tools:text=":" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/secondsTextView"
                 style="@style/SaleTimerItemTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 tools:text="52" />
         </LinearLayout>
     </RelativeLayout>

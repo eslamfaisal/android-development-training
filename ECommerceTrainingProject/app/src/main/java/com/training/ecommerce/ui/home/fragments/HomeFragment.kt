@@ -88,6 +88,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 }
             }
         }
+
+        // add animation from top to bottom
+        binding.saleAdsViewPager.animate()
+            .translationY(0f)
+            .alpha(1f)
+            .setDuration(500)
+            .start()
+
     }
 
     private fun tickerFlow(period: Long) = flow {

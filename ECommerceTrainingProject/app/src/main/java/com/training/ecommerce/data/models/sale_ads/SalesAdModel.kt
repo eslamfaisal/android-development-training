@@ -11,6 +11,7 @@ import java.util.Date
 @Keep
 @Parcelize
 data class SalesAdModel(
+    val id: String? = null,
     val title: String? = null,
     val description: String? = null,
 
@@ -38,6 +39,7 @@ data class SalesAdModel(
 ): Parcelable {
     fun toUIModel(): SalesAdUIModel {
         return SalesAdUIModel(
+            id = this.id,
             title = this.title,
             description = this.description,
             imageUrl = this.imageUrl,
