@@ -123,6 +123,39 @@
                     android:gravity="center"
                     android:orientation="horizontal" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TitleTextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/category" />
+
+                    <TextView
+                        android:id="@+id/forgot_password_tv"
+                        style="@style/MediumPrimaryTextViewStyle"
+                        android:layout_gravity="center"
+                        android:text="@string/more_categories"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categories_recycler_view"
+                    android:layout_width="match_parent"
+                    android:paddingStart="8dp"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/category_item"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

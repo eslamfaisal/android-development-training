@@ -19,11 +19,11 @@ fun loadImage(view: ImageView, imageUrl: String?) {
         .load(imageUrl).placeholder(loading)
         .diskCacheStrategy(DiskCacheStrategy.ALL) // TODO Don't use cache
 //        .signature(Object())
-        .transform(CenterCrop(), RoundedCorners(16))
+        .transform(CenterCrop(), RoundedCorners(16), )
         .into(view)
 }
 
-private fun getGlideCircleLoading(view: ImageView): CircularProgressDrawable {
+fun getGlideCircleLoading(view: ImageView): CircularProgressDrawable {
     return CircularProgressDrawable(view.context).apply {
         strokeWidth = 5f
         centerRadius = 30f
