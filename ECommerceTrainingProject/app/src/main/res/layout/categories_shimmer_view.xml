@@ -26,6 +26,7 @@
                 android:layout_height="70dp"
                 android:background="@drawable/circle_border_bg"
                 android:backgroundTint="@color/neutral_grey"
+                android:alpha="0.4"
                 android:padding="24dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -34,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:alpha="0.4"
                 android:background="@color/neutral_grey" />
         </LinearLayout>
 
@@ -54,6 +56,7 @@
                 android:layout_height="70dp"
                 android:background="@drawable/circle_border_bg"
                 android:backgroundTint="@color/neutral_grey"
+                android:alpha="0.4"
                 android:padding="24dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -62,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:alpha="0.4"
                 android:background="@color/neutral_grey" />
         </LinearLayout>
 
@@ -82,6 +86,7 @@
                 android:layout_height="70dp"
                 android:background="@drawable/circle_border_bg"
                 android:backgroundTint="@color/neutral_grey"
+                android:alpha="0.4"
                 android:padding="24dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -90,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:alpha="0.4"
                 android:background="@color/neutral_grey" />
         </LinearLayout>
 
@@ -110,6 +116,7 @@
                 android:layout_height="70dp"
                 android:background="@drawable/circle_border_bg"
                 android:backgroundTint="@color/neutral_grey"
+                android:alpha="0.4"
                 android:padding="24dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -118,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:alpha="0.4"
                 android:background="@color/neutral_grey" />
         </LinearLayout>
 
@@ -138,6 +146,7 @@
                 android:layout_height="70dp"
                 android:background="@drawable/circle_border_bg"
                 android:backgroundTint="@color/neutral_grey"
+                android:alpha="0.4"
                 android:padding="24dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -146,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:alpha="0.4"
                 android:background="@color/neutral_grey" />
         </LinearLayout>
 
@@ -166,6 +176,7 @@
                 android:layout_height="70dp"
                 android:background="@drawable/circle_border_bg"
                 android:backgroundTint="@color/neutral_grey"
+                android:alpha="0.4"
                 android:padding="24dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -174,6 +185,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:alpha="0.4"
                 android:background="@color/neutral_grey" />
         </LinearLayout>
 
@@ -194,6 +206,7 @@
                 android:layout_height="70dp"
                 android:background="@drawable/circle_border_bg"
                 android:backgroundTint="@color/neutral_grey"
+                android:alpha="0.4"
                 android:padding="24dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -202,6 +215,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:alpha="0.4"
                 android:background="@color/neutral_grey" />
         </LinearLayout>
 
@@ -221,6 +235,7 @@
                 android:layout_height="70dp"
                 android:background="@drawable/circle_border_bg"
                 android:backgroundTint="@color/neutral_grey"
+                android:alpha="0.4"
                 android:padding="24dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -229,6 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:alpha="0.4"
                 android:background="@color/neutral_grey" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
