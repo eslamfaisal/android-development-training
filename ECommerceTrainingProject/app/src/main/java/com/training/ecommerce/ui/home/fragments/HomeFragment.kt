@@ -1,5 +1,6 @@
 package com.training.ecommerce.ui.home.fragments
 
+import android.graphics.Paint
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
@@ -36,6 +37,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     override fun init() {
         initViews()
         iniViewModel()
+
+//        binding.searchTv.paintFlags = binding.searchTv.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG;
     }
 
     private fun iniViewModel() {

@@ -37,6 +37,12 @@
         <item name="fontFamily">@font/poppins_bold</item>
     </style>
 
+    <style name="MediumTitleTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/primary_dark_color</item>
+        <item name="fontFamily">@font/poppins_bold</item>
+    </style>
+
     <style name="MessageTextStyle">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/neutral_grey</item>
