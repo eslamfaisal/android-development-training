@@ -61,4 +61,62 @@ exports.registerUser = onRequest(async (req, res) => {
     }
 });
 
-// TODO create register social media user
+exports.getFlashSaleProducts = onRequest(async (req, res) => {
+    let countryID = req.query.country_id;
+    let limit = parseInt(req.query.limit, 10);
+    let lastDocumentId = req.query.last_document;
+
+    if (!countryID) {
+        return res.status(400).send('country_id is required');
+    }
+
+    if (isNaN(limit) || limit <= 0) {
+        return res.status(400).send('limit should be a positive number');
+    }
+
+    try {
+        let query = admin.firestore().collection('products').limit(limit);
+
+        if (lastDocumentId) {
+            const lastDocumentSnapshot = await admin.firestore().collection('products').doc(lastDocumentId).get();
+            if (lastDocumentSnapshot.exists) {
+                query = query.startAfter(lastDocumentSnapshot);
+            } else {
+                return res.status(400).send('Invalid last_document ID');
+            }
+        }
+
+        const snapshot = await query.get();
+
+        if (snapshot.empty) {
+            return res.status(200).send({
+                products: [],
+                offers: []
+            });
+        }
+
+        let ids = snapshot.docs.map(doc => doc.id);
+
+        const offersSnapshot = await admin.firestore().collection('product_offers').where('countries', 'array-contains-any', [countryID]).where('product_id', 'in', ids).get();
+
+
+        let products = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+
+        let offers = offersSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+
+        products.forEach(product => {
+            let offer = offers.find(offer => offer.product_id === product.id);
+            if (offer) {
+                product.offer_percentage = offer.countries_offers.find(offer => offer.country_id === countryID).offer_percentage;
+            }
+        });
+
+        res.status(200).send({
+            products: products
+        });
+
+    } catch (error) {
+        console.error('Error getting flash sale products:', error);
+        res.status(500).send('Error getting flash sale products: ' + error.message);
+    }
+});
