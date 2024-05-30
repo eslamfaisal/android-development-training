@@ -147,14 +147,22 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/categories_recycler_view"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:paddingStart="8dp"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/category_item"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    android:layout_height="wrap_content">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/categories_recycler_view"
+                        android:layout_width="match_parent"
+                        android:paddingStart="8dp"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        tools:listitem="@layout/category_item"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                    <include
+                        android:id="@+id/categories_shimmer_view"
+                        layout="@layout/categories_shimmer_view"/>
+                </FrameLayout>
 
             </LinearLayout>
 

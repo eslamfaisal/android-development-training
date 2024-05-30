@@ -67,8 +67,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                     }
 
                     is Resource.Success -> {
-//                        binding.categoriesShimmerView.root.stopShimmer()
-//                        binding.categoriesShimmerView.root.visibility = View.GONE
+                        binding.categoriesShimmerView.root.stopShimmer()
+                        binding.categoriesShimmerView.root.visibility = View.GONE
                         Log.d(TAG, "iniViewModel: categories Success = ${resources.data}")
                         initCategoriesView(resources.data)
                     }
