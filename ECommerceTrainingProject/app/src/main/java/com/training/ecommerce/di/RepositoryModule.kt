@@ -8,6 +8,8 @@ import com.training.ecommerce.data.repository.common.AppDataStoreRepositoryImpl
 import com.training.ecommerce.data.repository.common.AppPreferenceRepository
 import com.training.ecommerce.data.repository.home.SalesAdsRepository
 import com.training.ecommerce.data.repository.home.SalesAdsRepositoryImpl
+import com.training.ecommerce.data.repository.products.ProductsRepository
+import com.training.ecommerce.data.repository.products.ProductsRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserFirestoreRepository
 import com.training.ecommerce.data.repository.user.UserFirestoreRepositoryImpl
 import com.training.ecommerce.data.repository.user.UserPreferenceRepository
@@ -57,4 +59,10 @@ abstract class RepositoryModule {
     abstract fun provideCategoriesRepository(
         categoriesRepositoryImpl: CategoriesRepositoryImpl
     ): CategoriesRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideProductsRepository(
+        productsRepositoryImpl: ProductsRepositoryImpl
+    ): ProductsRepository
 }
