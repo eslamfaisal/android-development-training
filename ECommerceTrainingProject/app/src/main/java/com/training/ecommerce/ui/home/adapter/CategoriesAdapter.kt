@@ -39,14 +39,3 @@ class CategoriesAdapter(
     override fun getItemCount(): Int = categories.size
 
 }
-
-
-@BindingAdapter("categoryUrl")
-fun categoryUrl(view: ImageView, imageUrl: String?) {
-    val loading = getGlideCircleLoading(view)
-
-    Glide.with(view.context).load(imageUrl).placeholder(loading)
-        .diskCacheStrategy(DiskCacheStrategy.ALL)
-//        .signature(Object())
-        .transform(CenterInside()).into(view)
-}

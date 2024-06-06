@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
-            app:categoryUrl="@{category.icon}"
+            app:normalImageUrl="@{category.icon}"
             android:background="@drawable/circle_border_bg"
             android:padding="24dp" />
 
