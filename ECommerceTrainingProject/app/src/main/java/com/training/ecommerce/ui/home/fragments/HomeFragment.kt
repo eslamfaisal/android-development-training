@@ -1,6 +1,5 @@
 package com.training.ecommerce.ui.home.fragments
 
-import android.graphics.Paint
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
@@ -18,6 +17,7 @@ import com.training.ecommerce.ui.home.adapter.SalesAdAdapter
 import com.training.ecommerce.ui.home.model.CategoryUIModel
 import com.training.ecommerce.ui.home.model.SalesAdUIModel
 import com.training.ecommerce.ui.home.viewmodel.HomeViewModel
+import com.training.ecommerce.ui.products.adapter.ProductAdapter
 import com.training.ecommerce.utils.DepthPageTransformer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
@@ -37,8 +37,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     override fun init() {
         initViews()
         iniViewModel()
-
-//        binding.searchTv.paintFlags = binding.searchTv.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG;
     }
 
     private fun iniViewModel() {
@@ -83,7 +81,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             }
         }
 
-        viewModel.getFlashSaleProducts()
+//        viewModel.getFlashSaleProducts()
+
+        lifecycleScope.launch {
+            viewModel.flashSaleState.collect { productsList ->
+                if (productsList.isNotEmpty()) {
+                    Log.d(TAG, "iniViewModel: flashSaleState = ${productsList.size}")
+                    flashSaleAdapter.submitList(productsList)
+                }
+            }
+        }
+
     }
 
     private fun initCategoriesView(data: List<CategoryUIModel>?) {
@@ -101,8 +109,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
+    private val flashSaleAdapter by lazy { ProductAdapter() }
     private fun initViews() {
-        Log.d(TAG, "onViewCreated: HomeFragment")
+        binding.flashSaleProductsRv.apply {
+            adapter = flashSaleAdapter
+            layoutManager = LinearLayoutManager(
+                requireContext(), LinearLayoutManager.HORIZONTAL, false
+            )
+        }
 
     }
 

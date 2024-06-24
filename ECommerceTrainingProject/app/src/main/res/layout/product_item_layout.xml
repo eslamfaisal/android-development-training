@@ -1,68 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/edit_text_bg"
-    android:orientation="vertical"
-    android:padding="8dp">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
 
-    <ImageView
-        android:id="@+id/product_image"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:src="@drawable/product_placeholder" />
+        <variable
+            name="product"
+            type="com.training.ecommerce.ui.products.model.ProductUIModel" />
+    </data>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        style="@style/MediumTitleTextStyle"
-        android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="126dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:lines="2"
-        tools:text="@string/category" />
+        android:background="@drawable/edit_text_bg"
+        android:orientation="vertical"
+        android:padding="8dp">
 
-    <androidx.appcompat.widget.AppCompatRatingBar
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:numStars="5"
-        android:rating="4.5"
-        android:stepSize="1" />
-
-
-    <TextView
-        android:id="@+id/forgot_password_tv"
-        style="@style/MediumPrimaryTextViewStyle"
-        android:layout_marginTop="8dp"
-        tools:text="$299,43" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:imageUrl="@{product.getFirstImage()}"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/MessageTextStyle"
+            style="@style/MediumTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:foreground="@drawable/line_through_text"
-            android:textSize="10sp"
-            tools:text="$534,33" />
+            android:layout_marginTop="8dp"
+            android:lines="2"
+            android:text="@{product.name}"
+            tools:text="@string/category" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatRatingBar
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/primary_red"
-            android:textSize="10sp"
-            android:fontFamily="@font/poppins_bold"
-            android:textStyle="bold"
-            tools:text="$534,33" />
+            android:numStars="5"
+            android:rating="4.5"
+            android:stepSize="1" />
+
+
+        <TextView
+            android:id="@+id/price"
+            style="@style/MediumPrimaryTextViewStyle"
+            android:layout_marginTop="8dp"
+            android:text="@{product.getFormattedPriceAfterSale()}"
+            tools:text="$299,43" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/MessageTextStyle"
+                android:id="@+id/old_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{product.getFormattedPrice()}"
+                android:foreground="@drawable/line_through_text"
+                android:textSize="10sp"
+                tools:text="$534,33" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/sale_percentage"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/primary_red"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:text="@{product.getFormattedSale()}"
+                tools:text="$534,33" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

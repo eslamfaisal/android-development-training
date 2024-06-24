@@ -44,7 +44,7 @@ class UserPreferenceRepositoryImpl @Inject constructor(val context: Application)
         }
     }
 
-    override suspend fun getUserCountry(): Flow<CountryData> {
+    override fun getUserCountry(): Flow<CountryData> {
         return context.userDetailsDataStore.data.map { it.country }
     }
 }

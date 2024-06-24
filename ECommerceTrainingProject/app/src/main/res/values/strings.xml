@@ -37,4 +37,6 @@
     <string name="category">Category</string>
     <string name="more_categories">More Categories</string>
     <string name="select_country_msg">Please seelct your country</string>
+    <string name="flash_sale">Flash Sale</string>
+    <string name="see_more">See more</string>
 </resources>

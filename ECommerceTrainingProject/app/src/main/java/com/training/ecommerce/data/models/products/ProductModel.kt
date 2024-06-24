@@ -18,29 +18,17 @@ data class ProductModel(
 
     var images: List<String>? = null,
 
-    var prices: List<ProductPriceModel>? = null,
+    var price: Int? = null,
 
-    @get:PropertyName("offer_percentage")
-    @set:PropertyName("offer_percentage")
-    var offerPercentage: Int? = null,
+    @get:PropertyName("sale_percentage")
+    @set:PropertyName("sale_percentage")
+    var salePercentage: Int? = null,
+
+    @get:PropertyName("sale_type")
+    @set:PropertyName("sale_type")
+    var saleType: String? = null,
 
     var colors: List<String>? = null
-) : Parcelable {
-
-    fun getPrice(countryID: String): Float {
-      return  prices?.find { it.countryId == countryID }?.price ?:0f
-
-    }
-
-}
-
-@Keep
-@Parcelize
-data class ProductPriceModel (
-    @get:PropertyName("country_id")
-    @set:PropertyName("country_id")
-    var countryId: String? = null,
-    var price: Float? = null,
 ) : Parcelable
 
 enum class ProductSaleType(val type: String) {
