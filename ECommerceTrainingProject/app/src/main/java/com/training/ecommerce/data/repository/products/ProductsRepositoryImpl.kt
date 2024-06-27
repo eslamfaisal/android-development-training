@@ -12,6 +12,7 @@ import javax.inject.Inject
 class ProductsRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore
 ) : ProductsRepository {
+
     override fun getCategoryProducts(categoryID: String, pageLimit: Int): Flow<List<ProductModel>> {
         return flow {
             val products =
@@ -29,6 +30,7 @@ class ProductsRepositoryImpl @Inject constructor(
             Log.d("ProductsRepositoryImpl", "getSaleProducts: $countryID, $saleType")
             val products = firestore.collection("products")
                 .whereEqualTo("sale_type", saleType)
+                .whereEqualTo("country_id", countryID)
                 .orderBy("price")
                 .limit(pageLimit.toLong()).get().await().toObjects(ProductModel::class.java)
             emit(products)
