@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import javax.inject.Inject
 
-@BindingAdapter("android:visibility")
+@BindingAdapter("android:visibilities")
 fun setVisibility(view: View, isEmpty: Boolean) {
     view.visibility = if (isEmpty) View.GONE else View.VISIBLE
 }

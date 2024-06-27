@@ -170,7 +170,7 @@
                     android:paddingEnd="16dp"
                     android:paddingBottom="8dp"
                     android:tag="flash_sale_layout"
-                    android:visibility="@{viewmodel.isEmptyFlashSale}">
+                    android:visibilities="@{viewmodel.isEmptyFlashSale}">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TitleTextStyle"
@@ -206,7 +206,7 @@
                     android:paddingEnd="16dp"
                     android:paddingBottom="8dp"
                     android:tag="mega_sale_layout"
-                    android:visibility="@{viewmodel.isEmptyFlashSale}">
+                    android:visibilities="@{viewmodel.isEmptyMegaSale}">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TitleTextStyle"
