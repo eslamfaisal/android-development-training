@@ -7,6 +7,7 @@ data class ProductUIModel(
     val categoriesIDs: List<String>,  // Assuming categories are always provided, but can be empty.
     val images: List<String>,        // Image URLs can also be an empty list if there are no images.
     val price: Int,                  // Presenting price as a non-nullable Int for simplicity in UI calculations and display.
+    val rate: Float,                  // Presenting price as a non-nullable Int for simplicity in UI calculations and display.
     val priceAfterSale: Int? = null,      // Default price after sale is 0.
     val salePercentage: Int?,       // Offer percentage can be nullable to indicate no current offers.
     val saleType: String?,           // Sale type can be nullable if not all products are on sale.
@@ -39,6 +40,7 @@ data class ProductUIModel(
         result = 31 * result + categoriesIDs.hashCode()
         result = 31 * result + images.hashCode()
         result = 31 * result + price
+        result = 31 * result + rate.hashCode()
         result = 31 * result + (salePercentage ?: 0)
         result = 31 * result + (saleType?.hashCode() ?: 0)
         result = 31 * result + colors.hashCode()
@@ -56,6 +58,7 @@ data class ProductUIModel(
         if (description != other.description) return false
         if (categoriesIDs != other.categoriesIDs) return false
         if (images != other.images) return false
+        if (rate != other.rate) return false
         if (price != other.price) return false
         if (salePercentage != other.salePercentage) return false
         if (saleType != other.saleType) return false

@@ -161,7 +161,6 @@
 
 
                 <LinearLayout
-                    android:tag="flash_sale_layout"
                     android:id="@+id/flash_sale_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -170,7 +169,8 @@
                     android:paddingTop="8dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="8dp"
-                    app:isVisible="@{viewmodel.isEmptyFlashSale}">
+                    android:tag="flash_sale_layout"
+                    android:visibility="@{viewmodel.isEmptyFlashSale}">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TitleTextStyle"
@@ -188,17 +188,15 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:tag="flash_sale_rv"
                     android:id="@+id/flash_sale_products_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     android:paddingStart="8dp"
-                    app:isVisible="@{viewmodel.isEmptyFlashSale}"
+                    android:tag="flash_sale_rv"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
                 <LinearLayout
-                    android:tag="mega_sale_layout"
                     android:id="@+id/mega_sale_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -207,7 +205,8 @@
                     android:paddingTop="8dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="8dp"
-                    app:isVisible="@{viewmodel.isEmptyMegaSale}">
+                    android:tag="mega_sale_layout"
+                    android:visibility="@{viewmodel.isEmptyFlashSale}">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TitleTextStyle"
@@ -225,13 +224,12 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:tag="mega_sale_rv"
                     android:id="@+id/mega_sale_products_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     android:paddingStart="8dp"
-                    app:isVisible="@{viewmodel.isEmptyMegaSale}"
+                    android:tag="mega_sale_rv"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             </LinearLayout>

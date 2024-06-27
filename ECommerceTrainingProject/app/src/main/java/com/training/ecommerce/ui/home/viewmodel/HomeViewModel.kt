@@ -3,7 +3,9 @@ package com.training.ecommerce.ui.home.viewmodel
 import android.util.Log
 import android.view.View
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.models.products.ProductModel
@@ -28,6 +30,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import javax.inject.Inject
+
+@BindingAdapter("android:visibility")
+fun setVisibility(view: View, isEmpty: Boolean) {
+    view.visibility = if (isEmpty) View.GONE else View.VISIBLE
+}
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -56,21 +63,17 @@ class HomeViewModel @Inject constructor(
     val megaSaleState = getProductsSales(ProductSaleType.MEGA_SALE)
 
 
-    val isEmptyFlashSale: StateFlow<Boolean> = flashSaleState.map {
+    val isEmptyFlashSale: LiveData<Boolean> = flashSaleState.map {
         val isEmpty = it.isEmpty()
         Log.d(TAG, "isEmptyFlashSale: $isEmpty")
         isEmpty
-    }.stateIn(
-        viewModelScope, started = SharingStarted.Eagerly, initialValue = true
-    )
+    }.asLiveData()
 
-    val isEmptyMegaSale: StateFlow<Boolean> = megaSaleState.map {
+    val isEmptyMegaSale: LiveData<Boolean> = megaSaleState.map {
         val isEmpty = it.isEmpty()
         Log.d(TAG, "isEmptyMegaSale: $isEmpty")
         isEmpty
-    }.stateIn(
-        viewModelScope, started = SharingStarted.Eagerly, initialValue = true
-    )
+    }.asLiveData()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun getProductsSales(productSaleType: ProductSaleType): StateFlow<List<ProductUIModel>> =
@@ -111,8 +114,8 @@ class HomeViewModel @Inject constructor(
     }
 }
 
-@BindingAdapter("isVisible")
-fun setVisibility(view: View, isEmpty: Boolean) {
-    Log.d("HomeViewModel", "tage = ${view.tag}, setVisibility: $isEmpty")
-    view.visibility = if (isEmpty) View.GONE else View.VISIBLE
-}
+//@BindingAdapter("isVisible")
+//fun setVisibility(view: View, isEmpty: Boolean) {
+//    Log.d("HomeViewModel", "tage = ${view.tag}, setVisibility: $isEmpty")
+//    view.visibility = if (isEmpty) View.GONE else View.VISIBLE
+//}
