@@ -232,6 +232,46 @@
                     android:tag="mega_sale_rv"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+
+                <RelativeLayout
+                    android:id="@+id/recommended_product_layout"
+                    android:visibility="@{viewmodel.recommendedSectionDataState == null ? View.GONE : View.VISIBLE}"
+                    android:layout_width="match_parent"
+                    android:padding="8dp"
+                    android:layout_height="200dp">
+
+                    <ImageView
+                        android:id="@+id/recommended_product_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        tools:src="@drawable/promo_image" />
+
+                    <TextView
+                        android:id="@+id/recommended_product_title_iv"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="18dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@android:color/white"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        tools:text="Recommended Product" />
+
+                    <TextView
+                        android:id="@+id/recommended_product_description_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="18dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        tools:text="We recommend the best for you" />
+                </RelativeLayout>
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

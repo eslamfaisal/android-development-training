@@ -3,7 +3,6 @@ package com.training.ecommerce.ui.home.viewmodel
 import android.util.Log
 import android.view.View
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,8 +13,10 @@ import com.training.ecommerce.data.models.user.CountryData
 import com.training.ecommerce.data.repository.categories.CategoriesRepository
 import com.training.ecommerce.data.repository.home.SalesAdsRepository
 import com.training.ecommerce.data.repository.products.ProductsRepository
+import com.training.ecommerce.data.repository.special_sections.SpecialSectionsRepository
 import com.training.ecommerce.data.repository.user.UserPreferenceRepository
 import com.training.ecommerce.domain.models.toProductUIModel
+import com.training.ecommerce.domain.models.toSpecialSectionUIModel
 import com.training.ecommerce.ui.products.model.ProductUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -31,17 +32,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import javax.inject.Inject
 
-@BindingAdapter("android:visibilities")
-fun setVisibility(view: View, isEmpty: Boolean) {
-    view.visibility = if (isEmpty) View.GONE else View.VISIBLE
-}
-
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val salesAdsRepository: SalesAdsRepository,
     private val categoriesRepository: CategoriesRepository,
     private val productsRepository: ProductsRepository,
-    private val userPreferenceRepository: UserPreferenceRepository
+    private val userPreferenceRepository: UserPreferenceRepository,
+    private val specialSectionsRepository: SpecialSectionsRepository
 ) : ViewModel() {
 
     val salesAdsState = salesAdsRepository.getSalesAds().stateIn(
@@ -62,18 +59,16 @@ class HomeViewModel @Inject constructor(
 
     val megaSaleState = getProductsSales(ProductSaleType.MEGA_SALE)
 
+    val isEmptyFlashSale = flashSaleState.map { it.isEmpty() }.asLiveData()
 
-    val isEmptyFlashSale: LiveData<Boolean> = flashSaleState.map {
-        val isEmpty = it.isEmpty()
-        Log.d(TAG, "isEmptyFlashSale: $isEmpty")
-        isEmpty
-    }.asLiveData()
+    val isEmptyMegaSale = megaSaleState.map { it.isEmpty() }.asLiveData()
 
-    val isEmptyMegaSale: LiveData<Boolean> = megaSaleState.map {
-        val isEmpty = it.isEmpty()
-        Log.d(TAG, "isEmptyMegaSale: $isEmpty")
-        isEmpty
-    }.asLiveData()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val recommendedSectionDataState = specialSectionsRepository.recommendProductsSection().stateIn(
+        viewModelScope + IO, started = SharingStarted.Eagerly, initialValue = null
+    ).mapLatest { it?.toSpecialSectionUIModel()}
+
+    val isRecommendedSection = recommendedSectionDataState.map { it == null}.asLiveData()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun getProductsSales(productSaleType: ProductSaleType): StateFlow<List<ProductUIModel>> =
