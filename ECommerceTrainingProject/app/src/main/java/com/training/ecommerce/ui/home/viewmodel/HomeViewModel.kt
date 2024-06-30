@@ -1,11 +1,10 @@
 package com.training.ecommerce.ui.home.viewmodel
 
 import android.util.Log
-import android.view.View
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.DocumentSnapshot
 import com.training.ecommerce.data.models.Resource
 import com.training.ecommerce.data.models.products.ProductModel
 import com.training.ecommerce.data.models.products.ProductSaleType
@@ -21,8 +20,10 @@ import com.training.ecommerce.ui.products.model.ProductUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -66,9 +67,9 @@ class HomeViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     val recommendedSectionDataState = specialSectionsRepository.recommendProductsSection().stateIn(
         viewModelScope + IO, started = SharingStarted.Eagerly, initialValue = null
-    ).mapLatest { it?.toSpecialSectionUIModel()}
+    ).mapLatest { it?.toSpecialSectionUIModel() }
 
-    val isRecommendedSection = recommendedSectionDataState.map { it == null}.asLiveData()
+    val isRecommendedSection = recommendedSectionDataState.map { it == null }.asLiveData()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun getProductsSales(productSaleType: ProductSaleType): StateFlow<List<ProductUIModel>> =
@@ -95,13 +96,47 @@ class HomeViewModel @Inject constructor(
         salesAdsState.value.data?.forEach { it.startCountdown() }
     }
 
-    fun getFlashSaleProducts() = viewModelScope.launch(IO) {
-        val country = userPreferenceRepository.getUserCountry().first()
-        productsRepository.getSaleProducts(
-            country.id, ProductSaleType.FLASH_SALE.type, 10
-        ).collectLatest { products ->
-            Log.d(TAG, "Flash sale products: $products")
-        }
+    private val _allProductsState: MutableStateFlow<List<ProductUIModel>> =
+        MutableStateFlow(emptyList())
+    val allProductsState = _allProductsState.asStateFlow()
+    val isLoadingAllProducts = MutableStateFlow(false)
+    val isFinishedLoadAllProducts = MutableStateFlow(false)
+    var lastDocumentSnapshot: DocumentSnapshot? = null
+
+    fun getNextProducts() = viewModelScope.launch(IO) {
+        if (isFinishedLoadAllProducts.value) return@launch
+        if (isLoadingAllProducts.value) return@launch
+        isLoadingAllProducts.emit(true)
+
+        val countryId = countryState.first().id ?: "0"
+        productsRepository.getAllProductsPaging(countryId, 2, lastDocumentSnapshot)
+            .collectLatest { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        isLoadingAllProducts.emit(false)
+                        resource.data?.let { docs ->
+                            if (docs.isEmpty) {
+                                isFinishedLoadAllProducts.emit(true)
+                                return@collectLatest
+                            } else {
+                                lastDocumentSnapshot = docs.documents.lastOrNull()
+                                val lstProducts = docs.toObjects(ProductModel::class.java)
+                                    .map { getProductModel(it) }
+                                _allProductsState.emit(_allProductsState.value + lstProducts)
+                            }
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        isLoadingAllProducts.emit(false)
+                        Log.d(TAG, "getNextProducts: ${resource.exception?.message}")
+                    }
+
+                    is Resource.Loading -> {
+                        isLoadingAllProducts.emit(true)
+                    }
+                }
+            }
     }
 
     companion object {

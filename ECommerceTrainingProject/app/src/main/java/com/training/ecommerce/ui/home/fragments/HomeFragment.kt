@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.training.ecommerce.R
@@ -22,6 +23,7 @@ import com.training.ecommerce.ui.home.model.SpecialSectionUIModel
 import com.training.ecommerce.ui.home.viewmodel.HomeViewModel
 import com.training.ecommerce.ui.products.adapter.ProductAdapter
 import com.training.ecommerce.utils.DepthPageTransformer
+import com.training.ecommerce.utils.GridSpacingItemDecoration
 import com.training.ecommerce.utils.HorizontalSpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
@@ -112,6 +114,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 }
             }
         }
+
+        viewModel.getNextProducts()
+        lifecycleScope.launch {
+            viewModel.allProductsState.collectLatest { productsList ->
+                allProductsAdapter.submitList(productsList)
+                binding.invalidateAll()
+            }
+        }
     }
 
     private fun setupRecommendedViewData(sectionData: SpecialSectionUIModel) {
@@ -144,6 +154,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     private val flashSaleAdapter by lazy { ProductAdapter() }
     private val megaSaleAdapter by lazy { ProductAdapter() }
+    private val allProductsAdapter by lazy { ProductAdapter() }
+
     private fun initViews() {
         binding.flashSaleProductsRv.apply {
             adapter = flashSaleAdapter
@@ -159,7 +171,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             )
             addItemDecoration(HorizontalSpaceItemDecoration(16))
         }
-
+        binding.allProductsRv.apply {
+            adapter = allProductsAdapter
+            layoutManager = GridLayoutManager(
+                requireContext(), 2
+            )
+            addItemDecoration(GridSpacingItemDecoration(2, 16, true))
+        }
     }
 
     private fun initSalesAdsView(salesAds: List<SalesAdUIModel>?) {

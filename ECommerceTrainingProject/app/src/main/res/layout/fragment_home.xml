@@ -272,6 +272,15 @@
                         tools:text="We recommend the best for you" />
                 </RelativeLayout>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/all_products_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingStart="8dp"
+                    android:tag="mega_sale_rv"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
