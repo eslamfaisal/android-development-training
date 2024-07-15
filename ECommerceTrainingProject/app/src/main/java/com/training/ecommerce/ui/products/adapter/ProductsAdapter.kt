@@ -28,6 +28,7 @@ class ProductAdapter(
         val product = getItem(position)
         Log.d("ProductAdapter", "onBindViewHolder: ${product.id}")
         holder.bind(viewType = viewType, product)
+        holder.itemView.setOnClickListener { onProductClick(product) }
     }
 
     class ProductViewHolder(private val binding: ProductItemLayoutBinding) :

@@ -5,6 +5,9 @@ import androidx.annotation.Keep
 import com.training.ecommerce.data.models.products.ProductSizeModel
 import kotlinx.parcelize.Parcelize
 
+
+@Keep
+@Parcelize
 data class ProductUIModel(
     val id: String,
     val name: String,
@@ -19,7 +22,7 @@ data class ProductUIModel(
     val salePercentage: Int?,       // Offer percentage can be nullable to indicate no current offers.
     val saleType: String?,           // Sale type can be nullable if not all products are on sale.
     val currencySymbol: String = ""     // Default currency is USD.
-) {
+) : Parcelable {
 
     fun getFormattedPrice(): String {
         return "$currencySymbol$price"
@@ -73,20 +76,20 @@ data class ProductUIModel(
         return true
     }
 
+    override fun toString(): String {
+        return "ProductUIModel(id='$id', name='$name', description='$description', colors=$colors, sizes=$sizes, categoriesIDs=$categoriesIDs, images=$images, price=$price, rate=$rate, priceAfterSale=$priceAfterSale, salePercentage=$salePercentage, saleType=$saleType, currencySymbol='$currencySymbol')"
+    }
 }
 
 @Keep
 @Parcelize
 data class ProductColorUIModel(
-    var size: String? = null,
-    var stock: Int? = null,
-    var color: String? = null
+    var size: String? = null, var stock: Int? = null, var color: String? = null
 ) : Parcelable
 
 
 @Keep
 @Parcelize
 data class ProductSizeUIModel(
-    var size: String? = null,
-    var stock: Int? = null
+    var size: String? = null, var stock: Int? = null
 ) : Parcelable
