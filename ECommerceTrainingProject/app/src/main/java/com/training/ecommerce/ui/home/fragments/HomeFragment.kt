@@ -22,6 +22,7 @@ import com.training.ecommerce.ui.home.model.SalesAdUIModel
 import com.training.ecommerce.ui.home.model.SpecialSectionUIModel
 import com.training.ecommerce.ui.home.viewmodel.HomeViewModel
 import com.training.ecommerce.ui.products.adapter.ProductAdapter
+import com.training.ecommerce.ui.products.adapter.ProductViewType
 import com.training.ecommerce.utils.DepthPageTransformer
 import com.training.ecommerce.utils.GridSpacingItemDecoration
 import com.training.ecommerce.utils.HorizontalSpaceItemDecoration
@@ -152,8 +153,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
-    private val flashSaleAdapter by lazy { ProductAdapter() }
-    private val megaSaleAdapter by lazy { ProductAdapter() }
+    private val flashSaleAdapter by lazy { ProductAdapter(viewType = ProductViewType.LIST) }
+    private val megaSaleAdapter by lazy { ProductAdapter(viewType = ProductViewType.LIST) }
     private val allProductsAdapter by lazy { ProductAdapter() }
 
     private fun initViews() {

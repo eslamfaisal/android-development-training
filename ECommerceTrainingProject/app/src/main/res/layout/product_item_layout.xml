@@ -9,8 +9,9 @@
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/product_item_layout"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="126dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_bg"
         android:orientation="vertical"
@@ -18,9 +19,9 @@
 
         <ImageView
             android:id="@+id/product_image"
-            android:layout_width="110dp"
+            android:layout_width="match_parent"
             android:layout_height="110dp"
-            app:imageUrl="@{product.getFirstImage()}"/>
+            app:imageUrl="@{product.getFirstImage()}" />
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/MediumTitleTextStyle"
@@ -36,9 +37,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numStars="5"
-            android:theme="@style/RatingBarStyle"
             android:rating="@{product.rate}"
-            android:stepSize="1" />
+            android:stepSize="1"
+            android:theme="@style/RatingBarStyle" />
 
 
         <TextView
@@ -55,27 +56,27 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/MessageTextStyle"
                 android:id="@+id/old_price"
+                style="@style/MessageTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@{product.getFormattedPrice()}"
                 android:foreground="@drawable/line_through_text"
+                android:text="@{product.getFormattedPrice()}"
                 android:textSize="10sp"
                 tools:text="$534,33" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
                 android:id="@+id/sale_percentage"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins_bold"
+                android:text="@{product.getFormattedSale()}"
                 android:textColor="@color/primary_red"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:text="@{product.getFormattedSale()}"
                 tools:text="$534,33" />
 
         </LinearLayout>

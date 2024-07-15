@@ -9,7 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.training.ecommerce.databinding.ProductItemLayoutBinding
 import com.training.ecommerce.ui.products.model.ProductUIModel
 
-class ProductAdapter : ListAdapter<ProductUIModel, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
+enum class ProductViewType {
+    GRID, LIST
+}
+
+class ProductAdapter(
+    private val viewType: ProductViewType = ProductViewType.GRID,
+    private val onProductClick: (ProductUIModel) -> Unit = {}
+) : ListAdapter<ProductUIModel, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,11 +27,17 @@ class ProductAdapter : ListAdapter<ProductUIModel, ProductAdapter.ProductViewHol
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = getItem(position)
         Log.d("ProductAdapter", "onBindViewHolder: ${product.id}")
-        holder.bind(product)
+        holder.bind(viewType = viewType, product)
     }
 
-    class ProductViewHolder(private val binding: ProductItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: ProductUIModel) {
+    class ProductViewHolder(private val binding: ProductItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(viewType: ProductViewType, product: ProductUIModel) {
+            if (viewType == ProductViewType.GRID) {
+                binding.productItemLayout.layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            }
             binding.product = product
             binding.executePendingBindings() // This ensures that the binding has been executed immediately.
         }

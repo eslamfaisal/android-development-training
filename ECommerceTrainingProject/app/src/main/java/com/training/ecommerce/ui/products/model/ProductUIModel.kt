@@ -1,9 +1,16 @@
 package com.training.ecommerce.ui.products.model
 
+import android.os.Parcelable
+import androidx.annotation.Keep
+import com.training.ecommerce.data.models.products.ProductSizeModel
+import kotlinx.parcelize.Parcelize
+
 data class ProductUIModel(
     val id: String,
     val name: String,
     val description: String,
+    val colors: List<ProductColorUIModel>,
+    val sizes: List<ProductSizeModel>,
     val categoriesIDs: List<String>,  // Assuming categories are always provided, but can be empty.
     val images: List<String>,        // Image URLs can also be an empty list if there are no images.
     val price: Int,                  // Presenting price as a non-nullable Int for simplicity in UI calculations and display.
@@ -11,7 +18,6 @@ data class ProductUIModel(
     val priceAfterSale: Int? = null,      // Default price after sale is 0.
     val salePercentage: Int?,       // Offer percentage can be nullable to indicate no current offers.
     val saleType: String?,           // Sale type can be nullable if not all products are on sale.
-    val colors: List<String>,       // Colors can be an empty list if no color options are available.
     val currencySymbol: String = ""     // Default currency is USD.
 ) {
 
@@ -68,3 +74,19 @@ data class ProductUIModel(
     }
 
 }
+
+@Keep
+@Parcelize
+data class ProductColorUIModel(
+    var size: String? = null,
+    var stock: Int? = null,
+    var color: String? = null
+) : Parcelable
+
+
+@Keep
+@Parcelize
+data class ProductSizeUIModel(
+    var size: String? = null,
+    var stock: Int? = null
+) : Parcelable
