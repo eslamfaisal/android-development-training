@@ -26,7 +26,8 @@ class ProductDetailsViewModel @Inject constructor(
             ?: throw IllegalArgumentException("ProductUIModel is required")
     }
 
-    private val _productDetailsState: MutableStateFlow<ProductUIModel> = MutableStateFlow(productUiModel)
+    private val _productDetailsState: MutableStateFlow<ProductUIModel> =
+        MutableStateFlow(productUiModel)
     val productDetailsState = _productDetailsState.asStateFlow()
 
     init {
