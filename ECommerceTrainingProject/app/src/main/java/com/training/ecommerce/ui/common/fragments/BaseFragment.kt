@@ -1,6 +1,7 @@
 package com.training.ecommerce.ui.common.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,8 +56,12 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : ViewModel> : Fragment() {
     }
 
     override fun onDestroyView() {
+        Log.d(TAG, "onDestroyView: ${binding.javaClass.name}")
         super.onDestroyView()
         _binding = null
     }
 
+    companion object {
+        private const val TAG = "BaseFragment"
+    }
 }

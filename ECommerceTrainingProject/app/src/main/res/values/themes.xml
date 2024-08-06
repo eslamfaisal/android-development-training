@@ -37,6 +37,12 @@
         <item name="fontFamily">@font/poppins_bold</item>
     </style>
 
+    <style name="MediumTitleTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/primary_dark_color</item>
+        <item name="fontFamily">@font/poppins_bold</item>
+    </style>
+
     <style name="MessageTextStyle">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/neutral_grey</item>
@@ -86,4 +92,31 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/white</item>
+        <item name="itemActiveIndicatorStyle">@null</item>
+        <item name="itemTextAppearanceActive">@style/SelectedBottomNavigationViewTextStyle</item>
+        <item name="itemTextAppearanceInactive">@style/SelectedBottomNavigationViewTextStyle</item>
+    </style>
+
+    <style name="SelectedBottomNavigationViewTextStyle" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="SaleTimerItemTextStyle">
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">45dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/primary_dark_color</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:padding">8dp</item>
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:background">@drawable/timer_background</item>
+    </style>
+
+    <style name="RatingBarStyle" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/neutral_grey</item>
+        <item name="colorControlActivated">@color/primary_yellow</item>
+    </style>
 </resources>

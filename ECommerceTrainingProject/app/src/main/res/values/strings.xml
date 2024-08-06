@@ -30,4 +30,16 @@
     <string name="send">Send</string>
     <string name="log_out">Log Out</string>
     <string name="app_icon">App icon</string>
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="cart">Cart</string>
+    <string name="offer">Offer</string>
+    <string name="account">Account</string>
+    <string name="search_products">Search Products</string>
+    <string name="category">Category</string>
+    <string name="more_categories">More Categories</string>
+    <string name="select_country_msg">Please seelct your country</string>
+    <string name="flash_sale">Flash Sale</string>
+    <string name="see_more">See more</string>
+    <string name="mega_sale">Mega Sale</string>
 </resources>

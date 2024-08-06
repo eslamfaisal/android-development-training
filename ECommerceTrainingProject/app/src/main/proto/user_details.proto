@@ -3,10 +3,20 @@ syntax = "proto3";
 option java_package = "com.training.ecommerce.data.models.user";
 option java_multiple_files = true;
 
+message CountryData {
+  string id = 1;
+  string name = 2;
+  string code = 3;
+  string image = 4;
+  string currency = 5;
+  string currencySymbol = 6;
+}
+
 message UserDetailsPreferences {
   string id = 1;
   string email = 2;
   string name = 3;
   int32 createdAt = 4;
   repeated string reviews = 5;
+  CountryData country = 6; // Add the country data here
 }

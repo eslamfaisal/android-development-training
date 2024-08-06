@@ -18,6 +18,7 @@ object CrashlyticsUtils {
     const val REGISTER_KEY = "REGISTER_KEY"
     const val LOGIN_PROVIDER = "LOGIN_PROVIDER"
     const val LISTEN_TO_USER_DETAILS = "LISTEN_TO_USER_DETAILS"
+    const val SPECIAL_SECTIONS = "SPECIAL_SECTIONS"
 
 
     fun sendLogToCrashlytics(msg: String, vararg keys: String) {
@@ -53,3 +54,4 @@ class AddToCartException(message: String) : Exception(message)
 class LoginException(message: String) : Exception(message)
 class RegisterException(message: String) : Exception(message)
 class UserDetailsException(message: String) : Exception(message)
+class SpecialSectionsException(message: String) : Exception(message)

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="country"
+            type="com.training.ecommerce.ui.auth.models.CountryUIModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/edit_text_bg"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/country_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:padding="8dp"
+            android:scaleType="centerCrop"
+            android:textSize="20sp"
+            app:circleImageUrl="@{country.image}" />
+
+        <TextView
+            android:id="@+id/country_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@{country.name}"
+            android:textColor="@color/neutral_grey"
+            android:textSize="16sp" />
+    </LinearLayout>
+</layout>

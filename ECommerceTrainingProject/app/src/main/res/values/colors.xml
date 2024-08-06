@@ -6,4 +6,7 @@
     <color name="primary_color">#40BFFF</color>
     <color name="neutral_grey">#9098B1</color>
     <color name="neutral_light">#EBF0FF</color>
+    <color name="primary_red">#FB7181</color>
+    <color name="primary_yellow">#FFC833</color>
+
 </resources>

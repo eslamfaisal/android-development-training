@@ -37,19 +37,13 @@ android {
                 "\"449149627104-bf8isg90ol8j2acv6cvl5q15uo2kehmf.apps.googleusercontent.com\""
             )
             it.resValue(
-                "string",
-                "facebook_app_id",
-                "\"1085123185933390\""
+                "string", "facebook_app_id", "\"1085123185933390\""
             )
             it.resValue(
-                "string",
-                "fb_login_protocol_scheme",
-                "\"fb1085123185933390\""
+                "string", "fb_login_protocol_scheme", "\"fb1085123185933390\""
             )
             it.resValue(
-                "string",
-                "facebook_client_token",
-                "\"f4be6c4f39a66cd30192d2595eb6b9d6\""
+                "string", "facebook_client_token", "\"f4be6c4f39a66cd30192d2595eb6b9d6\""
             )
         }
     }
@@ -69,25 +63,27 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.activity:activity:1.9.0")
 
-    // navigation components
+    // arch components
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
 
-    val lifecycle_version = "2.7.0"
+    val lifecycle_version = "2.8.0"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.fragment:fragment-ktx:1.7.1")
     implementation("androidx.activity:activity-ktx:1.9.0")
-    implementation("androidx.datastore:datastore-preferences:1.1.0")
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("com.google.protobuf:protobuf-kotlin-lite:4.26.0")
 
     // firebase dependencies
@@ -98,13 +94,16 @@ dependencies {
     implementation("com.google.firebase:firebase-functions-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:21.1.0")
-    implementation ("com.facebook.android:facebook-login:17.0.0")
+    implementation("com.facebook.android:facebook-login:17.0.0")
 
     // third party libraries
     implementation("com.github.pwittchen:reactivenetwork-rx2:3.0.8")
     implementation("com.squareup.retrofit2:retrofit:2.11.0'")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.14")
+    implementation("com.github.bumptech.glide:glide:4.14.2")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 
     implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")

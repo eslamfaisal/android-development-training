@@ -39,7 +39,7 @@ class UserViewModelTest {
 
     @Test
     fun testSetUserIsLoggedIn() = runTest {
-        userViewModel.setIsLoggedIn(true)
+//        userViewModel.setIsLoggedIn(true)
 
         val isLoggedIn = userViewModel.isUserLoggedIn().first()
         assertThat(isLoggedIn).isEqualTo(true)
