@@ -2,6 +2,8 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+
     }
     dependencies {
         classpath("com.google.android.gms:oss-licenses-plugin:0.10.6") {
@@ -13,9 +15,12 @@ buildscript {
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id("com.android.application") version "8.4.0" apply false
+    id("com.android.application") version "8.5.1" apply false
     id("org.jetbrains.kotlin.android") version "2.0.0" apply false
-    id("com.google.gms.google-services") version "4.4.1" apply false
-    id("com.google.firebase.crashlytics") version "2.9.9" apply false
+    id("com.google.gms.google-services") version "4.4.2" apply false
+    id("com.google.firebase.crashlytics") version "3.0.2" apply false
     id("com.google.dagger.hilt.android") version "2.48" apply false
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0" // or the latest version available
+    id("org.jetbrains.kotlin.jvm") version "2.0.0"
+    id("org.jetbrains.compose") version "1.6.11"
 }
