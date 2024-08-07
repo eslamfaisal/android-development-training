@@ -86,12 +86,13 @@ dependencies {
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
-    val lifecycle_version = "2.8.0"
+    val lifecycle_version = "2.8.4"
+    val fragment_version = "1.8.2"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
-    implementation("androidx.fragment:fragment-ktx:1.7.1")
-    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+    implementation("androidx.activity:activity-ktx:1.9.1")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("com.google.protobuf:protobuf-kotlin-lite:4.26.0")
 
@@ -110,12 +111,16 @@ dependencies {
     implementation("androidx.compose.material3:material3-window-size-class")
     implementation("androidx.activity:activity-compose:1.9.1")
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
     implementation("androidx.compose.runtime:runtime-livedata")
     implementation("com.google.accompanist:accompanist-swiperefresh:0.28.0")
     implementation("com.google.accompanist:accompanist-webview:0.32.0")
     implementation("io.coil-kt:coil:2.6.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("org.jetbrains.compose:compose-gradle-plugin:1.6.11")
+    implementation("androidx.fragment:fragment-compose:$fragment_version")
+
+
 
     // firebase dependencies
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
