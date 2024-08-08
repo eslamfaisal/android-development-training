@@ -57,7 +57,7 @@ class ProductDetailsFragment :
                     val product = viewModel.productDetailsState.collectAsState().value
                     Row {
                         Text(
-                            text = product.description, style = ECommerceTypography.titleLarge
+                            text = product.description, style = MaterialTheme.typography.titleLarge
                         )
                     }
 

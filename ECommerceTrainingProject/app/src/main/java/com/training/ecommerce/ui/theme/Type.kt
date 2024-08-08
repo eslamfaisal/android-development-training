@@ -36,7 +36,8 @@ val ECommerceTypography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
         color = NeutralDarkColor,
-    )/* Other default text styles to override
+    )
+/* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.W500,
